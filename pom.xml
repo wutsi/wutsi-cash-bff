@@ -6,7 +6,7 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>wutsi-onboard-bff</artifactId>
+  <artifactId>wutsi-cash-bff</artifactId>
   <groupId>com.wutsi.application.cash</groupId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
