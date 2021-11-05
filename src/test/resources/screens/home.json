@@ -1,0 +1,21 @@
+{
+  "type": "Screen",
+  "attributes": {
+    "safe": true
+  },
+  "children": [
+    {
+      "type": "Container",
+      "attributes": {},
+      "children": [
+        {
+          "type": "Text",
+          "attributes": {
+            "caption": "HOME"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}
