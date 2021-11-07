@@ -38,17 +38,13 @@ wutsi:
   application:
     name: wutsi-cash-bff
     server-url: http://localhost:${server.port}
-  toggles:
-    send-sms-code: false      # Send SMS?
-    verification: false       # Validate SMS code?
   platform:
     security:
       type: jwt
-#      api-key: 48d14a96-254c-11ec-b001-0ece3331637f
-#      token-provider:
-#        type: custom
-#      api-key-provider:
-#        type: env
+      token-provider:
+        type: header
+      api-key-provider:
+        type: header
     tracing:
       client-id: ${wutsi.application.name}
       device-id-provider:
