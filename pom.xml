@@ -33,9 +33,8 @@
     <libphonenumber.geocoder.version>2.172</libphonenumber.geocoder.version>
     <libphonenumber.carrier.version>1.162</libphonenumber.carrier.version>
     <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
-    <postgresql.version>42.2.24</postgresql.version>
     <sdui-kotlin.version>0.0.7</sdui-kotlin.version>
-    <wutsi-platform-core.version>0.0.62</wutsi-platform-core.version>
+    <wutsi-platform-core.version>0.0.66</wutsi-platform-core.version>
     <wutsi-account.version>1.0.9</wutsi-account.version>
     <wutsi-sms.version>1.0.2</wutsi-sms.version>
     <wutsi-tenant.version>0.0.1</wutsi-tenant.version>
