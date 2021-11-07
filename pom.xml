@@ -28,7 +28,7 @@
     <junit.version>5.8.1</junit.version>
     <kotlin.version>1.5.31</kotlin.version>
     <kotlin-mockito.version>2.2.0</kotlin-mockito.version>
-    <klint.version>0.42.1</klint.version>
+    <klint.version>0.43.0</klint.version>
     <libphonenumber.version>8.12.36</libphonenumber.version>
     <libphonenumber.geocoder.version>2.172</libphonenumber.geocoder.version>
     <libphonenumber.carrier.version>1.162</libphonenumber.carrier.version>
