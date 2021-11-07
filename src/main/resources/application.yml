@@ -40,7 +40,7 @@ wutsi:
     server-url: http://localhost:${server.port}
   platform:
     security:
-      type: none
+      type: jwt
       token-provider:
         type: header
       api-key-provider:
