@@ -30,7 +30,7 @@
     <kotlin-mockito.version>2.2.0</kotlin-mockito.version>
     <klint.version>0.43.0</klint.version>
     <libphonenumber.version>8.12.36</libphonenumber.version>
-    <libphonenumber.geocoder.version>2.172</libphonenumber.geocoder.version>
+    <libphonenumber.geocoder.version>2.173</libphonenumber.geocoder.version>
     <libphonenumber.carrier.version>1.162</libphonenumber.carrier.version>
     <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
     <sdui-kotlin.version>0.0.7</sdui-kotlin.version>
