@@ -19,8 +19,8 @@
   </parent>
 
   <properties>
-    <jacoco.threshold.line>0.20</jacoco.threshold.line>
-    <jacoco.threshold.class>0.20</jacoco.threshold.class>
+    <jacoco.threshold.line>0.94</jacoco.threshold.line>
+    <jacoco.threshold.class>0.94</jacoco.threshold.class>
     <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     <jdk.version>11</jdk.version>
 
@@ -29,16 +29,13 @@
     <kotlin.version>1.5.31</kotlin.version>
     <kotlin-mockito.version>2.2.0</kotlin-mockito.version>
     <klint.version>0.43.0</klint.version>
-    <libphonenumber.version>8.12.36</libphonenumber.version>
-    <libphonenumber.geocoder.version>2.172</libphonenumber.geocoder.version>
-    <libphonenumber.carrier.version>1.162</libphonenumber.carrier.version>
     <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
-    <sdui-kotlin.version>0.0.7</sdui-kotlin.version>
-    <wutsi-platform-core.version>0.0.67</wutsi-platform-core.version>
+    <sdui-kotlin.version>0.0.19</sdui-kotlin.version>
+    <wutsi-platform-core.version>0.0.74</wutsi-platform-core.version>
     <wutsi-account.version>1.0.9</wutsi-account.version>
-    <wutsi-sms.version>1.0.2</wutsi-sms.version>
-    <wutsi-tenant.version>0.0.1</wutsi-tenant.version>
-    <wutsi-platform-payment.version>0.0.47</wutsi-platform-payment.version>
+    <wutsi-payment.version>0.0.1</wutsi-payment.version>
+    <wutsi-tenant.version>0.0.6</wutsi-tenant.version>
+    <wutsi-platform-payment.version>0.0.50</wutsi-platform-payment.version>
   </properties>
 
   <dependencies>
@@ -53,9 +50,9 @@
       <version>${wutsi-account.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.wutsi.platform.sms</groupId>
-      <artifactId>wutsi-sms-sdk-kotlin</artifactId>
-      <version>${wutsi-sms.version}</version>
+      <groupId>com.wutsi.platform.payment</groupId>
+      <artifactId>wutsi-payment-sdk-kotlin</artifactId>
+      <version>${wutsi-payment.version}</version>
     </dependency>
     <dependency>
       <groupId>com.wutsi.platform.tenant</groupId>
@@ -73,21 +70,6 @@
       <version>${sdui-kotlin.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.googlecode.libphonenumber</groupId>
-      <artifactId>libphonenumber</artifactId>
-      <version>${libphonenumber.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.googlecode.libphonenumber</groupId>
-      <artifactId>geocoder</artifactId>
-      <version>${libphonenumber.geocoder.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.googlecode.libphonenumber</groupId>
-      <artifactId>carrier</artifactId>
-      <version>${libphonenumber.carrier.version}</version>
-    </dependency>
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib</artifactId>

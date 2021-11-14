@@ -1,6 +1,5 @@
 package com.wutsi.application.cash.endpoint
 
-import com.auth0.jwt.interfaces.RSAKeyProvider
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
@@ -20,17 +19,15 @@ import com.wutsi.platform.core.test.TestTokenProvider
 import com.wutsi.platform.core.tracing.TracingContext
 import com.wutsi.platform.core.tracing.spring.SpringTracingRequestInterceptor
 import com.wutsi.platform.core.util.URN
-import com.wutsi.platform.security.WutsiSecurityApi
-import com.wutsi.platform.security.dto.GetKeyResponse
-import com.wutsi.platform.security.dto.Key
 import com.wutsi.platform.tenant.WutsiTenantApi
 import com.wutsi.platform.tenant.dto.GetTenantResponse
 import com.wutsi.platform.tenant.dto.Logo
+import com.wutsi.platform.tenant.dto.MobileCarrier
+import com.wutsi.platform.tenant.dto.PhonePrefix
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.web.client.RestTemplate
-import java.util.Base64
 import java.util.UUID
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
@@ -38,6 +35,7 @@ import kotlin.test.assertEquals
 abstract class AbstractEndpointTest {
     companion object {
         const val DEVICE_ID = "0000-1111"
+        const val TENANT_ID = "1"
         const val PHONE_NUMBER = "+15147550011"
     }
 
@@ -51,12 +49,8 @@ abstract class AbstractEndpointTest {
     private lateinit var tenantApi: WutsiTenantApi
 
     @MockBean
-    private lateinit var securityAPI: WutsiSecurityApi
+    protected lateinit var accountApi: WutsiAccountApi
 
-    @MockBean
-    private lateinit var accountApi: WutsiAccountApi
-
-    private lateinit var keyProvider: RSAKeyProvider
     private lateinit var apiKeyProvider: ApiKeyProvider
 
     protected lateinit var rest: RestTemplate
@@ -66,16 +60,11 @@ abstract class AbstractEndpointTest {
     @BeforeTest
     open fun setUp() {
         apiKeyProvider = TestApiKeyProvider("00000000-00000000-00000000-00000000")
-        keyProvider = TestRSAKeyProvider()
-        val key = Key(
-            algorithm = "RSA",
-            content = Base64.getEncoder().encodeToString(keyProvider.getPublicKeyById("1").encoded)
-        )
-        doReturn(GetKeyResponse(key)).whenever(securityAPI).getKey(any())
 
         traceId = UUID.randomUUID().toString()
         doReturn(DEVICE_ID).whenever(tracingContext).deviceId()
         doReturn(traceId).whenever(tracingContext).traceId()
+        doReturn(TENANT_ID).whenever(tracingContext).tenantId()
 
         val tenant = Tenant(
             id = 1,
@@ -86,7 +75,39 @@ abstract class AbstractEndpointTest {
             countries = listOf("CM"),
             languages = listOf("en", "fr"),
             currency = "XAF",
-            domainName = "www.wutsi.com"
+            domainName = "www.wutsi.com",
+            numberFormat = "#,###,##0",
+            monetaryFormat = "#,###,##0 XAF",
+            mobileCarriers = listOf(
+                MobileCarrier(
+                    code = "mtn",
+                    name = "MTN",
+                    countries = listOf("CM", "CD"),
+                    phonePrefixes = listOf(
+                        PhonePrefix(
+                            country = "CM",
+                            prefixes = listOf("+23795")
+                        ),
+                    ),
+                    logos = listOf(
+                        Logo(type = "PICTORIAL", url = "http://www.goole.com/images/mtn.png")
+                    )
+                ),
+                MobileCarrier(
+                    code = "orange",
+                    name = "ORANGE",
+                    countries = listOf("CM"),
+                    phonePrefixes = listOf(
+                        PhonePrefix(
+                            country = "CM",
+                            prefixes = listOf("+23722")
+                        ),
+                    ),
+                    logos = listOf(
+                        Logo(type = "PICTORIAL", url = "http://www.goole.com/images/orange.png")
+                    )
+                )
+            )
         )
         doReturn(GetTenantResponse(tenant)).whenever(tenantApi).getTenant(any())
 
@@ -118,10 +139,10 @@ abstract class AbstractEndpointTest {
         val tokenProvider = TestTokenProvider(
             JWTBuilder(
                 subject = subjectId.toString(),
-                subjectName = URN.of("user", subjectId.toString()).value,
+                name = URN.of("user", subjectId.toString()).value,
                 subjectType = subjectType,
                 scope = scope,
-                keyProvider = keyProvider,
+                keyProvider = TestRSAKeyProvider(),
                 admin = false
             ).build()
         )
