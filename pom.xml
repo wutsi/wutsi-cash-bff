@@ -26,11 +26,11 @@
 
     <javax-validation.version>2.0.1.Final</javax-validation.version>
     <junit.version>5.8.1</junit.version>
-    <kotlin.version>1.6.0</kotlin.version>
+    <kotlin.version>1.5.31</kotlin.version>
     <kotlin-mockito.version>2.2.0</kotlin-mockito.version>
     <klint.version>0.43.0</klint.version>
     <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
-    <sdui-kotlin.version>0.0.22-SNAPSHOT</sdui-kotlin.version>
+    <sdui-kotlin.version>0.0.22</sdui-kotlin.version>
     <wutsi-platform-core.version>0.0.74</wutsi-platform-core.version>
     <wutsi-account.version>1.0.9</wutsi-account.version>
     <wutsi-payment.version>0.0.1</wutsi-payment.version>
