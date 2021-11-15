@@ -21,7 +21,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          mvn -q -s settings.xml install
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git pull
+          mvn -q -s settings.xml -B release:prepare
 
       - name: HerokuCLI
         run: |

@@ -8,7 +8,7 @@
 
   <artifactId>wutsi-cash-bff</artifactId>
   <groupId>com.wutsi.application.cash</groupId>
-  <version>1.0.0</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>wutsi-cash-bff</name>
 
@@ -143,6 +143,18 @@
       <url>https://maven.pkg.github.com/wutsi/*</url>
     </repository>
   </repositories>
+
+  <scm>
+    <developerConnection>scm:git:https://github.com/wutsi/wutsi-cash-bff.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/wutsi/wutsi-cash-bff</url>
+    </repository>
+  </distributionManagement>
+
 
   <build>
     <finalName>${project.artifactId}</finalName>
