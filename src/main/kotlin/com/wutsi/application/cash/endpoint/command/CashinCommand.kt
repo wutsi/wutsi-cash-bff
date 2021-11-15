@@ -2,7 +2,6 @@ package com.wutsi.application.cash.endpoint.command
 
 import com.wutsi.application.cash.dto.CashinRequest
 import com.wutsi.application.cash.endpoint.AbstractCommand
-import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
@@ -45,13 +44,11 @@ class CashinCommand(
 
             if (response.status == Status.SUCCESSFUL.name) {
                 return Action(
-                    id = Page.CASHING_SUCCESS,
                     type = Route,
                     url = urlBuilder.build("cashin/success?amount=${request.amount}")
                 )
             } else {
                 return Action(
-                    id = Page.CASHING_PENDING,
                     type = Route,
                     url = urlBuilder.build("cashin/pending")
                 )

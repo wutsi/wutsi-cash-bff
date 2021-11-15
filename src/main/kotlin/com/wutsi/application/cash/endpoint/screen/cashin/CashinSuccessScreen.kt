@@ -32,7 +32,7 @@ class CashinSuccessScreen(private val tenantProvider: TenantProvider) : Abstract
         val numberFormat = DecimalFormat(tenant.monetaryFormat)
         val formattedAmount = numberFormat.format(amount)
         return Screen(
-            id = Page.CASHING_SUCCESS,
+            id = Page.CASHIN_SUCCESS,
             safe = true,
             appBar = AppBar(
                 elevation = 0.0,

@@ -44,7 +44,7 @@ class CashinScreen(
         ).paymentMethods
 
         return Screen(
-            id = Page.CASHING,
+            id = Page.CASHIN,
             appBar = AppBar(
                 elevation = 0.0,
                 backgroundColor = Theme.WHITE_COLOR,

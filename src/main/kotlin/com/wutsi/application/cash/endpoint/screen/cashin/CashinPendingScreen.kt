@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController
 class CashinPendingScreen(private val tenantProvider: TenantProvider) : AbstractQuery() {
     @PostMapping
     fun index(): Widget = Screen(
-        id = Page.CASHING_PENDING,
+        id = Page.CASHIN_PENDING,
         safe = true,
         appBar = AppBar(
             elevation = 0.0,
@@ -73,7 +73,6 @@ class CashinPendingScreen(private val tenantProvider: TenantProvider) : Abstract
                         type = Elevated,
                         caption = getText("page.cashin-pending.button.submit"),
                         action = Action(
-                            id = Page.HOME,
                             type = Route,
                             url = "route:/~"
                         )
