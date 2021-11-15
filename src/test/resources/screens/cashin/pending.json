@@ -1,6 +1,7 @@
 {
   "type": "Screen",
   "attributes": {
+    "id": "page.cashin.pending",
     "safe": true
   },
   "children": [
@@ -84,6 +85,7 @@
               },
               "children": [],
               "action": {
+                "id": "page.home",
                 "type": "Route",
                 "url": "route:/~"
               }

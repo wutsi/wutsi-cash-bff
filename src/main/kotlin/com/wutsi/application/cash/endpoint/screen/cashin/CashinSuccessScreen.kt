@@ -1,6 +1,7 @@
 package com.wutsi.application.cash.endpoint.screen.cashin
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
+import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.endpoint.Theme
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.flutter.sdui.Action
@@ -31,6 +32,7 @@ class CashinSuccessScreen(private val tenantProvider: TenantProvider) : Abstract
         val numberFormat = DecimalFormat(tenant.monetaryFormat)
         val formattedAmount = numberFormat.format(amount)
         return Screen(
+            id = Page.CASHING_SUCCESS,
             safe = true,
             appBar = AppBar(
                 elevation = 0.0,

@@ -1,6 +1,7 @@
 {
   "type": "Screen",
   "attributes": {
+    "id": "page.cashin",
     "safe": false
   },
   "children": [

@@ -1,6 +1,7 @@
 package com.wutsi.application.cash.endpoint.screen.cashin
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
+import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.endpoint.Theme
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.flutter.sdui.Action
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController
 class CashinPendingScreen(private val tenantProvider: TenantProvider) : AbstractQuery() {
     @PostMapping
     fun index(): Widget = Screen(
+        id = Page.CASHING_PENDING,
         safe = true,
         appBar = AppBar(
             elevation = 0.0,
@@ -71,6 +73,7 @@ class CashinPendingScreen(private val tenantProvider: TenantProvider) : Abstract
                         type = Elevated,
                         caption = getText("page.cashin-pending.button.submit"),
                         action = Action(
+                            id = Page.HOME,
                             type = Route,
                             url = "route:/~"
                         )

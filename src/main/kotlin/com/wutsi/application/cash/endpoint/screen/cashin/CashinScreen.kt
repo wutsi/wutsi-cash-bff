@@ -1,6 +1,7 @@
 package com.wutsi.application.cash.endpoint.screen.cashin
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
+import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.endpoint.Theme
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
@@ -43,6 +44,7 @@ class CashinScreen(
         ).paymentMethods
 
         return Screen(
+            id = Page.CASHING,
             appBar = AppBar(
                 elevation = 0.0,
                 backgroundColor = Theme.WHITE_COLOR,
