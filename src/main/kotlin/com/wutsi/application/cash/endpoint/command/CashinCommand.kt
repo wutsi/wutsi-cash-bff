@@ -42,17 +42,13 @@ class CashinCommand(
             logger.add("transaction_id", response.id)
             logger.add("transaction_status", response.status)
 
-            if (response.status == Status.SUCCESSFUL.name) {
-                return Action(
-                    type = Route,
-                    url = urlBuilder.build("cashin/success?amount=${request.amount}")
-                )
-            } else {
-                return Action(
-                    type = Route,
-                    url = urlBuilder.build("cashin/pending")
-                )
-            }
+            return Action(
+                type = Route,
+                url = if (response.status == Status.SUCCESSFUL.name)
+                    urlBuilder.build("cashin/success?amount=${request.amount}")
+                else
+                    urlBuilder.build("cashin/pending")
+            )
         } catch (ex: FeignException) {
             throw TransactionException(ex)
         }

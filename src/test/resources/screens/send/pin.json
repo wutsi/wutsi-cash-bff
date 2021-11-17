@@ -1,0 +1,98 @@
+{
+  "type": "Screen",
+  "attributes": {
+    "id": "page.send.pin",
+    "safe": false,
+    "backgroundColor": "#1D7EDF"
+  },
+  "children": [
+    {
+      "type": "Container",
+      "attributes": {
+        "alignment": "Center",
+        "padding": 20.0
+      },
+      "children": [
+        {
+          "type": "Column",
+          "attributes": {},
+          "children": [
+            {
+              "type": "Container",
+              "attributes": {
+                "alignment": "Center",
+                "padding": 10.0
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "Authorization",
+                    "color": "#FFFFFF",
+                    "bold": true,
+                    "size": 25.0,
+                    "alignment": "Center"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "attributes": {
+                "alignment": "TopCenter",
+                "padding": 10.0
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "Enter your PIN to authorize the transaction",
+                    "color": "#FFFFFF",
+                    "size": 18.0,
+                    "alignment": "Center"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "attributes": {},
+              "children": [
+                {
+                  "type": "PinWithKeyboard",
+                  "attributes": {
+                    "name": "pin",
+                    "color": "#FFFFFF",
+                    "hideText": true,
+                    "pinSize": 15.0,
+                    "keyboardButtonSize": 90.0
+                  },
+                  "children": [],
+                  "action": {
+                    "type": "Command",
+                    "url": "http://localhost:0/commands/send",
+                    "parameters": {
+                      "amount": "3000.0",
+                      "phone-number": "237666666666"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appBar": {
+    "type": "AppBar",
+    "attributes": {
+      "elevation": 0.0,
+      "backgroundColor": "#1D7EDF",
+      "foregroundColor": "#FFFFFF"
+    },
+    "children": []
+  }
+}
