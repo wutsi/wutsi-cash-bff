@@ -1,5 +1,6 @@
 package com.wutsi.application.cash.endpoint
 
+import com.wutsi.application.cash.exception.PasswordInvalidException
 import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Dialog
@@ -23,19 +24,30 @@ abstract class AbstractEndpoint {
 
     @ExceptionHandler(Throwable::class)
     fun onThrowable(ex: Throwable): Action =
-        createErrorAction(ex, "prompt.error.unexpected-error")
+        createErrorAction(ex, getText("prompt.error.unexpected-error"))
 
     @ExceptionHandler(TransactionException::class)
-    fun onTransactionException(ex: TransactionException): Action =
-        createErrorAction(ex, "prompt.error.transaction-failed")
+    fun onTransactionException(ex: TransactionException): Action {
+        val message = try {
+            getText("prompt.error.transaction-failed.${ex.error.name}")
+        } catch (ex: Exception) {
+            getText("prompt.error.transaction-failed")
+        }
 
-    private fun createErrorAction(e: Throwable, messageKey: String): Action {
+        return createErrorAction(ex, message)
+    }
+
+    @ExceptionHandler(PasswordInvalidException::class)
+    fun onPasswordInvalid(ex: PasswordInvalidException): Action =
+        createErrorAction(ex, getText("prompt.error.password-invalid"))
+
+    private fun createErrorAction(e: Throwable, message: String): Action {
         val action = Action(
             type = Prompt,
             prompt = Dialog(
                 title = getText("prompt.error.title"),
                 type = Error,
-                message = getText(messageKey)
+                message = message
             )
         )
         log(action, e)
@@ -66,4 +78,12 @@ abstract class AbstractEndpoint {
         url = "route:$path",
         replacement = replacement
     )
+
+    protected fun sanitizePhoneNumber(phoneNumber: String): String {
+        val tmp = phoneNumber.trim()
+        return if (tmp.startsWith("+"))
+            tmp
+        else
+            "+$tmp"
+    }
 }

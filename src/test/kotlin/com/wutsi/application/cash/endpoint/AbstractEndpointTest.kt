@@ -21,12 +21,15 @@ import com.wutsi.platform.core.tracing.spring.SpringTracingRequestInterceptor
 import com.wutsi.platform.core.util.URN
 import com.wutsi.platform.tenant.WutsiTenantApi
 import com.wutsi.platform.tenant.dto.GetTenantResponse
+import com.wutsi.platform.tenant.dto.Limits
 import com.wutsi.platform.tenant.dto.Logo
 import com.wutsi.platform.tenant.dto.MobileCarrier
 import com.wutsi.platform.tenant.dto.PhonePrefix
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.MessageSource
+import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.web.client.RestTemplate
 import java.util.UUID
 import kotlin.test.BeforeTest
@@ -50,6 +53,9 @@ abstract class AbstractEndpointTest {
 
     @MockBean
     protected lateinit var accountApi: WutsiAccountApi
+
+    @Autowired
+    private lateinit var messages: MessageSource
 
     private lateinit var apiKeyProvider: ApiKeyProvider
 
@@ -106,6 +112,12 @@ abstract class AbstractEndpointTest {
                     logos = listOf(
                         Logo(type = "PICTORIAL", url = "http://www.goole.com/images/orange.png")
                     )
+                )
+            ),
+            limits = listOf(
+                Limits(
+                    country = "CM",
+                    minCashin = 5000.0
                 )
             )
         )
@@ -167,4 +179,7 @@ abstract class AbstractEndpointTest {
         val writer = mapper.writerWithDefaultPrettyPrinter()
         assertEquals(writer.writeValueAsString(expected), writer.writeValueAsString(value))
     }
+
+    protected fun getText(key: String, args: Array<Any?> = emptyArray()) =
+        messages.getMessage(key, args, LocaleContextHolder.getLocale()) ?: key
 }

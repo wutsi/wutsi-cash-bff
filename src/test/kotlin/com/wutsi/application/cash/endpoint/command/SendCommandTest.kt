@@ -14,6 +14,7 @@ import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.SearchAccountResponse
 import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.core.ErrorCode
+import com.wutsi.platform.payment.core.ErrorCode.NONE
 import com.wutsi.platform.payment.dto.CreateTransferResponse
 import feign.FeignException
 import feign.Request
@@ -42,14 +43,14 @@ internal class SendCommandTest : AbstractEndpointTest() {
         super.setUp()
 
         url = "http://localhost:$port/commands/send?amount=3000.0&phone-number=+237666666666"
+
+        val account = AccountSummary(id = 111)
+        doReturn(SearchAccountResponse(listOf(account))).whenever(accountApi).searchAccount(any(), any(), any())
     }
 
     @Test
     fun success() {
         // Given
-        val account = AccountSummary(id = 111)
-        doReturn(SearchAccountResponse(listOf(account))).whenever(accountApi).searchAccount(any(), any(), any())
-
         doReturn(CreateTransferResponse("xxx", "SUCCESSFUL")).whenever(paymentApi).createTransfer(any())
 
         // WHEN
@@ -69,10 +70,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
     @Test
     fun transferFailed() {
         // Given
-        val account = AccountSummary(id = 111)
-        doReturn(SearchAccountResponse(listOf(account))).whenever(accountApi).searchAccount(any(), any(), any())
-
-        val ex = createFeignException(ErrorCode.NOT_ENOUGH_FUNDS.name)
+        val ex = createFeignException("failed")
         doThrow(ex).whenever(paymentApi).createTransfer(any())
 
         // WHEN
@@ -87,6 +85,49 @@ internal class SendCommandTest : AbstractEndpointTest() {
         val action = response.body
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error, action.prompt?.type)
+        assertEquals(getText("prompt.error.transaction-failed"), action.prompt?.message)
+    }
+
+    @Test
+    fun notEnoughFunds() {
+        // Given
+        val ex = createFeignException("failed", ErrorCode.NOT_ENOUGH_FUNDS)
+        doThrow(ex).whenever(paymentApi).createTransfer(any())
+
+        // WHEN
+        val request = SendRequest(
+            pin = "123456"
+        )
+        val response = rest.postForEntity(url, request, Action::class.java)
+
+        // THEN
+        assertEquals(200, response.statusCodeValue)
+
+        val action = response.body
+        assertEquals(ActionType.Prompt, action.type)
+        assertEquals(DialogType.Error, action.prompt?.type)
+        assertEquals(getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS"), action.prompt?.message)
+    }
+
+    @Test
+    fun payeeNotAllowedToReceive() {
+        // Given
+        val ex = createFeignException("failed", ErrorCode.PAYEE_NOT_ALLOWED_TO_RECEIVE)
+        doThrow(ex).whenever(paymentApi).createTransfer(any())
+
+        // WHEN
+        val request = SendRequest(
+            pin = "123456"
+        )
+        val response = rest.postForEntity(url, request, Action::class.java)
+
+        // THEN
+        assertEquals(200, response.statusCodeValue)
+
+        val action = response.body
+        assertEquals(ActionType.Prompt, action.type)
+        assertEquals(DialogType.Error, action.prompt?.type)
+        assertEquals(getText("prompt.error.transaction-failed.PAYEE_NOT_ALLOWED_TO_RECEIVE"), action.prompt?.message)
     }
 
     @Test
@@ -106,15 +147,35 @@ internal class SendCommandTest : AbstractEndpointTest() {
         val action = response.body
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error, action.prompt?.type)
+        assertEquals(getText("prompt.error.recipient-not-found"), action.prompt?.message)
     }
 
-    private fun createFeignException(code: String) = FeignException.Conflict(
+    @Test
+    fun noValue() {
+        // WHEN
+        url = "http://localhost:$port/commands/send?amount=0&phone-number=+237666666666"
+        val request = SendRequest(
+            pin = "123456"
+        )
+        val response = rest.postForEntity(url, request, Action::class.java)
+
+        // THEN
+        assertEquals(200, response.statusCodeValue)
+
+        val action = response.body
+        assertEquals(ActionType.Prompt, action.type)
+        assertEquals(DialogType.Error, action.prompt?.type)
+        assertEquals(getText("prompt.error.amount-required"), action.prompt?.message)
+    }
+
+    private fun createFeignException(code: String, errorCode: ErrorCode = NONE) = FeignException.Conflict(
         "failed",
         Request.create(POST, "https://www.google.ca", emptyMap(), "".toByteArray(), Charset.defaultCharset(), RequestTemplate()),
         """
             {
                 "error":{
-                    "code": "$code"
+                    "code": "$code",
+                    "downstreamCode": "$errorCode"
                 }
             }
         """.trimIndent().toByteArray(),

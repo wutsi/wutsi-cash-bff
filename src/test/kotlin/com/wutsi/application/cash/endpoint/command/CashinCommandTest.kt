@@ -10,6 +10,7 @@ import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.payment.WutsiPaymentApi
+import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashinResponse
 import feign.FeignException
@@ -50,7 +51,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         // WHEN
         val request = CashinRequest(
             paymentToken = "xxx",
-            amount = 1000.0
+            amount = 10000.0
         )
         val response = rest.postForEntity(url, request, Action::class.java)
 
@@ -71,7 +72,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         // WHEN
         val request = CashinRequest(
             paymentToken = "xxx",
-            amount = 1000.0
+            amount = 10000.0
         )
         val response = rest.postForEntity(url, request, Action::class.java)
 
@@ -86,13 +87,13 @@ internal class CashinCommandTest : AbstractEndpointTest() {
     @Test
     fun failure() {
         // GIVEN
-        val ex = createFeignException()
+        val ex = createFeignException("transaction-failed", ErrorCode.NONE)
         doThrow(ex).whenever(paymentApi).createCashin(any())
 
         // WHEN
         val request = CashinRequest(
             paymentToken = "xxx",
-            amount = 1000.0
+            amount = 10000.0
         )
         val response = rest.postForEntity(url, request, Action::class.java)
 
@@ -102,15 +103,75 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         val action = response.body
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error, action.prompt?.type)
+        assertEquals(getText("prompt.error.transaction-failed"), action.prompt?.message)
     }
 
-    private fun createFeignException() = FeignException.Conflict(
-        "failed",
+    @Test
+    fun failureNotEnoughFunds() {
+        // GIVEN
+        val ex = createFeignException("transaction-failed", ErrorCode.NOT_ENOUGH_FUNDS)
+        doThrow(ex).whenever(paymentApi).createCashin(any())
+
+        // WHEN
+        val request = CashinRequest(
+            paymentToken = "xxx",
+            amount = 10000.0
+        )
+        val response = rest.postForEntity(url, request, Action::class.java)
+
+        // THEN
+        assertEquals(200, response.statusCodeValue)
+
+        val action = response.body
+        assertEquals(ActionType.Prompt, action.type)
+        assertEquals(DialogType.Error, action.prompt?.type)
+        assertEquals(getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS"), action.prompt?.message)
+    }
+
+    @Test
+    fun minCashin() {
+        // WHEN
+        val request = CashinRequest(
+            paymentToken = "xxx",
+            amount = 5.0
+        )
+        val response = rest.postForEntity(url, request, Action::class.java)
+
+        // THEN
+        assertEquals(200, response.statusCodeValue)
+
+        val action = response.body
+        assertEquals(ActionType.Prompt, action.type)
+        assertEquals(DialogType.Error, action.prompt?.type)
+        assertEquals(getText("prompt.error.min-cashin", arrayOf("5,000 XAF")), action.prompt?.message)
+    }
+
+    @Test
+    fun noValue() {
+        // WHEN
+        val request = CashinRequest(
+            paymentToken = "xxx",
+            amount = 0.0
+        )
+        val response = rest.postForEntity(url, request, Action::class.java)
+
+        // THEN
+        assertEquals(200, response.statusCodeValue)
+
+        val action = response.body
+        assertEquals(ActionType.Prompt, action.type)
+        assertEquals(DialogType.Error, action.prompt?.type)
+        assertEquals(getText("prompt.error.amount-required"), action.prompt?.message)
+    }
+
+    private fun createFeignException(errorCode: String, downstreamError: ErrorCode) = FeignException.Conflict(
+        "",
         Request.create(POST, "https://www.google.ca", emptyMap(), "".toByteArray(), Charset.defaultCharset(), RequestTemplate()),
         """
             {
                 "error":{
-                    "code": ""
+                    "code": "$errorCode",
+                    "downstreamCode": "$downstreamError"
                 }
             }
         """.trimIndent().toByteArray(),

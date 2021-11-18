@@ -1,9 +1,10 @@
 package com.wutsi.application.cash.endpoint.command
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.wutsi.application.cash.dto.SendRequest
 import com.wutsi.application.cash.endpoint.AbstractCommand
-import com.wutsi.application.cash.exception.PasswordMismatchException
+import com.wutsi.application.cash.exception.PasswordInvalidException
 import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
@@ -36,6 +37,7 @@ class SendCommand(
     private val tenantProvider: TenantProvider,
     private val phoneNumberUtil: PhoneNumberUtil,
     private val urlBuilder: URLBuilder,
+    private val objectMapper: ObjectMapper,
 ) : AbstractCommand() {
     @PostMapping
     fun index(
@@ -57,8 +59,12 @@ class SendCommand(
                     message = getText("prompt.error.recipient-not-found")
                 )
             )
-
         logger.add("recipient_id", recipientId)
+
+        // Validate
+        val error = validate(amount, recipientId)
+        if (error != null)
+            return error
 
         // Verify the password
         checkPassword(request)
@@ -81,7 +87,7 @@ class SendCommand(
                 url = urlBuilder.build("send/success?amount=$amount&recipient=$recipient")
             )
         } catch (ex: FeignException) {
-            throw TransactionException(ex)
+            throw TransactionException.of(objectMapper, ex)
         }
     }
 
@@ -90,7 +96,7 @@ class SendCommand(
             val userId = userProvider.id()
             accountApi.checkPassword(userId, request.pin)
         } catch (ex: FeignException) {
-            throw PasswordMismatchException(ex)
+            throw PasswordInvalidException(ex)
         }
     }
 
@@ -102,16 +108,30 @@ class SendCommand(
             accounts[0].id
     }
 
-    private fun sanitizePhoneNumber(phoneNumber: String): String {
-        val tmp = phoneNumber.trim()
-        return if (tmp.startsWith("+"))
-            tmp
-        else
-            "+$tmp"
+    private fun formattedPhoneNumber(phoneNumber: String): String {
+        val number = phoneNumberUtil.parse(phoneNumber, "")
+        return phoneNumberUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.E164)
     }
 
-    private fun formattedPhoneNumber(phoneNumber: String): String {
-        val phoneNumber = phoneNumberUtil.parse(phoneNumber, "")
-        return phoneNumberUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.E164)
+    private fun validate(amount: Double, recipientId: Long): Action? {
+        if (amount == 0.0)
+            return Action(
+                type = Prompt,
+                prompt = Dialog(
+                    type = Error,
+                    message = getText("prompt.error.amount-required")
+                )
+            )
+
+        if (recipientId == userProvider.id())
+            return Action(
+                type = Prompt,
+                prompt = Dialog(
+                    type = Error,
+                    message = getText("prompt.error.self-transfer")
+                )
+            )
+
+        return null
     }
 }
