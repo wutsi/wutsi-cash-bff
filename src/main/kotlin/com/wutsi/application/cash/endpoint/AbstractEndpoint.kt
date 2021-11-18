@@ -1,5 +1,6 @@
 package com.wutsi.application.cash.endpoint
 
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.wutsi.application.cash.exception.PasswordInvalidException
 import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.flutter.sdui.Action
@@ -21,6 +22,9 @@ abstract class AbstractEndpoint {
 
     @Autowired
     private lateinit var logger: KVLogger
+
+    @Autowired
+    private lateinit var phoneNumberUtil: PhoneNumberUtil
 
     @ExceptionHandler(Throwable::class)
     fun onThrowable(ex: Throwable): Action =
@@ -85,5 +89,10 @@ abstract class AbstractEndpoint {
             tmp
         else
             "+$tmp"
+    }
+
+    protected fun formattedPhoneNumber(phoneNumber: String): String {
+        val number = phoneNumberUtil.parse(phoneNumber, "")
+        return phoneNumberUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.E164)
     }
 }

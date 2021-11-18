@@ -38,6 +38,7 @@ wutsi:
   application:
     name: wutsi-cash-bff
     server-url: http://localhost:${server.port}
+    login-url: https://wutsi-login-bff-test.herokuapp.com
   platform:
     security:
       type: jwt

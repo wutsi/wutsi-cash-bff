@@ -10,8 +10,6 @@ import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.DialogType
-import com.wutsi.platform.account.dto.AccountSummary
-import com.wutsi.platform.account.dto.SearchAccountResponse
 import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.ErrorCode.NONE
@@ -42,10 +40,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
     override fun setUp() {
         super.setUp()
 
-        url = "http://localhost:$port/commands/send?amount=3000.0&phone-number=+237666666666"
-
-        val account = AccountSummary(id = 111)
-        doReturn(SearchAccountResponse(listOf(account))).whenever(accountApi).searchAccount(any(), any(), any())
+        url = "http://localhost:$port/commands/send?amount=3000.0&recipient-id=111&recipient-name=YoMan"
     }
 
     @Test
@@ -64,7 +59,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         assertEquals(Route, action.type)
-        assertEquals("http://localhost:0/send/success?amount=3000.0&recipient=%2B237666666666", action.url)
+        assertEquals("http://localhost:0/send/success?amount=3000.0&recipient-name=YoMan", action.url)
     }
 
     @Test
@@ -130,30 +125,30 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(getText("prompt.error.transaction-failed.PAYEE_NOT_ALLOWED_TO_RECEIVE"), action.prompt?.message)
     }
 
-    @Test
-    fun recipientNotFound() {
-        // Given
-        doReturn(SearchAccountResponse()).whenever(accountApi).searchAccount(any(), any(), any())
-
-        // WHEN
-        val request = SendRequest(
-            pin = "123456"
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
-
-        // THEN
-        assertEquals(200, response.statusCodeValue)
-
-        val action = response.body
-        assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error, action.prompt?.type)
-        assertEquals(getText("prompt.error.recipient-not-found"), action.prompt?.message)
-    }
+//    @Test
+//    fun recipientNotFound() {
+//        // Given
+//        doReturn(SearchAccountResponse()).whenever(accountApi).searchAccount(any(), any(), any())
+//
+//        // WHEN
+//        val request = SendRequest(
+//            pin = "123456"
+//        )
+//        val response = rest.postForEntity(url, request, Action::class.java)
+//
+//        // THEN
+//        assertEquals(200, response.statusCodeValue)
+//
+//        val action = response.body
+//        assertEquals(ActionType.Prompt, action.type)
+//        assertEquals(DialogType.Error, action.prompt?.type)
+//        assertEquals(getText("prompt.error.recipient-not-found"), action.prompt?.message)
+//    }
 
     @Test
     fun noValue() {
         // WHEN
-        url = "http://localhost:$port/commands/send?amount=0&phone-number=+237666666666"
+        url = "http://localhost:$port/commands/send?amount=0&recipient-id=111&recipient-name=YoMan"
         val request = SendRequest(
             pin = "123456"
         )

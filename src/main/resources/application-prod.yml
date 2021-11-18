@@ -1,3 +1,4 @@
 wutsi:
   application:
     server-url: https://wutsi-cash-bff-prod.herokuapp.com
+    login-url: https://wutsi-login-bff-prod.herokuapp.com

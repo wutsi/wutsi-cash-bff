@@ -27,12 +27,12 @@ import java.text.DecimalFormat
 @RequestMapping("/send/success")
 class SendSuccessScreen(private val tenantProvider: TenantProvider) : AbstractQuery() {
     @PostMapping
-    fun index(@RequestParam amount: Double, @RequestParam recipient: String): Widget {
+    fun index(@RequestParam amount: Double, @RequestParam("recipient-name") recipientName: String): Widget {
         val tenant = tenantProvider.get()
         val numberFormat = DecimalFormat(tenant.monetaryFormat)
         val formattedAmount = numberFormat.format(amount)
         return Screen(
-            id = Page.CASHIN_SUCCESS,
+            id = Page.SEND_SUCCESS,
             safe = true,
             appBar = AppBar(
                 elevation = 0.0,
@@ -56,7 +56,7 @@ class SendSuccessScreen(private val tenantProvider: TenantProvider) : AbstractQu
                         padding = 10.0,
                         child = Text(
                             caption = getText(
-                                "page.send-success.message", arrayOf(formattedAmount, recipient)
+                                "page.send-success.message", arrayOf(formattedAmount, recipientName)
                             ),
                             alignment = TextAlignment.Center,
                             size = Theme.LARGE_TEXT_SIZE,

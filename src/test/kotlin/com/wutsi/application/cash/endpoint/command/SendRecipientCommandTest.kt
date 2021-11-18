@@ -41,6 +41,6 @@ internal class SendRecipientCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         kotlin.test.assertEquals(Route, action.type)
-        kotlin.test.assertEquals("http://localhost:0/send/pin?amount=3000.0&phone-number=${request.phoneNumber}", action.url)
+        kotlin.test.assertEquals("http://localhost:0/send/confirm", action.url)
     }
 }

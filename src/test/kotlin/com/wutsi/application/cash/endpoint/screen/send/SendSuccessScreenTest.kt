@@ -17,7 +17,7 @@ internal class SendSuccessScreenTest : AbstractEndpointTest() {
     override fun setUp() {
         super.setUp()
 
-        url = "http://localhost:$port/send/success?amount=3000&recipient=YoMan"
+        url = "http://localhost:$port/send/success?amount=3000&recipient-name=YoMan"
     }
 
     @Test

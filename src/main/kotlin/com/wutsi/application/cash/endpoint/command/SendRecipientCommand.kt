@@ -27,7 +27,11 @@ class SendRecipientCommand(
         logger.add("phone_number", request.phoneNumber)
         return Action(
             type = Route,
-            url = urlBuilder.build("send/pin?amount=$amount&phone-number=${request.phoneNumber}")
+            url = urlBuilder.build("send/confirm"),
+            parameters = mapOf(
+                "amount" to amount.toString(),
+                "phone-number" to request.phoneNumber
+            )
         )
     }
 }
