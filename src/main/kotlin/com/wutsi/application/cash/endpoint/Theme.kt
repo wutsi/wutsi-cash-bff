@@ -16,4 +16,3 @@ object Theme {
     const val ICON_MONEY = "e3f7"
     const val ICON_PENDING = "0xe484"
 }
-

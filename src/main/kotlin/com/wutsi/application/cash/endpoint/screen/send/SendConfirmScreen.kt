@@ -200,7 +200,7 @@ class SendConfirmScreen(
         if (fullName == null)
             return ""
 
-        val index = fullName.lastIndexOf(' ');
+        val index = fullName.lastIndexOf(' ')
         return if (index > 0)
             (fullName.substring(0, 1) + fullName.substring(index + 1, index + 2)).uppercase()
         else
