@@ -67,7 +67,20 @@
     "attributes": {
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
-      "automaticallyImplyLeading": false
+      "automaticallyImplyLeading": false,
+      "actions": [
+        {
+          "type": "IconButton",
+          "attributes": {
+            "icon": "ef28"
+          },
+          "children": [],
+          "action": {
+            "type": "Route",
+            "url": "route:/~"
+          }
+        }
+      ]
     },
     "children": []
   }

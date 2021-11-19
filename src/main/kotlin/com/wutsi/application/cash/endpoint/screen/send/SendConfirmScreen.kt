@@ -8,17 +8,22 @@ import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.application.cash.service.UserProvider
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
+import com.wutsi.flutter.sdui.CircleAvatar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Icon
+import com.wutsi.flutter.sdui.IconButton
+import com.wutsi.flutter.sdui.Image
 import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType
+import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.Alignment.Center
-import com.wutsi.flutter.sdui.enums.Alignment.CenterLeft
+import com.wutsi.flutter.sdui.enums.CrossAxisAlignment
 import com.wutsi.flutter.sdui.enums.InputType.Submit
+import com.wutsi.flutter.sdui.enums.MainAxisAlignment.center
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.AccountSummary
@@ -28,7 +33,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.net.URLEncoder
 import java.text.DecimalFormat
 
 @RestController
@@ -63,7 +67,16 @@ class SendConfirmScreen(
                 elevation = 0.0,
                 backgroundColor = Theme.WHITE_COLOR,
                 foregroundColor = Theme.BLACK_COLOR,
-                title = getText("page.send-confirm.title")
+                title = getText("page.send-confirm.title"),
+                actions = listOf(
+                    IconButton(
+                        icon = Theme.ICON_CANCEL,
+                        action = Action(
+                            type = Route,
+                            url = "route:/~"
+                        )
+                    )
+                )
             ),
             child = Container(
                 alignment = Center,
@@ -73,22 +86,41 @@ class SendConfirmScreen(
                         Container(
                             padding = 20.0
                         ),
-                        Container(
-                            alignment = CenterLeft,
-                            padding = 10.0,
-                            child = Text(
-                                caption = recipient.displayName ?: "",
-                                alignment = TextAlignment.Center,
-                                size = Theme.LARGE_TEXT_SIZE,
-                                color = Theme.PRIMARY_COLOR,
-                                bold = true,
+                        Column(
+                            mainAxisAlignment = center,
+                            crossAxisAlignment = CrossAxisAlignment.center,
+                            children = listOf(
+                                Container(
+                                    padding = 10.0,
+                                    alignment = Center,
+                                    child = CircleAvatar(
+                                        radius = 48.0,
+                                        child = if (recipient.pictureUrl.isNullOrEmpty())
+                                            Text(initials(recipient.displayName))
+                                        else
+                                            Image(
+                                                url = recipient.pictureUrl!!
+                                            )
+                                    )
+                                ),
+                                Container(
+                                    padding = 10.0,
+                                    alignment = Center,
+                                    child = Text(
+                                        caption = recipient.displayName ?: "",
+                                        alignment = TextAlignment.Center,
+                                        size = Theme.LARGE_TEXT_SIZE,
+                                        color = Theme.PRIMARY_COLOR,
+                                        bold = true,
+                                    )
+                                ),
+                                Text(
+                                    caption = formattedPhoneNumber(phoneNumber),
+                                    alignment = TextAlignment.Center,
+                                    color = Theme.BLACK_COLOR,
+                                    size = Theme.LARGE_TEXT_SIZE,
+                                ),
                             )
-                        ),
-                        Text(
-                            caption = formattedPhoneNumber(phoneNumber),
-                            alignment = TextAlignment.Center,
-                            color = Theme.BLACK_COLOR,
-                            size = Theme.LARGE_TEXT_SIZE,
                         ),
                         Container(
                             padding = 20.0
@@ -117,7 +149,16 @@ class SendConfirmScreen(
         appBar = AppBar(
             elevation = 0.0,
             backgroundColor = Theme.WHITE_COLOR,
-            automaticallyImplyLeading = false
+            automaticallyImplyLeading = false,
+            actions = listOf(
+                IconButton(
+                    icon = Theme.ICON_CANCEL,
+                    action = Action(
+                        type = Route,
+                        url = "route:/~"
+                    )
+                )
+            )
         ),
         child = Column(
             children = listOf(
@@ -155,24 +196,32 @@ class SendConfirmScreen(
             accounts[0]
     }
 
+    private fun initials(fullName: String?): String {
+        if (fullName == null)
+            return ""
+
+        val index = fullName.lastIndexOf(' ');
+        return if (index > 0)
+            (fullName.substring(0, 1) + fullName.substring(index + 1, index + 2)).uppercase()
+        else
+            fullName.substring(0, 1).uppercase()
+    }
+
     private fun returnUrl(amount: Double, recipient: AccountSummary): String {
         val me = userApi.getAccount(userProvider.id()).account
-        return "?phone=" + encode(me.phone?.number) +
+        return "?phone=" + encodeURLParam(me.phone?.number) +
             "&icon=" + Theme.ICON_LOCK +
             "&screen-id=" + Page.SEND_PIN +
-            "&title=" + encode(getText("page.send-pin.title")) +
-            "&sub-title=" + encode(getText("page.send-pin.sub-title")) +
+            "&title=" + encodeURLParam(getText("page.send-pin.title")) +
+            "&sub-title=" + encodeURLParam(getText("page.send-pin.sub-title")) +
             "&auth=false" +
             "&return-to-route=false" +
-            "&return-url=" + encode(
+            "&return-url=" + encodeURLParam(
             urlBuilder.build(
                 "commands/send?amount=$amount" +
                     "&recipient-id=${recipient.id}" +
-                    "&recipient-name=" + encode(recipient.displayName)
+                    "&recipient-name=" + encodeURLParam(recipient.displayName)
             )
         )
     }
-
-    private fun encode(text: String?): String =
-        text?.let { URLEncoder.encode(it, "utf-8") } ?: ""
 }

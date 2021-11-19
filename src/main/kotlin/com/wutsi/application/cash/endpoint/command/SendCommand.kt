@@ -11,7 +11,6 @@ import com.wutsi.flutter.sdui.Dialog
 import com.wutsi.flutter.sdui.enums.ActionType.Prompt
 import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.DialogType.Error
-import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.core.logging.KVLogger
 import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.dto.CreateTransferRequest
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController
 class SendCommand(
     private val logger: KVLogger,
     private val paymentApi: WutsiPaymentApi,
-    private val accountApi: WutsiAccountApi,
     private val userProvider: UserProvider,
     private val tenantProvider: TenantProvider,
     private val urlBuilder: URLBuilder,
@@ -59,7 +57,9 @@ class SendCommand(
 
             return Action(
                 type = Route,
-                url = urlBuilder.build("send/success?amount=$amount&recipient-name=$recipientName")
+                url = urlBuilder.build(
+                    "send/success?amount=$amount&recipient-name=" + encodeURLParam(recipientName)
+                )
             )
         } catch (ex: FeignException) {
             throw TransactionException.of(objectMapper, ex)

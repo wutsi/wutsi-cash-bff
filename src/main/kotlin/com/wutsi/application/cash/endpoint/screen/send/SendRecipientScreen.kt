@@ -10,11 +10,13 @@ import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Form
+import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType.Command
+import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.InputType.Phone
 import com.wutsi.flutter.sdui.enums.InputType.Submit
@@ -43,7 +45,16 @@ class SendRecipientScreen(
                 elevation = 0.0,
                 backgroundColor = Theme.PRIMARY_COLOR,
                 foregroundColor = Theme.WHITE_COLOR,
-                title = getText("page.send-recipient.title")
+                title = getText("page.send-recipient.title"),
+                actions = listOf(
+                    IconButton(
+                        icon = Theme.ICON_CANCEL,
+                        action = Action(
+                            type = Route,
+                            url = "route:/~"
+                        )
+                    )
+                )
             ),
             child = Container(
                 alignment = Center,
