@@ -114,11 +114,8 @@ abstract class AbstractEndpointTest {
                     )
                 )
             ),
-            limits = listOf(
-                Limits(
-                    country = "CM",
-                    minCashin = 5000.0
-                )
+            limits = Limits(
+                minCashin = 5000.0
             )
         )
         doReturn(GetTenantResponse(tenant)).whenever(tenantApi).getTenant(any())

@@ -84,9 +84,8 @@ class CashinCommand(
                 )
             )
 
-        val limits = tenant.limits.find { it.country == user.country }!!
-        if (request.amount < limits.minCashin) {
-            val amountText = DecimalFormat(tenant.monetaryFormat).format(limits.minCashin)
+        if (request.amount < tenant.limits.minCashin) {
+            val amountText = DecimalFormat(tenant.monetaryFormat).format(tenant.limits.minCashin)
             return Action(
                 type = Prompt,
                 prompt = Dialog(
