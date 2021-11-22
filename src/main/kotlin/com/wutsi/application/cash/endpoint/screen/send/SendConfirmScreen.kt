@@ -8,6 +8,7 @@ import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.application.cash.service.UserProvider
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
+import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.CircleAvatar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
@@ -53,7 +54,7 @@ class SendConfirmScreen(
         val xphoneNumber = sanitizePhoneNumber(phoneNumber)
         val recipient = findRecipient(xphoneNumber)
         return if (recipient == null)
-            recipientNotFound(xphoneNumber)
+            recipientNotFound(xphoneNumber, tenant)
         else
             confirm(amount, xphoneNumber, recipient, tenant)
     }
@@ -143,7 +144,7 @@ class SendConfirmScreen(
         ).toWidget()
     }
 
-    private fun recipientNotFound(phoneNumber: String) = Screen(
+    private fun recipientNotFound(phoneNumber: String, tenant: Tenant) = Screen(
         id = Page.SEND_CONFIRM,
         safe = true,
         appBar = AppBar(
@@ -183,6 +184,16 @@ class SendConfirmScreen(
                 ),
                 Text(
                     caption = formattedPhoneNumber(phoneNumber)
+                ),
+                Container(
+                    padding = 10.0,
+                    child = Button(
+                        caption = getText("page.send-confirm.button.invite", arrayOf(tenant.name)),
+                        action = Action(
+                            type = ActionType.Share,
+                            message = getText("page.send-confirm.invitation", arrayOf(tenant.name, tenant.installUrl))
+                        )
+                    )
                 ),
             )
         ),

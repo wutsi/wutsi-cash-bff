@@ -75,6 +75,7 @@ abstract class AbstractEndpointTest {
         val tenant = Tenant(
             id = 1,
             name = "test",
+            installUrl = "https://www.wutsi.com/install",
             logos = listOf(
                 Logo(type = "PICTORIAL", url = "http://www.goole.com/images/1.png")
             ),

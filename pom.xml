@@ -29,11 +29,11 @@
     <klint.version>0.43.0</klint.version>
     <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
     <libphonenumber.version>8.12.37</libphonenumber.version>
-    <sdui-kotlin.version>0.0.25</sdui-kotlin.version>
+    <sdui-kotlin.version>0.0.26</sdui-kotlin.version>
     <wutsi-platform-core.version>0.0.74</wutsi-platform-core.version>
     <wutsi-account.version>1.0.9</wutsi-account.version>
     <wutsi-payment.version>0.0.6</wutsi-payment.version>
-    <wutsi-tenant.version>0.0.9</wutsi-tenant.version>
+    <wutsi-tenant.version>0.0.10</wutsi-tenant.version>
     <wutsi-platform-payment.version>0.0.50</wutsi-platform-payment.version>
   </properties>
 
