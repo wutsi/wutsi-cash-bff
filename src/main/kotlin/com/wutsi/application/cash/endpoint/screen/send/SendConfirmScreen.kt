@@ -149,6 +149,7 @@ class SendConfirmScreen(
         appBar = AppBar(
             elevation = 0.0,
             backgroundColor = Theme.WHITE_COLOR,
+            foregroundColor = Theme.BLACK_COLOR,
             actions = listOf(
                 IconButton(
                     icon = Theme.ICON_CANCEL,

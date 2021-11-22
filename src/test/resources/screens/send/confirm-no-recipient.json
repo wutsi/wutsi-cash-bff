@@ -107,6 +107,7 @@
     "attributes": {
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
+      "foregroundColor": "#000000",
       "actions": [
         {
           "type": "IconButton",
