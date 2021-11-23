@@ -6,6 +6,7 @@ import com.wutsi.application.cash.endpoint.Theme
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.application.cash.service.UserProvider
+import com.wutsi.application.cash.util.StringUtil.initials
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
@@ -213,17 +214,6 @@ class SendConfirmScreen(
             null
         else
             accounts[0]
-    }
-
-    private fun initials(fullName: String?): String {
-        if (fullName == null)
-            return ""
-
-        val index = fullName.lastIndexOf(' ')
-        return if (index > 0)
-            (fullName.substring(0, 1) + fullName.substring(index + 1, index + 2)).uppercase()
-        else
-            fullName.substring(0, 1).uppercase()
     }
 
     private fun returnUrl(amount: Double, recipient: AccountSummary): String {
