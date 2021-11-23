@@ -6,6 +6,7 @@ object Page {
     const val CASHIN_PENDING = "page.cashin.pending"
     const val SEND = "page.send"
     const val SEND_RECIPIENT = "page.send.recipient"
+    const val SEND_RECIPIENT_NOT_FOUND = "page.send.revipient.not-found"
     const val SEND_CONFIRM = "page.send.confirm"
     const val SEND_PIN = "page.send.pin"
     const val SEND_SUCCESS = "page.send.success"

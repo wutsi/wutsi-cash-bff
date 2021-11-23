@@ -1,93 +1,127 @@
 {
-  "type" : "Screen",
-  "attributes" : {
-    "id" : "page.send.confirm",
-    "safe" : true
+  "type": "Screen",
+  "attributes": {
+    "id": "page.send.revipient.not-found",
+    "safe": false
   },
-  "children" : [ {
-    "type" : "Column",
-    "attributes" : { },
-    "children" : [ {
-      "type" : "Container",
-      "attributes" : {
-        "padding" : 40.0
-      },
-      "children" : [ ]
-    }, {
-      "type" : "Container",
-      "attributes" : {
-        "alignment" : "Center",
-        "padding" : 20.0
-      },
-      "children" : [ {
-        "type" : "Icon",
-        "attributes" : {
-          "code" : "e237",
-          "size" : 80.0,
-          "color" : "#8B0000"
+  "children": [
+    {
+      "type": "Column",
+      "attributes": {},
+      "children": [
+        {
+          "type": "Container",
+          "attributes": {
+            "padding": 40.0
+          },
+          "children": []
         },
-        "children" : [ ]
-      } ]
-    }, {
-      "type" : "Container",
-      "attributes" : {
-        "alignment" : "Center",
-        "padding" : 10.0
-      },
-      "children" : [ {
-        "type" : "Text",
-        "attributes" : {
-          "caption" : "No user found with this phone number.",
-          "size" : 18.0,
-          "alignment" : "Center"
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center",
+            "padding": 20.0
+          },
+          "children": [
+            {
+              "type": "Icon",
+              "attributes": {
+                "code": "e237",
+                "size": 80.0,
+                "color": "#8B0000"
+              },
+              "children": []
+            }
+          ]
         },
-        "children" : [ ]
-      } ]
-    }, {
-      "type" : "Text",
-      "attributes" : {
-        "caption" : "+237999999999"
-      },
-      "children" : [ ]
-    }, {
-      "type" : "Container",
-      "attributes" : {
-        "padding" : 10.0
-      },
-      "children" : [ {
-        "type" : "Button",
-        "attributes" : {
-          "caption" : "Invite test",
-          "padding" : 15.0,
-          "type" : "Elevated"
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center",
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "Text",
+              "attributes": {
+                "caption": "No user found with this phone number.",
+                "size": 18.0,
+                "alignment": "Center"
+              },
+              "children": []
+            }
+          ]
         },
-        "children" : [ ],
-        "action" : {
-          "type" : "Share",
-          "url" : "",
-          "message" : "Please install test from https://www.wutsi.com/install so that I can send you money."
+        {
+          "type": "Text",
+          "attributes": {
+            "caption": "+237999999999"
+          },
+          "children": []
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center",
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "Text",
+              "attributes": {
+                "caption": "Invite him to install test App",
+                "size": 18.0,
+                "alignment": "Center"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "Button",
+              "attributes": {
+                "caption": "Sent invitation to +237999999999",
+                "padding": 15.0,
+                "type": "Elevated"
+              },
+              "children": [],
+              "action": {
+                "type": "Share",
+                "url": "",
+                "message": "Please install test from https://www.wutsi.com/install so that I can send you money."
+              }
+            }
+          ]
         }
-      } ]
-    } ]
-  } ],
-  "appBar" : {
-    "type" : "AppBar",
-    "attributes" : {
-      "elevation" : 0.0,
-      "backgroundColor" : "#FFFFFF",
-      "automaticallyImplyLeading" : false,
-      "actions" : [ {
-        "type" : "IconButton",
-        "attributes" : {
-          "icon" : "ef28"
-        },
-        "children" : [ ],
-        "action" : {
-          "type" : "Route",
-          "url" : "route:/~"
+      ]
+    }
+  ],
+  "appBar": {
+    "type": "AppBar",
+    "attributes": {
+      "elevation": 0.0,
+      "backgroundColor": "#FFFFFF",
+      "foregroundColor": "#000000",
+      "actions": [
+        {
+          "type": "IconButton",
+          "attributes": {
+            "icon": "ef28"
+          },
+          "children": [],
+          "action": {
+            "type": "Route",
+            "url": "route:/~"
+          }
         }
-      } ]
+      ]
     },
-    "children" : [ ]
+    "children": []
   }
 }

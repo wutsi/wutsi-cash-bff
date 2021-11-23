@@ -145,12 +145,11 @@ class SendConfirmScreen(
     }
 
     private fun recipientNotFound(phoneNumber: String, tenant: Tenant) = Screen(
-        id = Page.SEND_CONFIRM,
-        safe = true,
+        id = Page.SEND_RECIPIENT_NOT_FOUND,
         appBar = AppBar(
             elevation = 0.0,
             backgroundColor = Theme.WHITE_COLOR,
-            automaticallyImplyLeading = false,
+            foregroundColor = Theme.BLACK_COLOR,
             actions = listOf(
                 IconButton(
                     icon = Theme.ICON_CANCEL,
@@ -177,7 +176,7 @@ class SendConfirmScreen(
                     alignment = Center,
                     padding = 10.0,
                     child = Text(
-                        caption = getText("prompt.error.recipient-not-found"),
+                        caption = getText("page.send-confirm.recipient-not-found"),
                         alignment = TextAlignment.Center,
                         size = Theme.LARGE_TEXT_SIZE,
                     )
@@ -186,12 +185,21 @@ class SendConfirmScreen(
                     caption = formattedPhoneNumber(phoneNumber)
                 ),
                 Container(
+                    alignment = Center,
+                    padding = 10.0,
+                    child = Text(
+                        caption = getText("page.send-confirm.invite", arrayOf(tenant.name)),
+                        alignment = TextAlignment.Center,
+                        size = Theme.LARGE_TEXT_SIZE,
+                    )
+                ),
+                Container(
                     padding = 10.0,
                     child = Button(
-                        caption = getText("page.send-confirm.button.invite", arrayOf(tenant.name)),
+                        caption = getText("page.send-confirm.button.invite", arrayOf(formattedPhoneNumber(phoneNumber))),
                         action = Action(
                             type = ActionType.Share,
-                            message = getText("page.send-confirm.invitation", arrayOf(tenant.name, tenant.installUrl))
+                            message = getText("page.send-confirm.invite.message", arrayOf(tenant.name, tenant.installUrl))
                         )
                     )
                 ),
