@@ -1,6 +1,5 @@
 package com.wutsi.application.cash.util
 
-
 object StringUtil {
     fun initials(fullName: String?): String {
         if (fullName == null)
