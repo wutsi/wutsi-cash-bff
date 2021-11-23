@@ -58,9 +58,6 @@ class SendScreen(
                         Form(
                             children = listOf(
                                 Container(
-                                    padding = 30.0
-                                ),
-                                Container(
                                     padding = 10.0,
                                     child = MoneyWithKeyboard(
                                         name = "amount",
