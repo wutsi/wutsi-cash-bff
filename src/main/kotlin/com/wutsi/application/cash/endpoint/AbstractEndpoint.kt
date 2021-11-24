@@ -9,7 +9,10 @@ import com.wutsi.flutter.sdui.enums.ActionType.Page
 import com.wutsi.flutter.sdui.enums.ActionType.Prompt
 import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.DialogType.Error
+import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.core.logging.KVLogger
+import com.wutsi.platform.tenant.dto.MobileCarrier
+import com.wutsi.platform.tenant.dto.Tenant
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.MessageSource
@@ -99,4 +102,7 @@ abstract class AbstractEndpoint {
 
     protected fun encodeURLParam(text: String?): String =
         text?.let { URLEncoder.encode(it, "utf-8") } ?: ""
+
+    protected fun getMobileCarrier(paymentMethod: PaymentMethodSummary, tenant: Tenant): MobileCarrier? =
+        tenant.mobileCarriers.findLast { it.code.equals(paymentMethod.provider, true) }
 }

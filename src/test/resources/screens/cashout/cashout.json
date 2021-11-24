@@ -1,0 +1,131 @@
+{
+  "type": "Screen",
+  "attributes": {
+    "id": "page.cashout",
+    "safe": false
+  },
+  "children": [
+    {
+      "type": "Container",
+      "attributes": {
+        "alignment": "Center",
+        "padding": 10.0
+      },
+      "children": [
+        {
+          "type": "Column",
+          "attributes": {},
+          "children": [
+            {
+              "type": "Form",
+              "attributes": {},
+              "children": [
+                {
+                  "type": "Container",
+                  "attributes": {
+                    "padding": 10.0
+                  },
+                  "children": [
+                    {
+                      "type": "MoneyWithSlider",
+                      "attributes": {
+                        "name": "amount",
+                        "moneyColor": "#1D7EDF",
+                        "maxValue": 0.0,
+                        "maxLength": 7,
+                        "currency": "XAF",
+                        "numberFormat": "#,###,##0"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "attributes": {
+                    "padding": 20.0
+                  },
+                  "children": []
+                },
+                {
+                  "type": "Container",
+                  "attributes": {
+                    "padding": 10.0
+                  },
+                  "children": [
+                    {
+                      "type": "DropdownButton",
+                      "attributes": {
+                        "name": "paymentToken",
+                        "value": "xxxxxx",
+                        "required": true
+                      },
+                      "children": [
+                        {
+                          "type": "DropdownMenuItem",
+                          "attributes": {
+                            "caption": "xxxx9999",
+                            "icon": "http://www.goole.com/images/mtn.png",
+                            "enabled": true,
+                            "value": "xxxxxx"
+                          },
+                          "children": []
+                        },
+                        {
+                          "type": "DropdownMenuItem",
+                          "attributes": {
+                            "caption": "xxxx1111",
+                            "icon": "http://www.goole.com/images/orange.png",
+                            "enabled": true,
+                            "value": "yyyyy"
+                          },
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "attributes": {
+                    "padding": 10.0
+                  },
+                  "children": [
+                    {
+                      "type": "Input",
+                      "attributes": {
+                        "name": "command",
+                        "hideText": false,
+                        "required": false,
+                        "caption": "Cash Out",
+                        "enabled": true,
+                        "readOnly": false,
+                        "type": "Submit",
+                        "minLength": 0
+                      },
+                      "children": [],
+                      "action": {
+                        "type": "Command",
+                        "url": "http://localhost:0/commands/cashout"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appBar": {
+    "type": "AppBar",
+    "attributes": {
+      "title": "Cash Out",
+      "elevation": 0.0,
+      "backgroundColor": "#FFFFFF",
+      "foregroundColor": "#000000"
+    },
+    "children": []
+  }
+}
