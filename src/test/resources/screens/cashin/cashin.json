@@ -72,6 +72,7 @@
                         "deleteText": "Delete",
                         "maxLength": 7,
                         "currency": "XAF",
+                        "keyboardButtonSize": 70.0,
                         "numberFormat": "#,###,##0"
                       },
                       "children": []

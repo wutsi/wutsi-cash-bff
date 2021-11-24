@@ -78,7 +78,8 @@ class CashinScreen(
                                         currency = tenant.currency,
                                         deleteText = getText("keyboard.delete"),
                                         moneyColor = Theme.PRIMARY_COLOR,
-                                        numberFormat = tenant.numberFormat
+                                        numberFormat = tenant.numberFormat,
+                                        keyboardButtonSize = 70.0
                                     ),
                                 ),
                                 Container(

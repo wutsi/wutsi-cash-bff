@@ -31,7 +31,7 @@
                       "attributes": {
                         "name": "amount",
                         "moneyColor": "#1D7EDF",
-                        "maxValue": 0.0,
+                        "maxValue": 50000,
                         "maxLength": 7,
                         "currency": "XAF",
                         "numberFormat": "#,###,##0"

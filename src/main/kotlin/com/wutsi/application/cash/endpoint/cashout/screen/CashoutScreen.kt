@@ -68,7 +68,7 @@ class CashoutScreen(
                                         currency = tenant.currency,
                                         moneyColor = Theme.PRIMARY_COLOR,
                                         numberFormat = tenant.numberFormat,
-                                        maxValue = balance.value
+                                        maxValue = balance.value.toInt()
                                     ),
                                 ),
                                 Container(padding = 20.0),
