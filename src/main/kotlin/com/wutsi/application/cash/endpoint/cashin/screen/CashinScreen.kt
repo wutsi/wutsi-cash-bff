@@ -83,7 +83,6 @@ class CashinScreen(
                                     ),
                                 ),
                                 Container(
-                                    padding = 10.0,
                                     child = Input(
                                         name = "command",
                                         type = Submit,

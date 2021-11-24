@@ -81,9 +81,7 @@
                 },
                 {
                   "type": "Container",
-                  "attributes": {
-                    "padding": 10.0
-                  },
+                  "attributes": {},
                   "children": [
                     {
                       "type": "Input",
