@@ -28,13 +28,13 @@ internal class SendConfirmScreenTest : AbstractEndpointTest() {
     @Test
     fun success() {
         val account = AccountSummary(id = 111, displayName = "Ray Sponsible")
-        doReturn(SearchAccountResponse(listOf(account))).whenever(accountApi).searchAccount(any(), any(), any())
+        doReturn(SearchAccountResponse(listOf(account))).whenever(accountApi).searchAccount(any())
         assertEndpointEquals("/screens/send/confirm.json", url)
     }
 
     @Test
     fun recipientNotFound() {
-        doReturn(SearchAccountResponse()).whenever(accountApi).searchAccount(any(), any(), any())
+        doReturn(SearchAccountResponse()).whenever(accountApi).searchAccount(any())
         assertEndpointEquals("/screens/send/confirm-no-recipient.json", url)
     }
 }

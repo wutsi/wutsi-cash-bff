@@ -29,6 +29,7 @@ import com.wutsi.flutter.sdui.enums.MainAxisAlignment.center
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.AccountSummary
+import com.wutsi.platform.account.dto.SearchAccountRequest
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
@@ -215,7 +216,11 @@ class SendConfirmScreen(
     ).toWidget()
 
     private fun findRecipient(phoneNumber: String): AccountSummary? {
-        val accounts = userApi.searchAccount(phoneNumber).accounts
+        val accounts = userApi.searchAccount(
+            SearchAccountRequest(
+                phoneNumber = phoneNumber
+            )
+        ).accounts
         return if (accounts.isEmpty())
             null
         else
