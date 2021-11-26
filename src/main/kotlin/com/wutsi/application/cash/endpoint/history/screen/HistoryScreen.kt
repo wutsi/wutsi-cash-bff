@@ -214,7 +214,7 @@ class HistoryScreen(
             val carrier = getMobileCarrier(tx, tenant)
             return getText("page.history.cashin.caption", arrayOf(carrier?.name ?: ""))
         } else {
-            val account = accounts[tx.recipientId]
+            val account = getAccount(tx, accounts)
             return if (tx.userId == userProvider.id())
                 getText("page.history.transfer.to.caption", arrayOf(account?.displayName ?: ""))
             else

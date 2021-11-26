@@ -5,7 +5,7 @@ object Theme {
     const val LARGE_TEXT_SIZE = 18.0
     const val SMALL_TEXT_SIZE = 10.0
     const val PRIMARY_COLOR = "#1D7EDF"
-    const val WARNING_COLOR = "#1D7EDF"
+    const val WARNING_COLOR = "#FFC107"
     const val SUCCESS_COLOR = "#4CAF50"
     const val DANGER_COLOR = "#8B0000"
     const val WHITE_COLOR = "#FFFFFF"
