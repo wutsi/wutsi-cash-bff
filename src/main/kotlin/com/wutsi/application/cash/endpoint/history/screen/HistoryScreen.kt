@@ -113,7 +113,7 @@ class HistoryScreen(
                         ),
                     ),
                     Flexible(
-                        flex = 2,
+                        flex = 4,
                         child = Container(
                             alignment = Alignment.TopRight,
                             child = amount(tx, tenant),

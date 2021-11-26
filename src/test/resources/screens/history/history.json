@@ -98,7 +98,7 @@
                 {
                   "type": "Flexible",
                   "attributes": {
-                    "flex": 2,
+                    "flex": 4,
                     "fit": "Tight"
                   },
                   "children": [
@@ -237,7 +237,7 @@
                 {
                   "type": "Flexible",
                   "attributes": {
-                    "flex": 2,
+                    "flex": 4,
                     "fit": "Tight"
                   },
                   "children": [
@@ -391,7 +391,7 @@
                 {
                   "type": "Flexible",
                   "attributes": {
-                    "flex": 2,
+                    "flex": 4,
                     "fit": "Tight"
                   },
                   "children": [
@@ -555,7 +555,7 @@
                 {
                   "type": "Flexible",
                   "attributes": {
-                    "flex": 2,
+                    "flex": 4,
                     "fit": "Tight"
                   },
                   "children": [
@@ -709,7 +709,7 @@
                 {
                   "type": "Flexible",
                   "attributes": {
-                    "flex": 2,
+                    "flex": 4,
                     "fit": "Tight"
                   },
                   "children": [
@@ -848,7 +848,7 @@
                 {
                   "type": "Flexible",
                   "attributes": {
-                    "flex": 2,
+                    "flex": 4,
                     "fit": "Tight"
                   },
                   "children": [
