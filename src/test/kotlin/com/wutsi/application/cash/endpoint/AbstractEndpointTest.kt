@@ -30,6 +30,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
+import org.springframework.http.HttpRequest
+import org.springframework.http.client.ClientHttpRequestExecution
+import org.springframework.http.client.ClientHttpRequestInterceptor
+import org.springframework.http.client.ClientHttpResponse
 import org.springframework.web.client.RestTemplate
 import java.util.UUID
 import kotlin.test.BeforeTest
@@ -160,6 +164,7 @@ abstract class AbstractEndpointTest {
         rest.interceptors.add(SpringTracingRequestInterceptor(tracingContext))
         rest.interceptors.add(SpringAuthorizationRequestInterceptor(tokenProvider))
         rest.interceptors.add(SpringApiKeyRequestInterceptor(apiKeyProvider))
+        rest.interceptors.add(LanguageClientHttpRequestInterceptor())
         return rest
     }
 
@@ -180,4 +185,15 @@ abstract class AbstractEndpointTest {
 
     protected fun getText(key: String, args: Array<Any?> = emptyArray()) =
         messages.getMessage(key, args, LocaleContextHolder.getLocale()) ?: key
+}
+
+class LanguageClientHttpRequestInterceptor : ClientHttpRequestInterceptor {
+    override fun intercept(
+        request: HttpRequest,
+        body: ByteArray,
+        execution: ClientHttpRequestExecution
+    ): ClientHttpResponse {
+        request.headers["Accept-Language"] = "en"
+        return execution.execute(request, body)
+    }
 }
