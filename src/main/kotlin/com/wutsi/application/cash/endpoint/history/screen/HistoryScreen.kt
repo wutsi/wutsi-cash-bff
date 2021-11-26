@@ -218,13 +218,11 @@ class HistoryScreen(
             val carrier = getMobileCarrier(tx, tenant)
             return getText("page.history.cashin.caption", arrayOf(carrier?.name ?: ""))
         } else {
-            return if (tx.userId == userProvider.id()) {
-                val account = accounts[tx.userId]
+            val account = accounts[tx.recipientId]
+            return if (tx.userId == userProvider.id())
                 getText("page.history.transfer.to.caption", arrayOf(account?.displayName ?: ""))
-            } else {
-                val account = accounts[tx.recipientId]
+            else
                 getText("page.history.transfer.from.caption", arrayOf(account?.displayName ?: ""))
-            }
         }
     }
 
@@ -239,9 +237,9 @@ class HistoryScreen(
 
     private fun getAccount(tx: TransactionSummary, accounts: Map<Long, AccountSummary>): AccountSummary? =
         if (tx.userId == userProvider.id())
-            accounts[tx.userId]
-        else
             accounts[tx.recipientId]
+        else
+            accounts[tx.userId]
 
     private fun getMobileCarrier(tx: TransactionSummary, tenant: Tenant): MobileCarrier? =
         tenant.mobileCarriers.find { it.code.equals(tx.paymentMethodProvider, true) }
