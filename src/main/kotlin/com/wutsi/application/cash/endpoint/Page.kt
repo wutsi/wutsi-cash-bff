@@ -13,4 +13,5 @@ object Page {
     const val SEND_CONFIRM = "page.send.confirm"
     const val SEND_PIN = "page.send.pin"
     const val SEND_SUCCESS = "page.send.success"
+    const val HISTORY = "page.history"
 }

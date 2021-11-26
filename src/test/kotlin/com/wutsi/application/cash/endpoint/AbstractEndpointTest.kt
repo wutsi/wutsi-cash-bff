@@ -39,7 +39,7 @@ abstract class AbstractEndpointTest {
     companion object {
         const val DEVICE_ID = "0000-1111"
         const val TENANT_ID = "1"
-        const val PHONE_NUMBER = "+15147550011"
+        const val USER_ID = 1L
     }
 
     @Autowired
@@ -73,7 +73,7 @@ abstract class AbstractEndpointTest {
         doReturn(TENANT_ID).whenever(tracingContext).tenantId()
 
         val tenant = Tenant(
-            id = 1,
+            id = USER_ID,
             name = "test",
             installUrl = "https://www.wutsi.com/install",
             logos = listOf(
