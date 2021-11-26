@@ -105,7 +105,8 @@
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopRight"
+                        "alignment": "TopRight",
+                        "padding": 10.0
                       },
                       "children": [
                         {
@@ -116,39 +117,23 @@
                           },
                           "children": [
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "10,000 XAF",
+                                "color": "#8B0000",
+                                "bold": true,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "10,000 XAF",
-                                    "color": "#8B0000",
-                                    "bold": true
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             },
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "01 Jan 2021",
+                                "size": 10.0,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "01 Jan 2021",
-                                    "size": 10.0
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             }
                           ]
                         }
@@ -244,7 +229,8 @@
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopRight"
+                        "alignment": "TopRight",
+                        "padding": 10.0
                       },
                       "children": [
                         {
@@ -255,39 +241,23 @@
                           },
                           "children": [
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "10,000 XAF",
+                                "color": "#1D7EDF",
+                                "bold": true,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "10,000 XAF",
-                                    "color": "#1D7EDF",
-                                    "bold": true
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             },
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "01 Jan 2021",
+                                "size": 10.0,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "01 Jan 2021",
-                                    "size": 10.0
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             }
                           ]
                         }
@@ -398,7 +368,8 @@
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopRight"
+                        "alignment": "TopRight",
+                        "padding": 10.0
                       },
                       "children": [
                         {
@@ -409,39 +380,23 @@
                           },
                           "children": [
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "10,000 XAF",
+                                "color": "#1D7EDF",
+                                "bold": true,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "10,000 XAF",
-                                    "color": "#1D7EDF",
-                                    "bold": true
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             },
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "01 Jan 2021",
+                                "size": 10.0,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "01 Jan 2021",
-                                    "size": 10.0
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             }
                           ]
                         }
@@ -562,7 +517,8 @@
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopRight"
+                        "alignment": "TopRight",
+                        "padding": 10.0
                       },
                       "children": [
                         {
@@ -573,39 +529,23 @@
                           },
                           "children": [
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "10,000 XAF",
+                                "color": "#1D7EDF",
+                                "bold": true,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "10,000 XAF",
-                                    "color": "#1D7EDF",
-                                    "bold": true
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             },
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "01 Jan 2021",
+                                "size": 10.0,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "01 Jan 2021",
-                                    "size": 10.0
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             }
                           ]
                         }
@@ -716,7 +656,8 @@
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopRight"
+                        "alignment": "TopRight",
+                        "padding": 10.0
                       },
                       "children": [
                         {
@@ -727,39 +668,23 @@
                           },
                           "children": [
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "10,000 XAF",
+                                "color": "#1D7EDF",
+                                "bold": true,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "10,000 XAF",
-                                    "color": "#1D7EDF",
-                                    "bold": true
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             },
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "01 Jan 2021",
+                                "size": 10.0,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "01 Jan 2021",
-                                    "size": 10.0
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             }
                           ]
                         }
@@ -855,7 +780,8 @@
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopRight"
+                        "alignment": "TopRight",
+                        "padding": 10.0
                       },
                       "children": [
                         {
@@ -866,39 +792,23 @@
                           },
                           "children": [
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "10,000 XAF",
+                                "color": "#1D7EDF",
+                                "bold": true,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "10,000 XAF",
-                                    "color": "#1D7EDF",
-                                    "bold": true
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             },
                             {
-                              "type": "Container",
+                              "type": "Text",
                               "attributes": {
-                                "alignment": "TopRight",
-                                "padding": 5.0
+                                "caption": "01 Jan 2021",
+                                "size": 10.0,
+                                "alignment": "Right"
                               },
-                              "children": [
-                                {
-                                  "type": "Text",
-                                  "attributes": {
-                                    "caption": "01 Jan 2021",
-                                    "size": 10.0
-                                  },
-                                  "children": []
-                                }
-                              ]
+                              "children": []
                             }
                           ]
                         }

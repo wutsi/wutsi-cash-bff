@@ -21,6 +21,7 @@ import com.wutsi.flutter.sdui.WidgetAware
 import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.CrossAxisAlignment
 import com.wutsi.flutter.sdui.enums.MainAxisAlignment
+import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.SearchAccountRequest
@@ -117,6 +118,7 @@ class HistoryScreen(
                         child = Container(
                             alignment = Alignment.TopRight,
                             child = amount(tx, tenant),
+                            padding = 10.0,
                         ),
                     ),
                 )
@@ -181,23 +183,17 @@ class HistoryScreen(
             mainAxisAlignment = MainAxisAlignment.spaceBetween,
             crossAxisAlignment = CrossAxisAlignment.end,
             children = listOf(
-                Container(
-                    padding = 5.0,
-                    alignment = Alignment.TopRight,
-                    child = Text(
-                        caption = moneyFormat.format(tx.amount),
-                        bold = true,
-                        color = color(tx),
-                    ),
+                Text(
+                    caption = moneyFormat.format(tx.amount),
+                    bold = true,
+                    color = color(tx),
+                    alignment = TextAlignment.Right
                 ),
-                Container(
-                    padding = 5.0,
-                    alignment = Alignment.TopRight,
-                    child = Text(
-                        caption = tx.created.format(dateFormat),
-                        size = Theme.SMALL_TEXT_SIZE,
-                    )
-                ),
+                Text(
+                    caption = tx.created.format(dateFormat),
+                    size = Theme.SMALL_TEXT_SIZE,
+                    alignment = TextAlignment.Right
+                )
             ),
         )
     }
