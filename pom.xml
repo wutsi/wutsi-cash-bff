@@ -6,7 +6,7 @@
 
   <artifactId>wutsi-cash-bff</artifactId>
   <groupId>com.wutsi.application.cash</groupId>
-  <version>0.0.24</version>
+  <version>0.0.25-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>wutsi-cash-bff</name>
 
@@ -150,7 +150,7 @@
 
   <scm>
     <developerConnection>scm:git:https://github.com/wutsi/wutsi-cash-bff.git</developerConnection>
-    <tag>wutsi-cash-bff-0.0.24</tag>
+    <tag>HEAD</tag>
   </scm>
   <distributionManagement>
     <repository>
