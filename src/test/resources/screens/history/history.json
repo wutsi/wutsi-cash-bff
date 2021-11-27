@@ -340,7 +340,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "From: Name 100",
+                                "caption": "From: Name 1",
                                 "bold": true
                               },
                               "children": []
@@ -479,7 +479,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "From: Name 1",
+                                "caption": "From: Name 101",
                                 "bold": true
                               },
                               "children": []
@@ -495,7 +495,7 @@
                               "type": "Text",
                               "attributes": {
                                 "caption": "Processing...",
-                                "color": "#1D7EDF",
+                                "color": "#FFC107",
                                 "bold": true,
                                 "size": 10.0
                               },
@@ -532,7 +532,7 @@
                               "type": "Text",
                               "attributes": {
                                 "caption": "10,000 XAF",
-                                "color": "#1D7EDF",
+                                "color": "#FFC107",
                                 "bold": true,
                                 "alignment": "Right"
                               },
@@ -628,7 +628,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "From: Name 1",
+                                "caption": "From: Name 101",
                                 "bold": true
                               },
                               "children": []
