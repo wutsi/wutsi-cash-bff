@@ -33,7 +33,7 @@
     <sdui-kotlin.version>0.0.32</sdui-kotlin.version>
     <wutsi-platform-core.version>0.0.74</wutsi-platform-core.version>
     <wutsi-account.version>1.0.12</wutsi-account.version>
-    <wutsi-contact.version>0.0.1-SNAPSHOT</wutsi-contact.version>
+    <wutsi-contact.version>0.0.1</wutsi-contact.version>
     <wutsi-payment.version>0.0.13</wutsi-payment.version>
     <wutsi-tenant.version>0.0.10</wutsi-tenant.version>
     <wutsi-platform-payment.version>0.0.50</wutsi-platform-payment.version>
@@ -49,6 +49,11 @@
       <groupId>com.wutsi.platform.account</groupId>
       <artifactId>wutsi-account-sdk-kotlin</artifactId>
       <version>${wutsi-account.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.wutsi.platform.contact</groupId>
+      <artifactId>wutsi-contact-sdk-kotlin</artifactId>
+      <version>${wutsi-contact.version}</version>
     </dependency>
     <dependency>
       <groupId>com.wutsi.platform.payment</groupId>
