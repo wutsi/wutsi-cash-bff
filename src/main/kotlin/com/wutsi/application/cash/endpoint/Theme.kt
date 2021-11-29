@@ -17,4 +17,6 @@ object Theme {
     const val ICON_LOCK = "e3ae"
     const val ICON_MONEY = "e3f7"
     const val ICON_PENDING = "0xe484"
+    const val ICON_CONTACT = "eb93"
+    const val ICON_PHONE = "eb99"
 }

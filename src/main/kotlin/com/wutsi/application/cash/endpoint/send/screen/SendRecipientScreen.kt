@@ -9,10 +9,14 @@ import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
+import com.wutsi.flutter.sdui.DefaultTabController
 import com.wutsi.flutter.sdui.Form
 import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.Screen
+import com.wutsi.flutter.sdui.Tab
+import com.wutsi.flutter.sdui.TabBar
+import com.wutsi.flutter.sdui.TabBarView
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType.Command
@@ -21,6 +25,7 @@ import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.InputType.Phone
 import com.wutsi.flutter.sdui.enums.InputType.Submit
 import com.wutsi.flutter.sdui.enums.TextAlignment
+import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -38,86 +43,104 @@ class SendRecipientScreen(
         val tenant = tenantProvider.get()
         val amountText = DecimalFormat(tenant.monetaryFormat).format(amount)
 
-        return Screen(
-            id = Page.SEND_RECIPIENT,
-            backgroundColor = Theme.WHITE_COLOR,
-            appBar = AppBar(
-                elevation = 0.0,
-                backgroundColor = Theme.PRIMARY_COLOR,
-                foregroundColor = Theme.WHITE_COLOR,
-                title = getText("page.send-recipient.title"),
-                actions = listOf(
-                    IconButton(
-                        icon = Theme.ICON_CANCEL,
-                        action = Action(
-                            type = Route,
-                            url = "route:/~"
+        return DefaultTabController(
+            length = 2,
+            child = Screen(
+                id = Page.SEND_RECIPIENT,
+                backgroundColor = Theme.WHITE_COLOR,
+                appBar = AppBar(
+                    elevation = 0.0,
+                    backgroundColor = Theme.PRIMARY_COLOR,
+                    foregroundColor = Theme.WHITE_COLOR,
+                    title = getText("page.send-recipient.title"),
+                    actions = listOf(
+                        IconButton(
+                            icon = Theme.ICON_CANCEL,
+                            action = Action(
+                                type = Route,
+                                url = "route:/~"
+                            )
+                        )
+                    ),
+                    bottom = TabBar(
+                        tabs = listOf(
+                            Tab(icon = Theme.ICON_CONTACT, caption = getText("page.send-recipient.tab.contact")),
+                            Tab(icon = Theme.ICON_PHONE, caption = getText("page.send-recipient.tab.phone"))
                         )
                     )
-                )
-            ),
-            child = Container(
-                alignment = Center,
-                padding = 20.0,
-                child = Column(
+                ),
+                child = TabBarView(
                     children = listOf(
-                        Form(
-                            children = listOf(
-                                Container(
-                                    alignment = Center,
-                                    padding = 10.0,
-                                    child = Text(
-                                        caption = getText(
-                                            "page.send-recipient.phone.title"
-                                        ),
-                                        alignment = TextAlignment.Center,
-                                        size = Theme.X_LARGE_TEXT_SIZE,
-                                        color = Theme.PRIMARY_COLOR,
-                                        bold = true
-                                    )
+                        contactTab(amount, amountText, tenant),
+                        phoneTab(amount, amountText, tenant)
+                    )
+                )
+            )
+        ).toWidget()
+    }
+
+    private fun phoneTab(amount: Double, amountText: String, tenant: Tenant) = Container(
+        alignment = Center,
+        padding = 20.0,
+        child = Column(
+            children = listOf(
+                Form(
+                    children = listOf(
+                        Container(
+                            alignment = Center,
+                            padding = 10.0,
+                            child = Text(
+                                caption = getText(
+                                    "page.send-recipient.phone.title"
                                 ),
-                                Container(
-                                    alignment = Center,
-                                    padding = 10.0,
-                                    child = Text(
-                                        caption = getText(
-                                            "page.send-recipient.phone.sub-title"
-                                        ),
-                                        alignment = TextAlignment.Center,
-                                        size = Theme.LARGE_TEXT_SIZE,
-                                        color = Theme.BLACK_COLOR,
-                                    )
+                                alignment = TextAlignment.Center,
+                                size = Theme.X_LARGE_TEXT_SIZE,
+                                color = Theme.PRIMARY_COLOR,
+                                bold = true
+                            )
+                        ),
+                        Container(
+                            alignment = Center,
+                            padding = 10.0,
+                            child = Text(
+                                caption = getText(
+                                    "page.send-recipient.phone.sub-title"
                                 ),
-                                Container(
-                                    padding = 20.0
-                                ),
-                                Container(
-                                    padding = 10.0,
-                                    child = Input(
-                                        name = "phoneNumber",
-                                        type = Phone,
-                                        required = true,
-                                        countries = tenant.countries
-                                    ),
-                                ),
-                                Container(
-                                    padding = 10.0,
-                                    child = Input(
-                                        name = "command",
-                                        type = Submit,
-                                        caption = getText("page.send-recipient.button.submit", arrayOf(amountText)),
-                                        action = Action(
-                                            type = Command,
-                                            url = urlBuilder.build("commands/send/recipient"),
-                                            parameters = mapOf("amount" to amount.toString())
-                                        )
-                                    )
+                                alignment = TextAlignment.Center,
+                                size = Theme.LARGE_TEXT_SIZE,
+                                color = Theme.BLACK_COLOR,
+                            )
+                        ),
+                        Container(
+                            padding = 20.0
+                        ),
+                        Container(
+                            padding = 10.0,
+                            child = Input(
+                                name = "phoneNumber",
+                                type = Phone,
+                                required = true,
+                                countries = tenant.countries
+                            ),
+                        ),
+                        Container(
+                            padding = 10.0,
+                            child = Input(
+                                name = "command",
+                                type = Submit,
+                                caption = getText("page.send-recipient.button.submit", arrayOf(amountText)),
+                                action = Action(
+                                    type = Command,
+                                    url = urlBuilder.build("commands/send/recipient"),
+                                    parameters = mapOf("amount" to amount.toString())
                                 )
                             )
                         )
                     )
                 )
-            ),
-        ).toWidget()
-    }
+            )
+        )
+    )
+
+    private fun contactTab(amount: Double, amountText: String, tenant: Tenant) = Text("Yo")
 }
