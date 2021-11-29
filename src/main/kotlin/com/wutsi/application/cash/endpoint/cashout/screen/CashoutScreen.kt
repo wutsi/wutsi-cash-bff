@@ -3,9 +3,9 @@ package com.wutsi.application.cash.endpoint.cashout.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.endpoint.Theme
+import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
-import com.wutsi.application.cash.service.UserProvider
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Column
@@ -34,14 +34,14 @@ class CashoutScreen(
     private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
-    private val userProvider: UserProvider,
+    private val securityManager: SecurityManager,
     private val paymentApi: WutsiPaymentApi,
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {
         val tenant = tenantProvider.get()
         val paymentMethods = accountApi.listPaymentMethods(
-            userProvider.id()
+            securityManager.currentUserId()
         ).paymentMethods
         val balance = getBalance(tenant)
 
@@ -113,7 +113,7 @@ class CashoutScreen(
 
     private fun getBalance(tenant: Tenant): Money {
         try {
-            val userId = userProvider.id()
+            val userId = securityManager.currentUserId()
             val balance = paymentApi.getBalance(userId).balance
             return Money(
                 value = balance.amount,

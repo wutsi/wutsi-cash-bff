@@ -3,8 +3,8 @@ package com.wutsi.application.cash.endpoint.history.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.endpoint.Theme
+import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.application.cash.service.TenantProvider
-import com.wutsi.application.cash.service.UserProvider
 import com.wutsi.application.cash.util.StringUtil
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.CircleAvatar
@@ -42,7 +42,7 @@ import java.time.format.DateTimeFormatter
 class HistoryScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
-    private val userProvider: UserProvider,
+    private val securityManager: SecurityManager,
     private val paymentApi: WutsiPaymentApi,
 ) : AbstractQuery() {
     @PostMapping
@@ -69,7 +69,7 @@ class HistoryScreen(
     private fun findTransactions(tenant: Tenant): List<TransactionSummary> =
         paymentApi.searchTransaction(
             SearchTransactionRequest(
-                userId = userProvider.id(),
+                userId = securityManager.currentUserId(),
                 tenantId = tenant.id,
                 limit = 30,
                 offset = 0
@@ -215,7 +215,7 @@ class HistoryScreen(
             return getText("page.history.cashin.caption", arrayOf(carrier?.name ?: ""))
         } else {
             val account = getAccount(tx, accounts)
-            return if (tx.userId == userProvider.id())
+            return if (tx.userId == securityManager.currentUserId())
                 getText("page.history.transfer.to.caption", arrayOf(account?.displayName ?: ""))
             else
                 getText("page.history.transfer.from.caption", arrayOf(account?.displayName ?: ""))
@@ -232,7 +232,7 @@ class HistoryScreen(
     }
 
     private fun getAccount(tx: TransactionSummary, accounts: Map<Long, AccountSummary>): AccountSummary? =
-        if (tx.userId == userProvider.id())
+        if (tx.userId == securityManager.currentUserId())
             accounts[tx.recipientId]
         else
             accounts[tx.userId]

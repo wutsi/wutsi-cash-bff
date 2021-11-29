@@ -5,8 +5,8 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 @Service
-class UserProvider {
-    fun id(): Long =
+class SecurityManager {
+    fun currentUserId(): Long =
         principal().id.toLong()
 
     fun principal(): WutsiPrincipal =

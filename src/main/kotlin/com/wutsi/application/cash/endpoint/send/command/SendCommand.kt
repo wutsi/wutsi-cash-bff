@@ -3,9 +3,9 @@ package com.wutsi.application.cash.endpoint.send.command
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.exception.TransactionException
+import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
-import com.wutsi.application.cash.service.UserProvider
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Dialog
 import com.wutsi.flutter.sdui.enums.ActionType.Prompt
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController
 class SendCommand(
     private val logger: KVLogger,
     private val paymentApi: WutsiPaymentApi,
-    private val userProvider: UserProvider,
+    private val securityManager: SecurityManager,
     private val tenantProvider: TenantProvider,
     private val urlBuilder: URLBuilder,
     private val objectMapper: ObjectMapper,
@@ -76,7 +76,7 @@ class SendCommand(
                 )
             )
 
-        if (recipientId == userProvider.id())
+        if (recipientId == securityManager.currentUserId())
             return Action(
                 type = Prompt,
                 prompt = Dialog(

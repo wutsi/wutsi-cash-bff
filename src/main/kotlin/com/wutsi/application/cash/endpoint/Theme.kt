@@ -19,4 +19,5 @@ object Theme {
     const val ICON_PENDING = "0xe484"
     const val ICON_CONTACT = "eb93"
     const val ICON_PHONE = "eb99"
+    const val ICON_CHEVRON_RIGHT = "e15f"
 }

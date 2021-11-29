@@ -3,9 +3,9 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.endpoint.Theme
+import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
-import com.wutsi.application.cash.service.UserProvider
 import com.wutsi.application.cash.util.StringUtil.initials
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
@@ -28,8 +28,11 @@ import com.wutsi.flutter.sdui.enums.InputType.Submit
 import com.wutsi.flutter.sdui.enums.MainAxisAlignment.center
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
+import com.wutsi.platform.account.dto.Account
 import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.SearchAccountRequest
+import com.wutsi.platform.core.error.Error
+import com.wutsi.platform.core.error.exception.BadRequestException
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
@@ -44,21 +47,43 @@ class SendConfirmScreen(
     private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
     private val userApi: WutsiAccountApi,
-    private val userProvider: UserProvider,
+    private val securityManager: SecurityManager,
     @Value("\${wutsi.application.login-url}") private val loginUrl: String,
 ) : AbstractQuery() {
     @PostMapping
     fun index(
         @RequestParam amount: Double,
-        @RequestParam("phone-number") phoneNumber: String
+        @RequestParam("phone-number", required = false) phoneNumber: String? = null,
+        @RequestParam("account-id", required = false) accountId: Long? = null
     ): Widget {
+        if (phoneNumber == null && accountId == null) {
+            throw BadRequestException(
+                error = Error(
+                    code = "no-recipient",
+                    message = "phone-number and account-id are missing"
+                )
+            )
+        }
+
         val tenant = tenantProvider.get()
-        val xphoneNumber = sanitizePhoneNumber(phoneNumber)
-        val recipient = findRecipient(xphoneNumber)
-        return if (recipient == null)
-            recipientNotFound(xphoneNumber, tenant)
-        else
-            confirm(amount, xphoneNumber, recipient, tenant)
+        if (phoneNumber != null) {
+            val xphoneNumber = sanitizePhoneNumber(phoneNumber)
+            val recipient = findRecipient(xphoneNumber)
+            return if (recipient == null)
+                recipientNotFound(xphoneNumber, tenant)
+            else
+                confirm(amount, xphoneNumber, recipient, tenant)
+        } else {
+            val recipient = findRecipient(accountId!!)
+            val summary = AccountSummary(
+                id = recipient.id,
+                displayName = recipient.displayName,
+                pictureUrl = recipient.pictureUrl,
+                country = recipient.country,
+                language = recipient.language,
+            )
+            return confirm(amount, recipient.phone!!.number, summary, tenant)
+        }
     }
 
     private fun confirm(amount: Double, phoneNumber: String, recipient: AccountSummary, tenant: Tenant): Widget {
@@ -227,8 +252,11 @@ class SendConfirmScreen(
             accounts[0]
     }
 
+    private fun findRecipient(id: Long): Account =
+        userApi.getAccount(id).account
+
     private fun returnUrl(amount: Double, recipient: AccountSummary): String {
-        val me = userApi.getAccount(userProvider.id()).account
+        val me = userApi.getAccount(securityManager.currentUserId()).account
         return "?phone=" + encodeURLParam(me.phone?.number) +
             "&icon=" + Theme.ICON_LOCK +
             "&screen-id=" + Page.SEND_PIN +
