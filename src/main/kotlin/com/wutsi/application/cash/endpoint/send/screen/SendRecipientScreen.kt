@@ -63,7 +63,6 @@ class SendRecipientScreen(
         val contacts = contactApi.searchContact(
             SearchContactRequest(
                 accountId = securityManager.currentUserId(),
-                tenantId = tenant.id,
                 limit = 100,
                 offset = 0,
             )
