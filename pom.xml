@@ -6,7 +6,7 @@
 
   <artifactId>wutsi-cash-bff</artifactId>
   <groupId>com.wutsi.application.cash</groupId>
-  <version>0.0.32-SNAPSHOT</version>
+  <version>0.0.33-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>wutsi-cash-bff</name>
 
