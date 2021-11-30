@@ -82,11 +82,11 @@ class SendConfirmScreen(
                 country = recipient.country,
                 language = recipient.language,
             )
-            return confirm(amount, recipient.phone!!.number, summary, tenant)
+            return confirm(amount, null, summary, tenant)
         }
     }
 
-    private fun confirm(amount: Double, phoneNumber: String, recipient: AccountSummary, tenant: Tenant): Widget {
+    private fun confirm(amount: Double, phoneNumber: String?, recipient: AccountSummary, tenant: Tenant): Widget {
         val amountText = DecimalFormat(tenant.monetaryFormat).format(amount)
         return Screen(
             id = Page.SEND_CONFIRM,
@@ -142,12 +142,14 @@ class SendConfirmScreen(
                                         bold = true,
                                     )
                                 ),
-                                Text(
-                                    caption = formattedPhoneNumber(phoneNumber),
-                                    alignment = TextAlignment.Center,
-                                    color = Theme.BLACK_COLOR,
-                                    size = Theme.LARGE_TEXT_SIZE,
-                                ),
+                                phoneNumber?.let {
+                                    Text(
+                                        caption = formattedPhoneNumber(it),
+                                        alignment = TextAlignment.Center,
+                                        color = Theme.BLACK_COLOR,
+                                        size = Theme.LARGE_TEXT_SIZE,
+                                    )
+                                } ?: Container()
                             )
                         ),
                         Container(
