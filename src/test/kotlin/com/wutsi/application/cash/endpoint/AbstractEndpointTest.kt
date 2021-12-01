@@ -73,7 +73,7 @@ abstract class AbstractEndpointTest {
         doReturn(TENANT_ID).whenever(tracingContext).tenantId()
 
         val tenant = Tenant(
-            id = USER_ID,
+            id = TENANT_ID.toLong(),
             name = "test",
             installUrl = "https://www.wutsi.com/install",
             logos = listOf(
@@ -122,7 +122,7 @@ abstract class AbstractEndpointTest {
         doReturn(GetTenantResponse(tenant)).whenever(tenantApi).getTenant(any())
 
         val account = Account(
-            id = 7777,
+            id = USER_ID,
             displayName = "Ray Sponsible",
             country = "CM",
             language = "en",
@@ -142,7 +142,7 @@ abstract class AbstractEndpointTest {
             "payment-manage",
             "payment-read"
         ),
-        subjectId: Long = 7777,
+        subjectId: Long = USER_ID,
         subjectType: SubjectType = USER
     ): RestTemplate {
         val rest = RestTemplate()

@@ -3,14 +3,10 @@ package com.wutsi.application.cash.endpoint.send.command
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.exception.TransactionException
-import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
-import com.wutsi.flutter.sdui.Dialog
-import com.wutsi.flutter.sdui.enums.ActionType.Prompt
 import com.wutsi.flutter.sdui.enums.ActionType.Route
-import com.wutsi.flutter.sdui.enums.DialogType.Error
 import com.wutsi.platform.core.logging.KVLogger
 import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.dto.CreateTransferRequest
@@ -25,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController
 class SendCommand(
     private val logger: KVLogger,
     private val paymentApi: WutsiPaymentApi,
-    private val securityManager: SecurityManager,
     private val tenantProvider: TenantProvider,
     private val urlBuilder: URLBuilder,
     private val objectMapper: ObjectMapper,
@@ -36,12 +31,6 @@ class SendCommand(
         @RequestParam(name = "recipient-id") recipientId: Long,
         @RequestParam(name = "recipient-name") recipientName: String,
     ): Action {
-        // Validate
-        val error = validate(amount, recipientId)
-        if (error != null)
-            return error
-
-        // Verify the password
         val tenant = tenantProvider.get()
         try {
             // Perform the transfer
@@ -64,27 +53,5 @@ class SendCommand(
         } catch (ex: FeignException) {
             throw TransactionException.of(objectMapper, ex)
         }
-    }
-
-    private fun validate(amount: Double, recipientId: Long): Action? {
-        if (amount == 0.0)
-            return Action(
-                type = Prompt,
-                prompt = Dialog(
-                    type = Error,
-                    message = getText("prompt.error.amount-required")
-                )
-            )
-
-        if (recipientId == securityManager.currentUserId())
-            return Action(
-                type = Prompt,
-                prompt = Dialog(
-                    type = Error,
-                    message = getText("prompt.error.self-transfer")
-                )
-            )
-
-        return null
     }
 }

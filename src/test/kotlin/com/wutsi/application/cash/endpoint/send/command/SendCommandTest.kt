@@ -125,44 +125,6 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(getText("prompt.error.transaction-failed.PAYEE_NOT_ALLOWED_TO_RECEIVE"), action.prompt?.message)
     }
 
-//    @Test
-//    fun recipientNotFound() {
-//        // Given
-//        doReturn(SearchAccountResponse()).whenever(accountApi).searchAccount(any(), any(), any())
-//
-//        // WHEN
-//        val request = SendRequest(
-//            pin = "123456"
-//        )
-//        val response = rest.postForEntity(url, request, Action::class.java)
-//
-//        // THEN
-//        assertEquals(200, response.statusCodeValue)
-//
-//        val action = response.body
-//        assertEquals(ActionType.Prompt, action.type)
-//        assertEquals(DialogType.Error, action.prompt?.type)
-//        assertEquals(getText("prompt.error.recipient-not-found"), action.prompt?.message)
-//    }
-
-    @Test
-    fun noValue() {
-        // WHEN
-        url = "http://localhost:$port/commands/send?amount=0&recipient-id=111&recipient-name=YoMan"
-        val request = SendRequest(
-            pin = "123456"
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
-
-        // THEN
-        assertEquals(200, response.statusCodeValue)
-
-        val action = response.body
-        assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error, action.prompt?.type)
-        assertEquals(getText("prompt.error.amount-required"), action.prompt?.message)
-    }
-
     private fun createFeignException(code: String, errorCode: ErrorCode = NONE) = FeignException.Conflict(
         "failed",
         Request.create(

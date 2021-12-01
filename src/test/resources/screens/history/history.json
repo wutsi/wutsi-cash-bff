@@ -340,7 +340,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "From: Name 1",
+                                "caption": "To: Name 100",
                                 "bold": true
                               },
                               "children": []
