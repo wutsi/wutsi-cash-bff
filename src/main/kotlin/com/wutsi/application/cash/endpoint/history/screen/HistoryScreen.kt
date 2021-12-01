@@ -47,9 +47,14 @@ class HistoryScreen(
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {
-        val tenant = tenantProvider.get()
-        val txs = findTransactions(tenant)
-        val accounts = findAccounts(txs)
+        val txs = findTransactions()
+        val children: List<WidgetAware> = if (txs.isEmpty()) {
+            emptyList()
+        } else {
+            val accounts = findAccounts(txs)
+            val tenant = tenantProvider.get()
+            txs.map { toListItem(it, accounts, tenant) }
+        }
 
         return Screen(
             id = Page.HISTORY,
@@ -61,16 +66,15 @@ class HistoryScreen(
             ),
             child = ListView(
                 separator = true,
-                children = txs.map { toListItem(it, accounts, tenant) }
+                children = children
             ),
         ).toWidget()
     }
 
-    private fun findTransactions(tenant: Tenant): List<TransactionSummary> =
+    private fun findTransactions(): List<TransactionSummary> =
         paymentApi.searchTransaction(
             SearchTransactionRequest(
-                userId = securityManager.currentUserId(),
-                tenantId = tenant.id,
+                accountId = securityManager.currentUserId(),
                 limit = 30,
                 offset = 0
             )
@@ -80,7 +84,7 @@ class HistoryScreen(
         if (txs.isEmpty())
             return emptyMap()
 
-        val accountIds = txs.map { it.userId }.toMutableSet()
+        val accountIds = txs.map { it.accountId }.toMutableSet()
         accountIds.addAll(txs.mapNotNull { it.recipientId })
 
         return accountApi.searchAccount(
@@ -215,7 +219,7 @@ class HistoryScreen(
             return getText("page.history.cashin.caption", arrayOf(carrier?.name ?: ""))
         } else {
             val account = getAccount(tx, accounts)
-            return if (tx.userId == securityManager.currentUserId())
+            return if (tx.accountId == securityManager.currentUserId())
                 getText("page.history.transfer.to.caption", arrayOf(account?.displayName ?: ""))
             else
                 getText("page.history.transfer.from.caption", arrayOf(account?.displayName ?: ""))
@@ -232,10 +236,10 @@ class HistoryScreen(
     }
 
     private fun getAccount(tx: TransactionSummary, accounts: Map<Long, AccountSummary>): AccountSummary? =
-        if (tx.userId == securityManager.currentUserId())
+        if (tx.accountId == securityManager.currentUserId())
             accounts[tx.recipientId]
         else
-            accounts[tx.userId]
+            accounts[tx.accountId]
 
     private fun getMobileCarrier(tx: TransactionSummary, tenant: Tenant): MobileCarrier? =
         tenant.mobileCarriers.find { it.code.equals(tx.paymentMethodProvider, true) }

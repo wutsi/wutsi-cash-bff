@@ -56,12 +56,11 @@ internal class HistoryScreenTest : AbstractEndpointTest() {
         assertEndpointEquals("/screens/history/history.json", url)
     }
 
-    private fun createTransferTransactionSummary(userId: Long, recipientId: Long, status: String = "SUCCESSFUL") =
+    private fun createTransferTransactionSummary(accountId: Long, recipientId: Long, status: String = "SUCCESSFUL") =
         TransactionSummary(
-            userId = userId,
+            accountId = accountId,
             recipientId = recipientId,
             type = "TRANSFER",
-            tenantId = TENANT_ID.toLong(),
             status = status,
             net = 10000.0,
             amount = 10000.0,
@@ -71,9 +70,8 @@ internal class HistoryScreenTest : AbstractEndpointTest() {
 
     private fun createCashInOutTransactionSummary(cashin: Boolean, status: String = "SUCCESSFUL") =
         TransactionSummary(
-            userId = USER_ID,
+            accountId = USER_ID,
             type = if (cashin) "CASHIN" else "CASHOUT",
-            tenantId = TENANT_ID.toLong(),
             status = status,
             net = 10000.0,
             amount = 10000.0,
