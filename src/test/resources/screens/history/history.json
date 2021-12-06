@@ -74,7 +74,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "Add Cash",
+                                "caption": "Add Cash From: 11111",
                                 "bold": true
                               },
                               "children": []
@@ -208,7 +208,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "Add Cash",
+                                "caption": "Add Cash From: 11111",
                                 "bold": true
                               },
                               "children": []
@@ -759,7 +759,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "Cash out",
+                                "caption": "Cash out To: 22222",
                                 "bold": true
                               },
                               "children": []

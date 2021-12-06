@@ -24,6 +24,7 @@ import com.wutsi.flutter.sdui.enums.MainAxisAlignment
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.AccountSummary
+import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountRequest
 import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.dto.SearchTransactionRequest
@@ -52,8 +53,9 @@ class HistoryScreen(
             emptyList()
         } else {
             val accounts = findAccounts(txs)
+            val paymentMethods = findPaymentMethods()
             val tenant = tenantProvider.get()
-            txs.map { toListItem(it, accounts, tenant) }
+            txs.map { toListItem(it, accounts, paymentMethods, tenant) }
         }
 
         return Screen(
@@ -80,6 +82,11 @@ class HistoryScreen(
             )
         ).transactions
 
+    private fun findPaymentMethods(): Map<String, PaymentMethodSummary> =
+        accountApi.listPaymentMethods(securityManager.currentUserId())
+            .paymentMethods
+            .map { it.token to it }.toMap()
+
     private fun findAccounts(txs: List<TransactionSummary>): Map<Long, AccountSummary> {
         if (txs.isEmpty())
             return emptyMap()
@@ -95,7 +102,12 @@ class HistoryScreen(
         ).accounts.map { it.id to it }.toMap()
     }
 
-    private fun toListItem(tx: TransactionSummary, accounts: Map<Long, AccountSummary>, tenant: Tenant): WidgetAware =
+    private fun toListItem(
+        tx: TransactionSummary,
+        accounts: Map<Long, AccountSummary>,
+        paymentMethods: Map<String, PaymentMethodSummary>,
+        tenant: Tenant
+    ): WidgetAware =
         Container(
             padding = 10.0,
             child = Row(
@@ -113,7 +125,7 @@ class HistoryScreen(
                         flex = 6,
                         child = Container(
                             alignment = Alignment.TopLeft,
-                            child = caption(tx, accounts, tenant),
+                            child = caption(tx, accounts, paymentMethods, tenant),
                             padding = 10.0,
                         ),
                     ),
@@ -147,10 +159,15 @@ class HistoryScreen(
         }
     }
 
-    private fun caption(tx: TransactionSummary, accounts: Map<Long, AccountSummary>, tenant: Tenant): WidgetAware {
+    private fun caption(
+        tx: TransactionSummary,
+        accounts: Map<Long, AccountSummary>,
+        paymentMethods: Map<String, PaymentMethodSummary>,
+        tenant: Tenant
+    ): WidgetAware {
         val children = mutableListOf<WidgetAware>(
             Text(
-                caption = toCaption1(tx, accounts, tenant),
+                caption = toCaption1(tx, accounts, paymentMethods),
                 bold = true,
             ),
         )
@@ -210,13 +227,17 @@ class HistoryScreen(
             else -> Theme.BLACK_COLOR
         }
 
-    private fun toCaption1(tx: TransactionSummary, accounts: Map<Long, AccountSummary>, tenant: Tenant): String {
+    private fun toCaption1(
+        tx: TransactionSummary,
+        accounts: Map<Long, AccountSummary>,
+        paymentMethods: Map<String, PaymentMethodSummary>
+    ): String {
         if (tx.type == "CASHIN") {
-            val carrier = getMobileCarrier(tx, tenant)
-            return getText("page.history.cashout.caption", arrayOf(carrier?.name ?: ""))
+            val paymentMethod = paymentMethods[tx.paymentMethodToken]
+            return getText("page.history.cashout.caption", arrayOf(paymentMethod?.maskedNumber ?: ""))
         } else if (tx.type == "CASHOUT") {
-            val carrier = getMobileCarrier(tx, tenant)
-            return getText("page.history.cashin.caption", arrayOf(carrier?.name ?: ""))
+            val paymentMethod = paymentMethods[tx.paymentMethodToken]
+            return getText("page.history.cashin.caption", arrayOf(paymentMethod?.maskedNumber ?: ""))
         } else {
             val account = getAccount(tx, accounts)
             return if (tx.accountId == securityManager.currentUserId())

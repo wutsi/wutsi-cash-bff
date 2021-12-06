@@ -5,6 +5,8 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.platform.account.dto.AccountSummary
+import com.wutsi.platform.account.dto.ListPaymentMethodResponse
+import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountResponse
 import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.dto.SearchTransactionResponse
@@ -37,14 +39,21 @@ internal class HistoryScreenTest : AbstractEndpointTest() {
     @Test
     fun index() {
         val txs = listOf(
-            createCashInOutTransactionSummary(true, "FAILED"),
-            createCashInOutTransactionSummary(true),
+            createCashInOutTransactionSummary(true, "A", "FAILED"),
+            createCashInOutTransactionSummary(true, "A"),
             createTransferTransactionSummary(USER_ID, 100),
             createTransferTransactionSummary(101, USER_ID, "PENDING"),
             createTransferTransactionSummary(101, USER_ID),
-            createCashInOutTransactionSummary(false)
+            createCashInOutTransactionSummary(false, "B")
         )
         doReturn(SearchTransactionResponse(txs)).whenever(paymentApi).searchTransaction(any())
+
+        val paymentMethods = listOf(
+            createPaymentMethodSummary("A", "11111"),
+            createPaymentMethodSummary("B", "22222"),
+            createPaymentMethodSummary("C", "33333"),
+        )
+        doReturn(ListPaymentMethodResponse(paymentMethods)).whenever(accountApi).listPaymentMethods(any())
 
         val accounts = listOf(
             createAccount(USER_ID),
@@ -68,16 +77,26 @@ internal class HistoryScreenTest : AbstractEndpointTest() {
             created = OffsetDateTime.of(2021, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC)
         )
 
-    private fun createCashInOutTransactionSummary(cashin: Boolean, status: String = "SUCCESSFUL") =
+    private fun createCashInOutTransactionSummary(
+        cashin: Boolean,
+        paymentMethodToken: String,
+        status: String = "SUCCESSFUL"
+    ) =
         TransactionSummary(
             accountId = USER_ID,
             type = if (cashin) "CASHIN" else "CASHOUT",
             status = status,
             net = 10000.0,
             amount = 10000.0,
+            paymentMethodToken = paymentMethodToken,
             description = "Sample description",
             created = OffsetDateTime.of(2021, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC)
         )
+
+    private fun createPaymentMethodSummary(token: String, maskedNumber: String) = PaymentMethodSummary(
+        token = token,
+        maskedNumber = maskedNumber
+    )
 
     private fun createAccount(id: Long) = AccountSummary(
         id = id,
