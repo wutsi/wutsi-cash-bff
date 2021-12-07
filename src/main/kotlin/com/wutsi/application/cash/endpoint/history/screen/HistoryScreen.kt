@@ -125,8 +125,8 @@ class HistoryScreen(
                         flex = 6,
                         child = Container(
                             alignment = Alignment.TopLeft,
-                            child = caption(tx, accounts, paymentMethods, tenant),
-                            padding = 10.0,
+                            child = caption(tx, accounts, paymentMethods),
+                            padding = 5.0,
                         ),
                     ),
                     Flexible(
@@ -134,7 +134,7 @@ class HistoryScreen(
                         child = Container(
                             alignment = Alignment.TopRight,
                             child = amount(tx, tenant),
-                            padding = 10.0,
+                            padding = 5.0,
                         ),
                     ),
                 )
@@ -162,20 +162,17 @@ class HistoryScreen(
     private fun caption(
         tx: TransactionSummary,
         accounts: Map<Long, AccountSummary>,
-        paymentMethods: Map<String, PaymentMethodSummary>,
-        tenant: Tenant
+        paymentMethods: Map<String, PaymentMethodSummary>
     ): WidgetAware {
         val children = mutableListOf<WidgetAware>(
             Text(
-                caption = toCaption1(tx, accounts, paymentMethods),
-                bold = true,
+                caption = toCaption1(tx, accounts, paymentMethods)
             ),
         )
 
-        val sub = toCaption2(tx, tenant)
-        if (sub != null) {
+        if (!tx.description.isNullOrEmpty()) {
             children.add(
-                Text(caption = sub)
+                Text(caption = tx.description!!)
             )
         }
 
@@ -244,15 +241,6 @@ class HistoryScreen(
                 getText("page.history.transfer.to.caption", arrayOf(account?.displayName ?: ""))
             else
                 getText("page.history.transfer.from.caption", arrayOf(account?.displayName ?: ""))
-        }
-    }
-
-    private fun toCaption2(tx: TransactionSummary, tenant: Tenant): String? {
-        if (tx.type == "CASHIN" || tx.type == "CASHOUT") {
-            val carrier = getMobileCarrier(tx, tenant)
-            return carrier?.name
-        } else {
-            return tx.description
         }
     }
 
