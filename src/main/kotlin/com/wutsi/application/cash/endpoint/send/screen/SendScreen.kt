@@ -95,6 +95,7 @@ class SendScreen(
                                         moneyColor = Theme.WHITE_COLOR,
                                         keyboardColor = Theme.WHITE_COLOR,
                                         numberFormat = tenant.numberFormat,
+                                        value = 0
                                     ),
                                 ),
                                 Container(

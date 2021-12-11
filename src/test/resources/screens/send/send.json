@@ -51,6 +51,7 @@
                         "moneyColor": "#FFFFFF",
                         "deleteText": "Delete",
                         "maxLength": 7,
+                        "value": 0,
                         "currency": "XAF",
                         "numberFormat": "#,###,##0"
                       },
