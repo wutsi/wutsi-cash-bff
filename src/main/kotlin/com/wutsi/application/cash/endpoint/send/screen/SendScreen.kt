@@ -72,7 +72,6 @@ class SendScreen(
             ),
             child = Container(
                 alignment = Center,
-                padding = 20.0,
                 child = Column(
                     children = listOf(
                         Text(
@@ -99,6 +98,7 @@ class SendScreen(
                                     ),
                                 ),
                                 Container(
+                                    padding = 10.0,
                                     child = Input(
                                         name = "command",
                                         type = Submit,
