@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>wutsi-cash-bff</artifactId>
   <groupId>com.wutsi.application.cash</groupId>
-  <version>0.0.43-SNAPSHOT</version>
+  <version>0.0.45-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>wutsi-cash-bff</name>
 
@@ -29,7 +28,7 @@
     <kotlin-mockito.version>2.2.0</kotlin-mockito.version>
     <klint.version>0.43.2</klint.version>
     <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
-    <libphonenumber.version>8.12.38</libphonenumber.version>
+    <libphonenumber.version>8.12.39</libphonenumber.version>
     <sdui-kotlin.version>0.0.32</sdui-kotlin.version>
     <wutsi-platform-core.version>0.0.78</wutsi-platform-core.version>
     <wutsi-account.version>1.0.17</wutsi-account.version>
@@ -293,12 +292,11 @@
             <phase>validate</phase>
             <configuration>
               <target name="ktlint">
-                <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true"
-                      classname="com.pinterest.ktlint.Main" classpathref="maven.plugin.classpath">
-                  <arg value="src/**/*.kt"/>
+                <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classname="com.pinterest.ktlint.Main" classpathref="maven.plugin.classpath">
+                  <arg value="src/**/*.kt" />
                   <!-- to generate report in checkstyle format prepend following args: -->
-                  <arg value="--reporter=plain"/>
-                  <arg value="--reporter=checkstyle,output=${project.build.directory}/ktlint.xml"/>
+                  <arg value="--reporter=plain" />
+                  <arg value="--reporter=checkstyle,output=${project.build.directory}/ktlint.xml" />
 
                   <!-- see https://github.com/pinterest/ktlint#usage for more -->
                 </java>
@@ -312,10 +310,9 @@
             <id>ktlint-format</id>
             <configuration>
               <target name="ktlint">
-                <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true"
-                      classname="com.pinterest.ktlint.Main" classpathref="maven.plugin.classpath">
-                  <arg value="-F"/>
-                  <arg value="src/**/*.kt"/>
+                <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classname="com.pinterest.ktlint.Main" classpathref="maven.plugin.classpath">
+                  <arg value="-F" />
+                  <arg value="src/**/*.kt" />
                 </java>
               </target>
             </configuration>
