@@ -95,9 +95,9 @@ abstract class AbstractEndpoint {
             "+$tmp"
     }
 
-    protected fun formattedPhoneNumber(phoneNumber: String): String {
-        val number = phoneNumberUtil.parse(phoneNumber, "")
-        return phoneNumberUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.E164)
+    protected fun formattedPhoneNumber(phoneNumber: String, country: String? = null): String {
+        val number = phoneNumberUtil.parse(phoneNumber, country ?: "")
+        return phoneNumberUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL)
     }
 
     protected fun encodeURLParam(text: String?): String =

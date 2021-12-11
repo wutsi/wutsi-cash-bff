@@ -55,7 +55,7 @@
         {
           "type": "Text",
           "attributes": {
-            "caption": "+237999999999"
+            "caption": "+237 999999999"
           },
           "children": []
         },
@@ -86,7 +86,7 @@
             {
               "type": "Button",
               "attributes": {
-                "caption": "Sent invitation to +237999999999",
+                "caption": "Sent invitation to +237 999999999",
                 "padding": 15.0,
                 "type": "Elevated"
               },

@@ -27,7 +27,7 @@ import kotlin.test.assertEquals
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class CashoutCommandTest : AbstractEndpointTest() {
     @LocalServerPort
-    public val port: Int = 0
+    val port: Int = 0
 
     private lateinit var url: String
 
@@ -55,11 +55,11 @@ internal class CashoutCommandTest : AbstractEndpointTest() {
         val response = rest.postForEntity(url, request, Action::class.java)
 
         // THEN
-        kotlin.test.assertEquals(200, response.statusCodeValue)
+        assertEquals(200, response.statusCodeValue)
 
         val action = response.body
-        kotlin.test.assertEquals(ActionType.Route, action.type)
-        kotlin.test.assertEquals("http://localhost:0/cashout/success?amount=${request.amount}", action.url)
+        assertEquals(ActionType.Route, action.type)
+        assertEquals("http://localhost:0/cashout/success?amount=${request.amount}", action.url)
     }
 
     @Test

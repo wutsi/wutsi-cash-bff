@@ -18,6 +18,23 @@
           "attributes": {},
           "children": [
             {
+              "type": "Text",
+              "attributes": {
+                "caption": "Your Balance: 50,000 XAF",
+                "color": "#FFFFFF",
+                "size": 18.0,
+                "alignment": "Center"
+              },
+              "children": []
+            },
+            {
+              "type": "Container",
+              "attributes": {
+                "padding": 20.0
+              },
+              "children": []
+            },
+            {
               "type": "Form",
               "attributes": {},
               "children": [
@@ -44,9 +61,7 @@
                 },
                 {
                   "type": "Container",
-                  "attributes": {
-                    "padding": 10.0
-                  },
+                  "attributes": {},
                   "children": [
                     {
                       "type": "Input",
@@ -78,7 +93,6 @@
   "appBar": {
     "type": "AppBar",
     "attributes": {
-      "title": "Send",
       "elevation": 0.0,
       "backgroundColor": "#1D7EDF",
       "foregroundColor": "#FFFFFF",
@@ -86,15 +100,26 @@
         {
           "type": "IconButton",
           "attributes": {
-            "icon": "ef28"
+            "icon": "e57f"
           },
           "children": [],
           "action": {
             "type": "Route",
-            "url": "route:/~"
+            "url": "https://wutsi-shell-bff-test.herokuapp.com/settings"
           }
         }
-      ]
+      ],
+      "leading": {
+        "type": "IconButton",
+        "attributes": {
+          "icon": "e314"
+        },
+        "children": [],
+        "action": {
+          "type": "Route",
+          "url": "http://localhost:0/history"
+        }
+      }
     },
     "children": []
   }
