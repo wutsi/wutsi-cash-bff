@@ -31,9 +31,7 @@
               "children": [
                 {
                   "type": "Container",
-                  "attributes": {
-                    "padding": 10.0
-                  },
+                  "attributes": {},
                   "children": [
                     {
                       "type": "MoneyWithKeyboard",
@@ -43,7 +41,7 @@
                         "deleteText": "Delete",
                         "maxLength": 7,
                         "currency": "XAF",
-                        "keyboardButtonSize": 70.0,
+                        "keyboardButtonSize": 60.0,
                         "numberFormat": "#,###,##0"
                       },
                       "children": []
@@ -52,7 +50,9 @@
                 },
                 {
                   "type": "Container",
-                  "attributes": {},
+                  "attributes": {
+                    "padding": 10.0
+                  },
                   "children": [
                     {
                       "type": "DropdownButton",

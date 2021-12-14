@@ -70,7 +70,6 @@ class CashoutScreen(
                         Form(
                             children = listOf(
                                 Container(
-                                    padding = 10.0,
                                     child = MoneyWithKeyboard(
                                         name = "amount",
                                         maxLength = 7,
@@ -78,10 +77,11 @@ class CashoutScreen(
                                         deleteText = getText("keyboard.delete"),
                                         moneyColor = Theme.PRIMARY_COLOR,
                                         numberFormat = tenant.numberFormat,
-                                        keyboardButtonSize = 70.0
+                                        keyboardButtonSize = 60.0
                                     ),
                                 ),
                                 Container(
+                                    padding = 10.0,
                                     child = DropdownButton(
                                         value = paymentMethods[0].token,
                                         name = "paymentToken",
