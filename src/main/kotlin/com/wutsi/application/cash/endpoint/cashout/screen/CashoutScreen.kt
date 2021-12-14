@@ -16,10 +16,12 @@ import com.wutsi.flutter.sdui.Form
 import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.MoneyWithKeyboard
 import com.wutsi.flutter.sdui.Screen
+import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType.Command
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.InputType.Submit
+import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.core.Money
@@ -27,6 +29,7 @@ import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.text.DecimalFormat
 
 @RestController
 @RequestMapping("/cashout")
@@ -44,6 +47,7 @@ class CashoutScreen(
             securityManager.currentUserId()
         ).paymentMethods
         val balance = getBalance(tenant)
+        val balanceText = DecimalFormat(tenant.monetaryFormat).format(balance.value)
 
         return Screen(
             id = Page.CASHOUT,
@@ -55,9 +59,14 @@ class CashoutScreen(
             ),
             child = Container(
                 alignment = Center,
-                padding = 10.0,
                 child = Column(
                     children = listOf(
+                        Text(
+                            alignment = TextAlignment.Center,
+                            color = Theme.WHITE_COLOR,
+                            caption = getText("page.cashout.your-balance", arrayOf(balanceText)),
+                            size = Theme.LARGE_TEXT_SIZE,
+                        ),
                         Form(
                             children = listOf(
                                 Container(
@@ -72,9 +81,7 @@ class CashoutScreen(
                                         keyboardButtonSize = 70.0
                                     ),
                                 ),
-                                Container(padding = 20.0),
                                 Container(
-                                    padding = 10.0,
                                     child = DropdownButton(
                                         value = paymentMethods[0].token,
                                         name = "paymentToken",

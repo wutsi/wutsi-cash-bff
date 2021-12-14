@@ -8,14 +8,23 @@
     {
       "type": "Container",
       "attributes": {
-        "alignment": "Center",
-        "padding": 10.0
+        "alignment": "Center"
       },
       "children": [
         {
           "type": "Column",
           "attributes": {},
           "children": [
+            {
+              "type": "Text",
+              "attributes": {
+                "caption": "Your Balance: 50,000 XAF",
+                "color": "#FFFFFF",
+                "size": 18.0,
+                "alignment": "Center"
+              },
+              "children": []
+            },
             {
               "type": "Form",
               "attributes": {},
@@ -43,16 +52,7 @@
                 },
                 {
                   "type": "Container",
-                  "attributes": {
-                    "padding": 20.0
-                  },
-                  "children": []
-                },
-                {
-                  "type": "Container",
-                  "attributes": {
-                    "padding": 10.0
-                  },
+                  "attributes": {},
                   "children": [
                     {
                       "type": "DropdownButton",
