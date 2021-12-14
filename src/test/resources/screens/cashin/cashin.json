@@ -16,21 +16,13 @@
           "attributes": {},
           "children": [
             {
-              "type": "Container",
+              "type": "Text",
               "attributes": {
-                "padding": 10.0
+                "caption": "Your Balance: 0 XAF",
+                "size": 18.0,
+                "alignment": "Center"
               },
-              "children": [
-                {
-                  "type": "Text",
-                  "attributes": {
-                    "caption": "Your Balance: 0 XAF",
-                    "size": 18.0,
-                    "alignment": "Center"
-                  },
-                  "children": []
-                }
-              ]
+              "children": []
             },
             {
               "type": "Form",
@@ -76,9 +68,7 @@
                 },
                 {
                   "type": "Container",
-                  "attributes": {
-                    "padding": 10.0
-                  },
+                  "attributes": {},
                   "children": [
                     {
                       "type": "MoneyWithKeyboard",

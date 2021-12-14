@@ -61,13 +61,10 @@ class CashinScreen(
                 alignment = Center,
                 child = Column(
                     children = listOf(
-                        Container(
-                            padding = 10.0,
-                            child = Text(
-                                alignment = TextAlignment.Center,
-                                caption = getText("page.cashin.your-balance", arrayOf(balanceText)),
-                                size = Theme.LARGE_TEXT_SIZE,
-                            ),
+                        Text(
+                            alignment = TextAlignment.Center,
+                            caption = getText("page.cashin.your-balance", arrayOf(balanceText)),
+                            size = Theme.LARGE_TEXT_SIZE,
                         ),
                         Form(
                             children = listOf(
@@ -87,7 +84,6 @@ class CashinScreen(
                                     ),
                                 ),
                                 Container(
-                                    padding = 10.0,
                                     child = MoneyWithKeyboard(
                                         name = "amount",
                                         maxLength = 7,
