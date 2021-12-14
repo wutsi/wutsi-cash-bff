@@ -101,8 +101,8 @@ internal class CashoutCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error, action.prompt?.type)
-        assertEquals(getText("prompt.error.transaction-failed"), action.prompt?.message)
+        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
+        assertEquals(getText("prompt.error.transaction-failed"), action.prompt?.attributes?.get("message"))
     }
 
     private fun createFeignException(errorCode: String, downstreamError: ErrorCode) = FeignException.Conflict(

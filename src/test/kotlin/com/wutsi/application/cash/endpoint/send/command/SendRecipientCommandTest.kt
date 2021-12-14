@@ -23,7 +23,7 @@ import kotlin.test.assertEquals
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class SendRecipientCommandTest : AbstractEndpointTest() {
     @LocalServerPort
-    public val port: Int = 0
+    val port: Int = 0
 
     private lateinit var url: String
 
@@ -93,10 +93,10 @@ internal class SendRecipientCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error, action.prompt?.type)
+        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(
             messages.getMessage("prompt.error.self-transfer", emptyArray(), Locale.ENGLISH),
-            action.prompt?.message
+            action.prompt?.attributes?.get("message")
         )
     }
 }

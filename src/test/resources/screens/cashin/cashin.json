@@ -8,14 +8,30 @@
     {
       "type": "Container",
       "attributes": {
-        "alignment": "Center",
-        "padding": 10.0
+        "alignment": "Center"
       },
       "children": [
         {
           "type": "Column",
           "attributes": {},
           "children": [
+            {
+              "type": "Container",
+              "attributes": {
+                "padding": 10.0
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "Your Balance: 0 XAF",
+                    "size": 18.0,
+                    "alignment": "Center"
+                  },
+                  "children": []
+                }
+              ]
+            },
             {
               "type": "Form",
               "attributes": {},
@@ -81,7 +97,9 @@
                 },
                 {
                   "type": "Container",
-                  "attributes": {},
+                  "attributes": {
+                    "padding": 10.0
+                  },
                   "children": [
                     {
                       "type": "Input",

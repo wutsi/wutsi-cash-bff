@@ -67,7 +67,7 @@ class SendRecipientCommand(
                 prompt = Dialog(
                     type = DialogType.Error,
                     message = getText("prompt.error.self-transfer")
-                )
+                ).toWidget()
             )
         }
 

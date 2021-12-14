@@ -29,7 +29,7 @@ import kotlin.test.assertEquals
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class SendCommandTest : AbstractEndpointTest() {
     @LocalServerPort
-    public val port: Int = 0
+    val port: Int = 0
 
     private lateinit var url: String
 
@@ -79,8 +79,8 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error, action.prompt?.type)
-        assertEquals(getText("prompt.error.transaction-failed"), action.prompt?.message)
+        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
+        assertEquals(getText("prompt.error.transaction-failed"), action.prompt?.attributes?.get("message"))
     }
 
     @Test
@@ -100,8 +100,11 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error, action.prompt?.type)
-        assertEquals(getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS"), action.prompt?.message)
+        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
+        assertEquals(
+            getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS"),
+            action.prompt?.attributes?.get("message")
+        )
     }
 
     @Test
@@ -121,8 +124,11 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error, action.prompt?.type)
-        assertEquals(getText("prompt.error.transaction-failed.PAYEE_NOT_ALLOWED_TO_RECEIVE"), action.prompt?.message)
+        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
+        assertEquals(
+            getText("prompt.error.transaction-failed.PAYEE_NOT_ALLOWED_TO_RECEIVE"),
+            action.prompt?.attributes?.get("message")
+        )
     }
 
     private fun createFeignException(code: String, errorCode: ErrorCode = NONE) = FeignException.Conflict(

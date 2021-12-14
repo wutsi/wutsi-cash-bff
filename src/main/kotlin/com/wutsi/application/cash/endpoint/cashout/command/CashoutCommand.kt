@@ -75,7 +75,7 @@ class CashoutCommand(
                 prompt = Dialog(
                     type = Error,
                     message = getText("prompt.error.amount-required")
-                )
+                ).toWidget()
             )
 
         if (request.amount < tenant.limits.minCashout) {
@@ -85,7 +85,7 @@ class CashoutCommand(
                 prompt = Dialog(
                     type = Error,
                     message = getText("prompt.error.min-cashout", arrayOf(amountText))
-                )
+                ).toWidget()
             )
         }
         return null

@@ -56,7 +56,7 @@ abstract class AbstractEndpoint {
                 title = getText("prompt.error.title"),
                 type = Error,
                 message = message
-            )
+            ).toWidget()
         )
         log(action, e)
         return action
@@ -66,7 +66,7 @@ abstract class AbstractEndpoint {
         logger.add("action_type", action.type)
         logger.add("action_url", action.url)
         logger.add("action_prompt_type", action.prompt?.type)
-        logger.add("action_prompt_message", action.prompt?.message)
+        logger.add("action_prompt_message", action.prompt?.attributes?.get("message"))
         logger.add("exception", e::class.java)
         logger.add("exception_message", e.message)
 
