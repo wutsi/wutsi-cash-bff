@@ -14,7 +14,7 @@ import com.wutsi.flutter.sdui.DropdownButton
 import com.wutsi.flutter.sdui.DropdownMenuItem
 import com.wutsi.flutter.sdui.Form
 import com.wutsi.flutter.sdui.Input
-import com.wutsi.flutter.sdui.MoneyWithSlider
+import com.wutsi.flutter.sdui.MoneyWithKeyboard
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType.Command
@@ -62,13 +62,14 @@ class CashoutScreen(
                             children = listOf(
                                 Container(
                                     padding = 10.0,
-                                    child = MoneyWithSlider(
+                                    child = MoneyWithKeyboard(
                                         name = "amount",
                                         maxLength = 7,
                                         currency = tenant.currency,
+                                        deleteText = getText("keyboard.delete"),
                                         moneyColor = Theme.PRIMARY_COLOR,
                                         numberFormat = tenant.numberFormat,
-                                        maxValue = balance.value.toInt()
+                                        keyboardButtonSize = 70.0
                                     ),
                                 ),
                                 Container(padding = 20.0),

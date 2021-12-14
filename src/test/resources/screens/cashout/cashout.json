@@ -27,13 +27,14 @@
                   },
                   "children": [
                     {
-                      "type": "MoneyWithSlider",
+                      "type": "MoneyWithKeyboard",
                       "attributes": {
                         "name": "amount",
                         "moneyColor": "#1D7EDF",
-                        "maxValue": 50000,
+                        "deleteText": "Delete",
                         "maxLength": 7,
                         "currency": "XAF",
+                        "keyboardButtonSize": 70.0,
                         "numberFormat": "#,###,##0"
                       },
                       "children": []
