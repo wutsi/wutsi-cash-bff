@@ -63,7 +63,6 @@ class CashoutScreen(
                     children = listOf(
                         Text(
                             alignment = TextAlignment.Center,
-                            color = Theme.WHITE_COLOR,
                             caption = getText("page.cashout.your-balance", arrayOf(balanceText)),
                             size = Theme.LARGE_TEXT_SIZE,
                         ),

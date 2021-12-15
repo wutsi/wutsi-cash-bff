@@ -19,7 +19,6 @@
               "type": "Text",
               "attributes": {
                 "caption": "Your Balance: 50,000 XAF",
-                "color": "#FFFFFF",
                 "size": 18.0,
                 "alignment": "Center"
               },
