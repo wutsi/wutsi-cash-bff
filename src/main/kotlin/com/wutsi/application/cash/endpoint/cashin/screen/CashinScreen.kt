@@ -61,29 +61,31 @@ class CashinScreen(
                 alignment = Center,
                 child = Column(
                     children = listOf(
-                        Text(
-                            alignment = TextAlignment.Center,
-                            caption = getText("page.cashin.your-balance", arrayOf(balanceText)),
-                            size = Theme.LARGE_TEXT_SIZE,
+                        Container(
+                            padding = 10.0,
+                            child = Text(
+                                alignment = TextAlignment.Center,
+                                caption = getText("page.cashin.your-balance", arrayOf(balanceText)),
+                                size = Theme.LARGE_TEXT_SIZE,
+                            )
                         ),
                         Form(
                             children = listOf(
-                                Container(
-                                    padding = 10.0,
-                                    child = DropdownButton(
-                                        value = paymentMethods[0].token,
-                                        name = "paymentToken",
-                                        required = true,
-                                        children = paymentMethods.map {
-                                            DropdownMenuItem(
-                                                caption = it.maskedNumber,
-                                                value = it.token,
-                                                icon = getMobileCarrier(it, tenant)?.let { tenantProvider.logo(it) }
-                                            )
-                                        }
-                                    ),
+                                DropdownButton(
+                                    value = paymentMethods[0].token,
+                                    name = "paymentToken",
+                                    required = true,
+                                    children = paymentMethods.map {
+                                        DropdownMenuItem(
+                                            caption = formattedPhoneNumber(it.phone?.number, it.phone?.country)
+                                                ?: it.maskedNumber,
+                                            value = it.token,
+                                            icon = getMobileCarrier(it, tenant)?.let { tenantProvider.logo(it) }
+                                        )
+                                    }
                                 ),
                                 Container(
+                                    padding = 10.0,
                                     child = MoneyWithKeyboard(
                                         name = "amount",
                                         maxLength = 7,
@@ -91,7 +93,6 @@ class CashinScreen(
                                         deleteText = getText("keyboard.delete"),
                                         moneyColor = Theme.PRIMARY_COLOR,
                                         numberFormat = tenant.numberFormat,
-                                        keyboardButtonSize = 70.0
                                     ),
                                 ),
                                 Container(

@@ -152,7 +152,7 @@ class HistoryScreen(
                 child = account?.pictureUrl?.let { Image(width = 48.0, height = 48.0, url = it) }
                     ?: Text(
                         caption = StringUtil.initials(account?.displayName),
-                        size = Theme.LARGE_TEXT_SIZE,
+                        size = Theme.X_LARGE_TEXT_SIZE,
                         bold = true
                     )
             )

@@ -16,36 +16,37 @@
           "attributes": {},
           "children": [
             {
-              "type": "Text",
+              "type": "Container",
               "attributes": {
-                "caption": "Your Balance: 50,000 XAF",
-                "size": 18.0,
-                "alignment": "Center"
+                "padding": 10.0
               },
-              "children": []
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "Your Balance: 50,000 XAF",
+                    "size": 16.0,
+                    "alignment": "Center"
+                  },
+                  "children": []
+                }
+              ]
             },
             {
               "type": "Form",
               "attributes": {},
               "children": [
                 {
-                  "type": "Container",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "type": "MoneyWithKeyboard",
-                      "attributes": {
-                        "name": "amount",
-                        "moneyColor": "#1D7EDF",
-                        "deleteText": "Delete",
-                        "maxLength": 7,
-                        "currency": "XAF",
-                        "keyboardButtonSize": 60.0,
-                        "numberFormat": "#,###,##0"
-                      },
-                      "children": []
-                    }
-                  ]
+                  "type": "MoneyWithKeyboard",
+                  "attributes": {
+                    "name": "amount",
+                    "moneyColor": "#1D7EDF",
+                    "deleteText": "Delete",
+                    "maxLength": 7,
+                    "currency": "XAF",
+                    "numberFormat": "#,###,##0"
+                  },
+                  "children": []
                 },
                 {
                   "type": "Container",

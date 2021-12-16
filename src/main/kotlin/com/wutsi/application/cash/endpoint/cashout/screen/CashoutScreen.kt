@@ -61,23 +61,23 @@ class CashoutScreen(
                 alignment = Center,
                 child = Column(
                     children = listOf(
-                        Text(
-                            alignment = TextAlignment.Center,
-                            caption = getText("page.cashout.your-balance", arrayOf(balanceText)),
-                            size = Theme.LARGE_TEXT_SIZE,
+                        Container(
+                            padding = 10.0,
+                            child = Text(
+                                alignment = TextAlignment.Center,
+                                caption = getText("page.cashout.your-balance", arrayOf(balanceText)),
+                                size = Theme.LARGE_TEXT_SIZE,
+                            ),
                         ),
                         Form(
                             children = listOf(
-                                Container(
-                                    child = MoneyWithKeyboard(
-                                        name = "amount",
-                                        maxLength = 7,
-                                        currency = tenant.currency,
-                                        deleteText = getText("keyboard.delete"),
-                                        moneyColor = Theme.PRIMARY_COLOR,
-                                        numberFormat = tenant.numberFormat,
-                                        keyboardButtonSize = 60.0
-                                    ),
+                                MoneyWithKeyboard(
+                                    name = "amount",
+                                    maxLength = 7,
+                                    currency = tenant.currency,
+                                    deleteText = getText("keyboard.delete"),
+                                    moneyColor = Theme.PRIMARY_COLOR,
+                                    numberFormat = tenant.numberFormat,
                                 ),
                                 Container(
                                     padding = 10.0,
@@ -87,7 +87,8 @@ class CashoutScreen(
                                         required = true,
                                         children = paymentMethods.map {
                                             DropdownMenuItem(
-                                                caption = it.maskedNumber,
+                                                caption = formattedPhoneNumber(it.phone?.number, it.phone?.country)
+                                                    ?: it.maskedNumber,
                                                 value = it.token,
                                                 icon = getMobileCarrier(it, tenant)?.let {
                                                     tenantProvider.logo(

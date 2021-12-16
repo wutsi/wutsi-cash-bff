@@ -1,8 +1,8 @@
 package com.wutsi.application.cash.endpoint
 
 object Theme {
-    const val LARGER_TEXT_SIZE = 16.0
-    const val LARGE_TEXT_SIZE = 18.0
+    const val LARGE_TEXT_SIZE = 16.0
+    const val X_LARGE_TEXT_SIZE = 18.0
     const val SMALL_TEXT_SIZE = 10.0
     const val PRIMARY_COLOR = "#1D7EDF"
     const val WARNING_COLOR = "#FFC107"

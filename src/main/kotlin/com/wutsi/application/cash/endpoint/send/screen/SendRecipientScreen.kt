@@ -118,7 +118,7 @@ class SendRecipientScreen(
                                     "page.send-recipient.phone.title"
                                 ),
                                 alignment = TextAlignment.Center,
-                                size = Theme.LARGER_TEXT_SIZE,
+                                size = Theme.LARGE_TEXT_SIZE,
                                 color = Theme.PRIMARY_COLOR,
                                 bold = true
                             )
@@ -185,7 +185,7 @@ class SendRecipientScreen(
                                 "page.send-recipient.contact.title"
                             ),
                             alignment = TextAlignment.Left,
-                            size = Theme.LARGER_TEXT_SIZE,
+                            size = Theme.LARGE_TEXT_SIZE,
                             color = Theme.PRIMARY_COLOR,
                             bold = true,
                         )
@@ -222,7 +222,7 @@ class SendRecipientScreen(
             child = account.pictureUrl?.let { Image(width = 48.0, height = 48.0, url = it) }
                 ?: Text(
                     caption = StringUtil.initials(account.displayName),
-                    size = Theme.LARGE_TEXT_SIZE,
+                    size = Theme.X_LARGE_TEXT_SIZE,
                     bold = true
                 )
         ),

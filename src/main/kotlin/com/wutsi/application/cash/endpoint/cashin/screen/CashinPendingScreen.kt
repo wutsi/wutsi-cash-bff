@@ -52,7 +52,7 @@ class CashinPendingScreen : AbstractQuery() {
                             "page.cashin-pending.message_1"
                         ),
                         alignment = TextAlignment.Center,
-                        size = Theme.LARGE_TEXT_SIZE,
+                        size = Theme.X_LARGE_TEXT_SIZE,
                     )
                 ),
                 Container(
@@ -63,7 +63,7 @@ class CashinPendingScreen : AbstractQuery() {
                             "page.cashin-pending.message_2"
                         ),
                         alignment = TextAlignment.Center,
-                        size = Theme.LARGE_TEXT_SIZE,
+                        size = Theme.X_LARGE_TEXT_SIZE,
                     )
                 ),
                 Container(

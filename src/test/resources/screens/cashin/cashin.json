@@ -16,59 +16,61 @@
           "attributes": {},
           "children": [
             {
-              "type": "Text",
+              "type": "Container",
               "attributes": {
-                "caption": "Your Balance: 0 XAF",
-                "size": 18.0,
-                "alignment": "Center"
+                "padding": 10.0
               },
-              "children": []
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "Your Balance: 0 XAF",
+                    "size": 16.0,
+                    "alignment": "Center"
+                  },
+                  "children": []
+                }
+              ]
             },
             {
               "type": "Form",
               "attributes": {},
               "children": [
                 {
-                  "type": "Container",
+                  "type": "DropdownButton",
                   "attributes": {
-                    "padding": 10.0
+                    "name": "paymentToken",
+                    "value": "xxxxxx",
+                    "required": true
                   },
                   "children": [
                     {
-                      "type": "DropdownButton",
+                      "type": "DropdownMenuItem",
                       "attributes": {
-                        "name": "paymentToken",
-                        "value": "xxxxxx",
-                        "required": true
+                        "caption": "xxxx9999",
+                        "icon": "http://www.goole.com/images/mtn.png",
+                        "enabled": true,
+                        "value": "xxxxxx"
                       },
-                      "children": [
-                        {
-                          "type": "DropdownMenuItem",
-                          "attributes": {
-                            "caption": "xxxx9999",
-                            "icon": "http://www.goole.com/images/mtn.png",
-                            "enabled": true,
-                            "value": "xxxxxx"
-                          },
-                          "children": []
-                        },
-                        {
-                          "type": "DropdownMenuItem",
-                          "attributes": {
-                            "caption": "xxxx1111",
-                            "icon": "http://www.goole.com/images/orange.png",
-                            "enabled": true,
-                            "value": "yyyyy"
-                          },
-                          "children": []
-                        }
-                      ]
+                      "children": []
+                    },
+                    {
+                      "type": "DropdownMenuItem",
+                      "attributes": {
+                        "caption": "xxxx1111",
+                        "icon": "http://www.goole.com/images/orange.png",
+                        "enabled": true,
+                        "value": "yyyyy"
+                      },
+                      "children": []
                     }
                   ]
                 },
                 {
                   "type": "Container",
-                  "attributes": {},
+                  "attributes": {
+                    "padding": 10.0
+                  },
                   "children": [
                     {
                       "type": "MoneyWithKeyboard",
@@ -78,7 +80,6 @@
                         "deleteText": "Delete",
                         "maxLength": 7,
                         "currency": "XAF",
-                        "keyboardButtonSize": 70.0,
                         "numberFormat": "#,###,##0"
                       },
                       "children": []

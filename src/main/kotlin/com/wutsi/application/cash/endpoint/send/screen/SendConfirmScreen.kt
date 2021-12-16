@@ -137,17 +137,17 @@ class SendConfirmScreen(
                                     child = Text(
                                         caption = recipient.displayName ?: "",
                                         alignment = TextAlignment.Center,
-                                        size = Theme.LARGE_TEXT_SIZE,
+                                        size = Theme.X_LARGE_TEXT_SIZE,
                                         color = Theme.PRIMARY_COLOR,
                                         bold = true,
                                     )
                                 ),
                                 phoneNumber?.let {
                                     Text(
-                                        caption = formattedPhoneNumber(it),
+                                        caption = formattedPhoneNumber(it)!!,
                                         alignment = TextAlignment.Center,
                                         color = Theme.BLACK_COLOR,
-                                        size = Theme.LARGE_TEXT_SIZE,
+                                        size = Theme.X_LARGE_TEXT_SIZE,
                                     )
                                 } ?: Container()
                             )
@@ -204,11 +204,11 @@ class SendConfirmScreen(
                     child = Text(
                         caption = getText("page.send-confirm.recipient-not-found"),
                         alignment = TextAlignment.Center,
-                        size = Theme.LARGE_TEXT_SIZE,
+                        size = Theme.X_LARGE_TEXT_SIZE,
                     )
                 ),
                 Text(
-                    caption = formattedPhoneNumber(phoneNumber)
+                    caption = formattedPhoneNumber(phoneNumber) ?: phoneNumber
                 ),
                 Container(
                     alignment = Center,
@@ -216,7 +216,7 @@ class SendConfirmScreen(
                     child = Text(
                         caption = getText("page.send-confirm.invite", arrayOf(tenant.name)),
                         alignment = TextAlignment.Center,
-                        size = Theme.LARGE_TEXT_SIZE,
+                        size = Theme.X_LARGE_TEXT_SIZE,
                     )
                 ),
                 Container(

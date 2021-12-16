@@ -95,7 +95,10 @@ abstract class AbstractEndpoint {
             "+$tmp"
     }
 
-    protected fun formattedPhoneNumber(phoneNumber: String, country: String? = null): String {
+    protected fun formattedPhoneNumber(phoneNumber: String?, country: String? = null): String? {
+        if (phoneNumber == null)
+            return null
+
         val number = phoneNumberUtil.parse(phoneNumber, country ?: "")
         return phoneNumberUtil.format(number, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL)
     }

@@ -11,22 +11,14 @@
       "attributes": {},
       "children": [
         {
-          "type": "Container",
+          "type": "Text",
           "attributes": {
-            "padding": 10.0
+            "caption": "Your Balance: 50,000 XAF",
+            "color": "#FFFFFF",
+            "size": 16.0,
+            "alignment": "Center"
           },
-          "children": [
-            {
-              "type": "Text",
-              "attributes": {
-                "caption": "Your Balance: 50,000 XAF",
-                "color": "#FFFFFF",
-                "size": 16.0,
-                "alignment": "Center"
-              },
-              "children": []
-            }
-          ]
+          "children": []
         },
         {
           "type": "Form",

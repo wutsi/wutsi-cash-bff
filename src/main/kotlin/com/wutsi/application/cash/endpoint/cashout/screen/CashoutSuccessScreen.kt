@@ -59,7 +59,7 @@ class CashoutSuccessScreen(private val tenantProvider: TenantProvider) : Abstrac
                                 "page.cashout-success.message", arrayOf(formattedAmount)
                             ),
                             alignment = TextAlignment.Center,
-                            size = Theme.LARGE_TEXT_SIZE,
+                            size = Theme.X_LARGE_TEXT_SIZE,
                         )
                     ),
                     Container(

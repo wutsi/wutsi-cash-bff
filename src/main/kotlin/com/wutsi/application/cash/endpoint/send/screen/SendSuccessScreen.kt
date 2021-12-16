@@ -59,7 +59,7 @@ class SendSuccessScreen(private val tenantProvider: TenantProvider) : AbstractQu
                                 "page.send-success.message", arrayOf(formattedAmount, recipientName)
                             ),
                             alignment = TextAlignment.Center,
-                            size = Theme.LARGE_TEXT_SIZE,
+                            size = Theme.X_LARGE_TEXT_SIZE,
                         )
                     ),
                     Container(

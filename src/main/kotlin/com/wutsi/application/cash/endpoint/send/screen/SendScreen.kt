@@ -71,14 +71,11 @@ class SendScreen(
             ),
             child = Column(
                 children = listOf(
-                    Container(
-                        padding = 10.0,
-                        child = Text(
-                            alignment = TextAlignment.Center,
-                            color = Theme.WHITE_COLOR,
-                            caption = getText("page.send.your-balance", arrayOf(balanceText)),
-                            size = Theme.LARGER_TEXT_SIZE,
-                        )
+                    Text(
+                        alignment = TextAlignment.Center,
+                        color = Theme.WHITE_COLOR,
+                        caption = getText("page.send.your-balance", arrayOf(balanceText)),
+                        size = Theme.LARGE_TEXT_SIZE,
                     ),
                     Form(
                         children = listOf(
