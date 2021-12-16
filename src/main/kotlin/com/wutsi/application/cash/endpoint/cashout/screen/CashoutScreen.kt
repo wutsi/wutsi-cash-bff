@@ -76,7 +76,7 @@ class CashoutScreen(
                                         value = if (paymentMethods.size == 1) paymentMethods[0].token else null,
                                         name = "paymentToken",
                                         required = true,
-                                        hint = getText("page.cashin.payment-token.hint"),
+                                        hint = getText("page.cashout.payment-token.hint"),
                                         children = paymentMethods.map {
                                             DropdownMenuItem(
                                                 caption = formattedPhoneNumber(it.phone?.number, it.phone?.country)

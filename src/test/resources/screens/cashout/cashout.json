@@ -45,7 +45,7 @@
                       "type": "DropdownButton",
                       "attributes": {
                         "name": "paymentToken",
-                        "hint": "Choose the Account",
+                        "hint": "Choose an Account",
                         "required": true
                       },
                       "children": [
