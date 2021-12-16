@@ -90,7 +90,6 @@ class CashinScreen(
                                         name = "amount",
                                         maxLength = 7,
                                         currency = tenant.currency,
-                                        deleteText = getText("keyboard.delete"),
                                         moneyColor = Theme.PRIMARY_COLOR,
                                         numberFormat = tenant.numberFormat,
                                     ),

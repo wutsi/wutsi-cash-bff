@@ -77,7 +77,6 @@
                       "attributes": {
                         "name": "amount",
                         "moneyColor": "#1D7EDF",
-                        "deleteText": "Delete",
                         "maxLength": 7,
                         "currency": "XAF",
                         "numberFormat": "#,###,##0"

@@ -85,7 +85,6 @@ class SendScreen(
                                     name = "amount",
                                     maxLength = 7,
                                     currency = tenant.currency,
-                                    deleteText = getText("keyboard.delete"),
                                     moneyColor = Theme.WHITE_COLOR,
                                     keyboardColor = Theme.WHITE_COLOR,
                                     numberFormat = tenant.numberFormat,
