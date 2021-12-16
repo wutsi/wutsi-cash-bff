@@ -25,7 +25,6 @@
                   "type": "Text",
                   "attributes": {
                     "caption": "Your Balance: 0 XAF",
-                    "size": 16.0,
                     "alignment": "Center"
                   },
                   "children": []
@@ -37,40 +36,46 @@
               "attributes": {},
               "children": [
                 {
-                  "type": "DropdownButton",
+                  "type": "Container",
                   "attributes": {
-                    "name": "paymentToken",
-                    "value": "xxxxxx",
-                    "required": true
+                    "padding": 10.0
                   },
                   "children": [
                     {
-                      "type": "DropdownMenuItem",
+                      "type": "DropdownButton",
                       "attributes": {
-                        "caption": "xxxx9999",
-                        "icon": "http://www.goole.com/images/mtn.png",
-                        "enabled": true,
-                        "value": "xxxxxx"
+                        "name": "paymentToken",
+                        "hint": "Choose the Account",
+                        "required": true
                       },
-                      "children": []
-                    },
-                    {
-                      "type": "DropdownMenuItem",
-                      "attributes": {
-                        "caption": "xxxx1111",
-                        "icon": "http://www.goole.com/images/orange.png",
-                        "enabled": true,
-                        "value": "yyyyy"
-                      },
-                      "children": []
+                      "children": [
+                        {
+                          "type": "DropdownMenuItem",
+                          "attributes": {
+                            "caption": "xxxx9999",
+                            "icon": "http://www.goole.com/images/mtn.png",
+                            "enabled": true,
+                            "value": "xxxxxx"
+                          },
+                          "children": []
+                        },
+                        {
+                          "type": "DropdownMenuItem",
+                          "attributes": {
+                            "caption": "xxxx1111",
+                            "icon": "http://www.goole.com/images/orange.png",
+                            "enabled": true,
+                            "value": "yyyyy"
+                          },
+                          "children": []
+                        }
+                      ]
                     }
                   ]
                 },
                 {
                   "type": "Container",
-                  "attributes": {
-                    "padding": 10.0
-                  },
+                  "attributes": {},
                   "children": [
                     {
                       "type": "MoneyWithKeyboard",

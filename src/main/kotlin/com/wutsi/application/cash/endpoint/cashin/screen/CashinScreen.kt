@@ -66,26 +66,28 @@ class CashinScreen(
                             child = Text(
                                 alignment = TextAlignment.Center,
                                 caption = getText("page.cashin.your-balance", arrayOf(balanceText)),
-                                size = Theme.LARGE_TEXT_SIZE,
                             )
                         ),
                         Form(
                             children = listOf(
-                                DropdownButton(
-                                    value = paymentMethods[0].token,
-                                    name = "paymentToken",
-                                    required = true,
-                                    children = paymentMethods.map {
-                                        DropdownMenuItem(
-                                            caption = formattedPhoneNumber(it.phone?.number, it.phone?.country)
-                                                ?: it.maskedNumber,
-                                            value = it.token,
-                                            icon = getMobileCarrier(it, tenant)?.let { tenantProvider.logo(it) }
-                                        )
-                                    }
-                                ),
                                 Container(
                                     padding = 10.0,
+                                    child = DropdownButton(
+                                        value = if (paymentMethods.size == 1) paymentMethods[0].token else null,
+                                        name = "paymentToken",
+                                        required = true,
+                                        hint = getText("page.cashin.payment-token.hint"),
+                                        children = paymentMethods.map {
+                                            DropdownMenuItem(
+                                                caption = formattedPhoneNumber(it.phone?.number, it.phone?.country)
+                                                    ?: it.maskedNumber,
+                                                value = it.token,
+                                                icon = getMobileCarrier(it, tenant)?.let { tenantProvider.logo(it) }
+                                            )
+                                        }
+                                    )
+                                ),
+                                Container(
                                     child = MoneyWithKeyboard(
                                         name = "amount",
                                         maxLength = 7,

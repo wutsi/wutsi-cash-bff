@@ -25,7 +25,6 @@
                   "type": "Text",
                   "attributes": {
                     "caption": "Your Balance: 50,000 XAF",
-                    "size": 16.0,
                     "alignment": "Center"
                   },
                   "children": []
@@ -37,17 +36,6 @@
               "attributes": {},
               "children": [
                 {
-                  "type": "MoneyWithKeyboard",
-                  "attributes": {
-                    "name": "amount",
-                    "moneyColor": "#1D7EDF",
-                    "maxLength": 7,
-                    "currency": "XAF",
-                    "numberFormat": "#,###,##0"
-                  },
-                  "children": []
-                },
-                {
                   "type": "Container",
                   "attributes": {
                     "padding": 10.0
@@ -57,7 +45,7 @@
                       "type": "DropdownButton",
                       "attributes": {
                         "name": "paymentToken",
-                        "value": "xxxxxx",
+                        "hint": "Choose the Account",
                         "required": true
                       },
                       "children": [
@@ -84,6 +72,17 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "type": "MoneyWithKeyboard",
+                  "attributes": {
+                    "name": "amount",
+                    "moneyColor": "#1D7EDF",
+                    "maxLength": 7,
+                    "currency": "XAF",
+                    "numberFormat": "#,###,##0"
+                  },
+                  "children": []
                 },
                 {
                   "type": "Container",
