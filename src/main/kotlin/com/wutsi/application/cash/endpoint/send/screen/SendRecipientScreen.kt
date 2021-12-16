@@ -106,7 +106,6 @@ class SendRecipientScreen(
 
     private fun phoneTab(amount: Double, amountText: String, tenant: Tenant) = Container(
         alignment = Center,
-        padding = 20.0,
         child = Column(
             children = listOf(
                 Form(
@@ -119,7 +118,7 @@ class SendRecipientScreen(
                                     "page.send-recipient.phone.title"
                                 ),
                                 alignment = TextAlignment.Center,
-                                size = Theme.X_LARGE_TEXT_SIZE,
+                                size = Theme.LARGER_TEXT_SIZE,
                                 color = Theme.PRIMARY_COLOR,
                                 bold = true
                             )
@@ -132,12 +131,8 @@ class SendRecipientScreen(
                                     "page.send-recipient.phone.sub-title"
                                 ),
                                 alignment = TextAlignment.Center,
-                                size = Theme.LARGE_TEXT_SIZE,
                                 color = Theme.BLACK_COLOR,
                             )
-                        ),
-                        Container(
-                            padding = 20.0
                         ),
                         Container(
                             padding = 10.0,
@@ -183,9 +178,6 @@ class SendRecipientScreen(
             child = Column(
                 children = listOf(
                     Container(
-                        padding = 10.0
-                    ),
-                    Container(
                         padding = 10.0,
                         alignment = Center,
                         child = Text(
@@ -193,7 +185,7 @@ class SendRecipientScreen(
                                 "page.send-recipient.contact.title"
                             ),
                             alignment = TextAlignment.Left,
-                            size = Theme.X_LARGE_TEXT_SIZE,
+                            size = Theme.LARGER_TEXT_SIZE,
                             color = Theme.PRIMARY_COLOR,
                             bold = true,
                         )
@@ -206,7 +198,6 @@ class SendRecipientScreen(
                                 "page.send-recipient.contact.sub-title"
                             ),
                             alignment = TextAlignment.Left,
-                            size = Theme.LARGE_TEXT_SIZE,
                             color = Theme.BLACK_COLOR,
                         )
                     ),

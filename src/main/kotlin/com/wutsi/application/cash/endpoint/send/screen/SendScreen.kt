@@ -19,7 +19,6 @@ import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType.Command
 import com.wutsi.flutter.sdui.enums.ActionType.Route
-import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.InputType.Submit
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.payment.WutsiPaymentApi
@@ -70,44 +69,41 @@ class SendScreen(
                     )
                 )
             ),
-            child = Container(
-                alignment = Center,
-                child = Column(
-                    children = listOf(
-                        Text(
+            child = Column(
+                children = listOf(
+                    Container(
+                        padding = 10.0,
+                        child = Text(
                             alignment = TextAlignment.Center,
                             color = Theme.WHITE_COLOR,
                             caption = getText("page.send.your-balance", arrayOf(balanceText)),
-                            size = Theme.LARGE_TEXT_SIZE,
-                        ),
-                        Container(
-                            padding = 20.0,
-                        ),
-                        Form(
-                            children = listOf(
-                                Container(
-                                    padding = 10.0,
-                                    child = MoneyWithKeyboard(
-                                        name = "amount",
-                                        maxLength = 7,
-                                        currency = tenant.currency,
-                                        deleteText = getText("keyboard.delete"),
-                                        moneyColor = Theme.WHITE_COLOR,
-                                        keyboardColor = Theme.WHITE_COLOR,
-                                        numberFormat = tenant.numberFormat,
-                                        value = 0
-                                    ),
+                            size = Theme.LARGER_TEXT_SIZE,
+                        )
+                    ),
+                    Form(
+                        children = listOf(
+                            Container(
+                                padding = 10.0,
+                                child = MoneyWithKeyboard(
+                                    name = "amount",
+                                    maxLength = 7,
+                                    currency = tenant.currency,
+                                    deleteText = getText("keyboard.delete"),
+                                    moneyColor = Theme.WHITE_COLOR,
+                                    keyboardColor = Theme.WHITE_COLOR,
+                                    numberFormat = tenant.numberFormat,
+                                    value = 0
                                 ),
-                                Container(
-                                    padding = 10.0,
-                                    child = Input(
-                                        name = "command",
-                                        type = Submit,
-                                        caption = getText("page.send.button.submit"),
-                                        action = Action(
-                                            type = Command,
-                                            url = urlBuilder.build("commands/send/amount")
-                                        )
+                            ),
+                            Container(
+                                padding = 10.0,
+                                child = Input(
+                                    name = "command",
+                                    type = Submit,
+                                    caption = getText("page.send.button.submit"),
+                                    action = Action(
+                                        type = Command,
+                                        url = urlBuilder.build("commands/send/amount")
                                     )
                                 )
                             )
@@ -118,16 +114,16 @@ class SendScreen(
         ).toWidget()
     }
 
-    private fun getBalance(tenant: Tenant): Money {
+    private fun getBalance(tenant: Tenant): Money =
         try {
             val userId = securityManager.currentUserId()
             val balance = paymentApi.getBalance(userId).balance
-            return Money(
+
+            Money(
                 value = balance.amount,
                 currency = balance.currency
             )
         } catch (ex: Throwable) {
-            return Money(currency = tenant.currency)
+            Money(currency = tenant.currency)
         }
-    }
 }

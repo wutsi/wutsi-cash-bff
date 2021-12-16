@@ -1,7 +1,7 @@
 package com.wutsi.application.cash.endpoint
 
 object Theme {
-    const val X_LARGE_TEXT_SIZE = 25.0
+    const val LARGER_TEXT_SIZE = 16.0
     const val LARGE_TEXT_SIZE = 18.0
     const val SMALL_TEXT_SIZE = 10.0
     const val PRIMARY_COLOR = "#1D7EDF"
@@ -12,7 +12,7 @@ object Theme {
     const val BLACK_COLOR = "#000000"
     const val DIVIDER_COLOR = "#8c8c8c"
     const val ICON_CANCEL = "ef28"
-    const val ICON_CHECK = "e15a"
+    const val ICON_CHECK = "e856"
     const val ICON_CHEVRON_RIGHT = "e15f"
     const val ICON_CONTACT = "eb93"
     const val ICON_HISTORY = "e314"

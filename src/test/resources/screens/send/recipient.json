@@ -27,13 +27,6 @@
                     {
                       "type": "Container",
                       "attributes": {
-                        "padding": 10.0
-                      },
-                      "children": []
-                    },
-                    {
-                      "type": "Container",
-                      "attributes": {
                         "alignment": "Center",
                         "padding": 10.0
                       },
@@ -44,7 +37,7 @@
                             "caption": "Send to Contact",
                             "color": "#1D7EDF",
                             "bold": true,
-                            "size": 25.0,
+                            "size": 16.0,
                             "alignment": "Left"
                           },
                           "children": []
@@ -63,7 +56,6 @@
                           "attributes": {
                             "caption": "Select the recipient from you Contacts",
                             "color": "#000000",
-                            "size": 18.0,
                             "alignment": "Left"
                           },
                           "children": []
@@ -169,8 +161,7 @@
             {
               "type": "Container",
               "attributes": {
-                "alignment": "Center",
-                "padding": 20.0
+                "alignment": "Center"
               },
               "children": [
                 {
@@ -194,7 +185,7 @@
                                 "caption": "Send to Phone",
                                 "color": "#1D7EDF",
                                 "bold": true,
-                                "size": 25.0,
+                                "size": 16.0,
                                 "alignment": "Center"
                               },
                               "children": []
@@ -213,19 +204,11 @@
                               "attributes": {
                                 "caption": "Enter the phone number of the recipient",
                                 "color": "#000000",
-                                "size": 18.0,
                                 "alignment": "Center"
                               },
                               "children": []
                             }
                           ]
-                        },
-                        {
-                          "type": "Container",
-                          "attributes": {
-                            "padding": 20.0
-                          },
-                          "children": []
                         },
                         {
                           "type": "Container",
