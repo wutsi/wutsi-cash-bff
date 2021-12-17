@@ -34,7 +34,7 @@
     <wutsi-platform-core.version>0.0.78</wutsi-platform-core.version>
     <wutsi-account.version>1.0.18</wutsi-account.version>
     <wutsi-contact.version>0.0.3</wutsi-contact.version>
-    <wutsi-payment.version>0.0.19</wutsi-payment.version>
+    <wutsi-payment.version>0.0.21</wutsi-payment.version>
     <wutsi-tenant.version>0.0.10</wutsi-tenant.version>
     <wutsi-platform-payment.version>0.0.63</wutsi-platform-payment.version>
   </properties>
