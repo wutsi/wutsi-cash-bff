@@ -9,6 +9,7 @@ import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.CircleAvatar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
+import com.wutsi.flutter.sdui.Divider
 import com.wutsi.flutter.sdui.Flexible
 import com.wutsi.flutter.sdui.Image
 import com.wutsi.flutter.sdui.ListView
@@ -44,15 +45,10 @@ class HistoryScreen(
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {
-        val txs = findTransactions()
-        val children: List<WidgetAware> = if (txs.isEmpty()) {
-            emptyList()
-        } else {
-            val accounts = findAccounts(txs)
-            val paymentMethods = findPaymentMethods()
-            val tenant = tenantProvider.get()
-            txs.map { toListItem(it, accounts, paymentMethods, tenant) }
-        }
+        val limit = 30
+        val tenant = tenantProvider.get()
+        val balance = getBalance(tenant)
+        val balanceText = DecimalFormat(tenant.monetaryFormat).format(balance.value)
 
         return Screen(
             id = Page.HISTORY,
@@ -60,20 +56,52 @@ class HistoryScreen(
                 elevation = 0.0,
                 backgroundColor = Theme.WHITE_COLOR,
                 foregroundColor = Theme.BLACK_COLOR,
-                title = getText("page.history.app-bar.title")
+                title = getText("page.history.app-bar.title", arrayOf(balanceText))
             ),
-            child = ListView(
-                separator = true,
-                children = children
+            child = Column(
+                children = listOf(
+                    Container(
+                        padding = 10.0,
+                        child = Text(getText("page.history.title", arrayOf(limit))),
+                    ),
+                    Divider(color = Theme.DIVIDER_COLOR, height = 1.0),
+                    Flexible(
+                        child = transactionsWidget(limit, tenant)
+                    )
+                )
             ),
         ).toWidget()
     }
 
-    private fun findTransactions(): List<TransactionSummary> =
+    private fun transactionsWidget(limit: Int, tenant: Tenant): WidgetAware {
+        val txs = findTransactions(limit)
+        if (txs.isEmpty())
+            return Container(
+                padding = 20.0,
+                alignment = Alignment.TopCenter,
+                child = Text(
+                    getText("page.history.no-transaction"),
+                    bold = true,
+                    size = Theme.LARGE_TEXT_SIZE,
+                    alignment = TextAlignment.Center
+                )
+            )
+
+        val accounts = findAccounts(txs)
+        val paymentMethods = findPaymentMethods()
+        return Flexible(
+            child = ListView(
+                separator = true,
+                children = txs.map { toListItem(it, accounts, paymentMethods, tenant) }
+            )
+        )
+    }
+
+    private fun findTransactions(limit: Int): List<TransactionSummary> =
         paymentApi.searchTransaction(
             SearchTransactionRequest(
                 accountId = securityManager.currentUserId(),
-                limit = 30,
+                limit = limit,
                 offset = 0
             )
         ).transactions

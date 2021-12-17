@@ -6,10 +6,8 @@
   },
   "children": [
     {
-      "type": "ListView",
-      "attributes": {
-        "separator": true
-      },
+      "type": "Column",
+      "attributes": {},
       "children": [
         {
           "type": "Container",
@@ -18,812 +16,861 @@
           },
           "children": [
             {
-              "type": "Row",
+              "type": "Text",
               "attributes": {
-                "mainAxisAlignment": "start",
-                "crossAxisAlignment": "start"
+                "caption": "Your last 30 transactions."
               },
-              "children": [
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 2,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopLeft"
-                      },
-                      "children": [
-                        {
-                          "type": "Image",
-                          "attributes": {
-                            "url": "",
-                            "width": 48.0,
-                            "height": 48.0
-                          },
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 6,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopLeft",
-                        "padding": 5.0
-                      },
-                      "children": [
-                        {
-                          "type": "Column",
-                          "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
-                            "crossAxisAlignment": "start"
-                          },
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "Add Cash From: 11111"
-                              },
-                              "children": []
-                            },
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "Sample description"
-                              },
-                              "children": []
-                            },
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "Failed",
-                                "color": "#8B0000",
-                                "bold": true,
-                                "size": 10.0
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 4,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopRight",
-                        "padding": 5.0
-                      },
-                      "children": [
-                        {
-                          "type": "Column",
-                          "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
-                            "crossAxisAlignment": "end"
-                          },
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "10,000 XAF",
-                                "color": "#8B0000",
-                                "bold": true,
-                                "alignment": "Right"
-                              },
-                              "children": []
-                            },
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "01 Jan 2021",
-                                "size": 10.0,
-                                "alignment": "Right"
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "children": []
             }
           ]
         },
         {
-          "type": "Container",
+          "type": "Divider",
           "attributes": {
-            "padding": 10.0
+            "height": 1.0,
+            "color": "#8c8c8c"
           },
-          "children": [
-            {
-              "type": "Row",
-              "attributes": {
-                "mainAxisAlignment": "start",
-                "crossAxisAlignment": "start"
-              },
-              "children": [
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 2,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopLeft"
-                      },
-                      "children": [
-                        {
-                          "type": "Image",
-                          "attributes": {
-                            "url": "",
-                            "width": 48.0,
-                            "height": 48.0
-                          },
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 6,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopLeft",
-                        "padding": 5.0
-                      },
-                      "children": [
-                        {
-                          "type": "Column",
-                          "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
-                            "crossAxisAlignment": "start"
-                          },
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "Add Cash From: 11111"
-                              },
-                              "children": []
-                            },
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "Sample description"
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 4,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopRight",
-                        "padding": 5.0
-                      },
-                      "children": [
-                        {
-                          "type": "Column",
-                          "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
-                            "crossAxisAlignment": "end"
-                          },
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "10,000 XAF",
-                                "color": "#1D7EDF",
-                                "bold": true,
-                                "alignment": "Right"
-                              },
-                              "children": []
-                            },
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "01 Jan 2021",
-                                "size": 10.0,
-                                "alignment": "Right"
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "children": []
         },
         {
-          "type": "Container",
+          "type": "Flexible",
           "attributes": {
-            "padding": 10.0
+            "flex": 1,
+            "fit": "Tight"
           },
           "children": [
             {
-              "type": "Row",
+              "type": "Flexible",
               "attributes": {
-                "mainAxisAlignment": "start",
-                "crossAxisAlignment": "start"
+                "flex": 1,
+                "fit": "Tight"
               },
               "children": [
                 {
-                  "type": "Flexible",
+                  "type": "ListView",
                   "attributes": {
-                    "flex": 2,
-                    "fit": "Tight"
+                    "separator": true
                   },
                   "children": [
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopLeft"
+                        "padding": 10.0
                       },
                       "children": [
                         {
-                          "type": "CircleAvatar",
+                          "type": "Row",
                           "attributes": {
-                            "radius": 24.0
-                          },
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "N1",
-                                "bold": true,
-                                "size": 18.0
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 6,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopLeft",
-                        "padding": 5.0
-                      },
-                      "children": [
-                        {
-                          "type": "Column",
-                          "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
+                            "mainAxisAlignment": "start",
                             "crossAxisAlignment": "start"
                           },
                           "children": [
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "To: Name 100"
+                                "flex": 2,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Image",
+                                      "attributes": {
+                                        "url": "",
+                                        "width": 48.0,
+                                        "height": 48.0
+                                      },
+                                      "children": []
+                                    }
+                                  ]
+                                }
+                              ]
                             },
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "Sample description"
+                                "flex": 6,
+                                "fit": "Tight"
                               },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 4,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopRight",
-                        "padding": 5.0
-                      },
-                      "children": [
-                        {
-                          "type": "Column",
-                          "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
-                            "crossAxisAlignment": "end"
-                          },
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "10,000 XAF",
-                                "color": "#1D7EDF",
-                                "bold": true,
-                                "alignment": "Right"
-                              },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "start"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Add Cash From: 11111"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Sample description"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Failed",
+                                            "color": "#8B0000",
+                                            "bold": true,
+                                            "size": 10.0
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             },
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "01 Jan 2021",
-                                "size": 10.0,
-                                "alignment": "Right"
+                                "flex": 4,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopRight",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "end"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "10,000 XAF",
+                                            "color": "#8B0000",
+                                            "bold": true,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "01 Jan 2021",
+                                            "size": 10.0,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             }
                           ]
                         }
                       ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "Container",
-          "attributes": {
-            "padding": 10.0
-          },
-          "children": [
-            {
-              "type": "Row",
-              "attributes": {
-                "mainAxisAlignment": "start",
-                "crossAxisAlignment": "start"
-              },
-              "children": [
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 2,
-                    "fit": "Tight"
-                  },
-                  "children": [
+                    },
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopLeft"
+                        "padding": 10.0
                       },
                       "children": [
                         {
-                          "type": "CircleAvatar",
+                          "type": "Row",
                           "attributes": {
-                            "radius": 24.0
-                          },
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "N1",
-                                "bold": true,
-                                "size": 18.0
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 6,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopLeft",
-                        "padding": 5.0
-                      },
-                      "children": [
-                        {
-                          "type": "Column",
-                          "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
+                            "mainAxisAlignment": "start",
                             "crossAxisAlignment": "start"
                           },
                           "children": [
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "From: Name 101"
+                                "flex": 2,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Image",
+                                      "attributes": {
+                                        "url": "",
+                                        "width": 48.0,
+                                        "height": 48.0
+                                      },
+                                      "children": []
+                                    }
+                                  ]
+                                }
+                              ]
                             },
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "Sample description"
+                                "flex": 6,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "start"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Add Cash From: 11111"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Sample description"
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             },
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "Processing...",
-                                "color": "#FFC107",
-                                "bold": true,
-                                "size": 10.0
+                                "flex": 4,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopRight",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "end"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "10,000 XAF",
+                                            "color": "#1D7EDF",
+                                            "bold": true,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "01 Jan 2021",
+                                            "size": 10.0,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             }
                           ]
                         }
                       ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 4,
-                    "fit": "Tight"
-                  },
-                  "children": [
+                    },
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopRight",
-                        "padding": 5.0
+                        "padding": 10.0
                       },
                       "children": [
                         {
-                          "type": "Column",
+                          "type": "Row",
                           "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
-                            "crossAxisAlignment": "end"
-                          },
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "10,000 XAF",
-                                "color": "#FFC107",
-                                "bold": true,
-                                "alignment": "Right"
-                              },
-                              "children": []
-                            },
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "01 Jan 2021",
-                                "size": 10.0,
-                                "alignment": "Right"
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "Container",
-          "attributes": {
-            "padding": 10.0
-          },
-          "children": [
-            {
-              "type": "Row",
-              "attributes": {
-                "mainAxisAlignment": "start",
-                "crossAxisAlignment": "start"
-              },
-              "children": [
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 2,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopLeft"
-                      },
-                      "children": [
-                        {
-                          "type": "CircleAvatar",
-                          "attributes": {
-                            "radius": 24.0
-                          },
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "N1",
-                                "bold": true,
-                                "size": 18.0
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 6,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopLeft",
-                        "padding": 5.0
-                      },
-                      "children": [
-                        {
-                          "type": "Column",
-                          "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
+                            "mainAxisAlignment": "start",
                             "crossAxisAlignment": "start"
                           },
                           "children": [
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "From: Name 101"
+                                "flex": 2,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "CircleAvatar",
+                                      "attributes": {
+                                        "radius": 24.0
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "N1",
+                                            "bold": true,
+                                            "size": 18.0
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             },
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "Sample description"
+                                "flex": 6,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "start"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "To: Name 100"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Sample description"
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "Flexible",
+                              "attributes": {
+                                "flex": 4,
+                                "fit": "Tight"
+                              },
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopRight",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "end"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "10,000 XAF",
+                                            "color": "#1D7EDF",
+                                            "bold": true,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "01 Jan 2021",
+                                            "size": 10.0,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             }
                           ]
                         }
                       ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 4,
-                    "fit": "Tight"
-                  },
-                  "children": [
+                    },
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopRight",
-                        "padding": 5.0
+                        "padding": 10.0
                       },
                       "children": [
                         {
-                          "type": "Column",
+                          "type": "Row",
                           "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
-                            "crossAxisAlignment": "end"
-                          },
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "10,000 XAF",
-                                "color": "#1D7EDF",
-                                "bold": true,
-                                "alignment": "Right"
-                              },
-                              "children": []
-                            },
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "01 Jan 2021",
-                                "size": 10.0,
-                                "alignment": "Right"
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "Container",
-          "attributes": {
-            "padding": 10.0
-          },
-          "children": [
-            {
-              "type": "Row",
-              "attributes": {
-                "mainAxisAlignment": "start",
-                "crossAxisAlignment": "start"
-              },
-              "children": [
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 2,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopLeft"
-                      },
-                      "children": [
-                        {
-                          "type": "Image",
-                          "attributes": {
-                            "url": "",
-                            "width": 48.0,
-                            "height": 48.0
-                          },
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 6,
-                    "fit": "Tight"
-                  },
-                  "children": [
-                    {
-                      "type": "Container",
-                      "attributes": {
-                        "alignment": "TopLeft",
-                        "padding": 5.0
-                      },
-                      "children": [
-                        {
-                          "type": "Column",
-                          "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
+                            "mainAxisAlignment": "start",
                             "crossAxisAlignment": "start"
                           },
                           "children": [
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "Cash out To: 22222"
+                                "flex": 2,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "CircleAvatar",
+                                      "attributes": {
+                                        "radius": 24.0
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "N1",
+                                            "bold": true,
+                                            "size": 18.0
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             },
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "Sample description"
+                                "flex": 6,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "start"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "From: Name 101"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Sample description"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Processing...",
+                                            "color": "#FFC107",
+                                            "bold": true,
+                                            "size": 10.0
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "Flexible",
+                              "attributes": {
+                                "flex": 4,
+                                "fit": "Tight"
+                              },
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopRight",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "end"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "10,000 XAF",
+                                            "color": "#FFC107",
+                                            "bold": true,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "01 Jan 2021",
+                                            "size": 10.0,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             }
                           ]
                         }
                       ]
-                    }
-                  ]
-                },
-                {
-                  "type": "Flexible",
-                  "attributes": {
-                    "flex": 4,
-                    "fit": "Tight"
-                  },
-                  "children": [
+                    },
                     {
                       "type": "Container",
                       "attributes": {
-                        "alignment": "TopRight",
-                        "padding": 5.0
+                        "padding": 10.0
                       },
                       "children": [
                         {
-                          "type": "Column",
+                          "type": "Row",
                           "attributes": {
-                            "mainAxisAlignment": "spaceBetween",
-                            "crossAxisAlignment": "end"
+                            "mainAxisAlignment": "start",
+                            "crossAxisAlignment": "start"
                           },
                           "children": [
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "10,000 XAF",
-                                "color": "#1D7EDF",
-                                "bold": true,
-                                "alignment": "Right"
+                                "flex": 2,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "CircleAvatar",
+                                      "attributes": {
+                                        "radius": 24.0
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "N1",
+                                            "bold": true,
+                                            "size": 18.0
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             },
                             {
-                              "type": "Text",
+                              "type": "Flexible",
                               "attributes": {
-                                "caption": "01 Jan 2021",
-                                "size": 10.0,
-                                "alignment": "Right"
+                                "flex": 6,
+                                "fit": "Tight"
                               },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "start"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "From: Name 101"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Sample description"
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "Flexible",
+                              "attributes": {
+                                "flex": 4,
+                                "fit": "Tight"
+                              },
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopRight",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "end"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "10,000 XAF",
+                                            "color": "#1D7EDF",
+                                            "bold": true,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "01 Jan 2021",
+                                            "size": 10.0,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Container",
+                      "attributes": {
+                        "padding": 10.0
+                      },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "attributes": {
+                            "mainAxisAlignment": "start",
+                            "crossAxisAlignment": "start"
+                          },
+                          "children": [
+                            {
+                              "type": "Flexible",
+                              "attributes": {
+                                "flex": 2,
+                                "fit": "Tight"
+                              },
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Image",
+                                      "attributes": {
+                                        "url": "",
+                                        "width": 48.0,
+                                        "height": 48.0
+                                      },
+                                      "children": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "Flexible",
+                              "attributes": {
+                                "flex": 6,
+                                "fit": "Tight"
+                              },
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopLeft",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "start"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Cash out To: 22222"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "Sample description"
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "Flexible",
+                              "attributes": {
+                                "flex": 4,
+                                "fit": "Tight"
+                              },
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "alignment": "TopRight",
+                                    "padding": 5.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Column",
+                                      "attributes": {
+                                        "mainAxisAlignment": "spaceBetween",
+                                        "crossAxisAlignment": "end"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "10,000 XAF",
+                                            "color": "#1D7EDF",
+                                            "bold": true,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        },
+                                        {
+                                          "type": "Text",
+                                          "attributes": {
+                                            "caption": "01 Jan 2021",
+                                            "size": 10.0,
+                                            "alignment": "Right"
+                                          },
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             }
                           ]
                         }
@@ -841,7 +888,7 @@
   "appBar": {
     "type": "AppBar",
     "attributes": {
-      "title": "Transaction History",
+      "title": "100,000 XAF",
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
       "foregroundColor": "#000000"

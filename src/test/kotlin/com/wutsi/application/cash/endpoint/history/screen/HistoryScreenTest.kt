@@ -60,6 +60,13 @@ internal class HistoryScreenTest : AbstractEndpointTest() {
         assertEndpointEquals("/screens/history/history.json", url)
     }
 
+    @Test
+    fun noTransactions() {
+        doReturn(SearchTransactionResponse()).whenever(paymentApi).searchTransaction(any())
+
+        assertEndpointEquals("/screens/history/history-empty.json", url)
+    }
+
     private fun createTransferTransactionSummary(accountId: Long, recipientId: Long, status: String = "SUCCESSFUL") =
         TransactionSummary(
             accountId = accountId,

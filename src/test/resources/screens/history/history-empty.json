@@ -1,0 +1,76 @@
+{
+  "type": "Screen",
+  "attributes": {
+    "id": "page.history",
+    "safe": false
+  },
+  "children": [
+    {
+      "type": "Column",
+      "attributes": {},
+      "children": [
+        {
+          "type": "Container",
+          "attributes": {
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "Text",
+              "attributes": {
+                "caption": "Your last 30 transactions."
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Divider",
+          "attributes": {
+            "height": 1.0,
+            "color": "#8c8c8c"
+          },
+          "children": []
+        },
+        {
+          "type": "Flexible",
+          "attributes": {
+            "flex": 1,
+            "fit": "Tight"
+          },
+          "children": [
+            {
+              "type": "Container",
+              "attributes": {
+                "alignment": "TopCenter",
+                "padding": 20.0
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "No Transaction.",
+                    "bold": true,
+                    "size": 16.0,
+                    "alignment": "Center"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appBar": {
+    "type": "AppBar",
+    "attributes": {
+      "title": "100,000 XAF",
+      "elevation": 0.0,
+      "backgroundColor": "#FFFFFF",
+      "foregroundColor": "#000000"
+    },
+    "children": []
+  }
+}
