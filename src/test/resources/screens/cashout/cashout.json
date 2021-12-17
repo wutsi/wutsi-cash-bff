@@ -64,6 +64,7 @@
                     "moneyColor": "#1D7EDF",
                     "maxLength": 7,
                     "currency": "XAF",
+                    "keyboardButtonSize": 65.0,
                     "numberFormat": "#,###,##0"
                   },
                   "children": []
@@ -104,7 +105,7 @@
   "appBar": {
     "type": "AppBar",
     "attributes": {
-      "title": "Balance: 50,000 XAF",
+      "title": "50,000 XAF",
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
       "foregroundColor": "#000000"

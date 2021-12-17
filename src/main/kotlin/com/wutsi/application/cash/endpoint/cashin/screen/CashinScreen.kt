@@ -79,6 +79,7 @@ class CashinScreen(
                                         currency = tenant.currency,
                                         moneyColor = Theme.PRIMARY_COLOR,
                                         numberFormat = tenant.numberFormat,
+                                        keyboardButtonSize = 65.0
                                     ),
                                 ),
                                 Container(

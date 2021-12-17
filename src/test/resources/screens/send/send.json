@@ -69,7 +69,7 @@
   "appBar": {
     "type": "AppBar",
     "attributes": {
-      "title": "Balance: 50,000 XAF",
+      "title": "50,000 XAF",
       "elevation": 0.0,
       "backgroundColor": "#1D7EDF",
       "foregroundColor": "#FFFFFF",

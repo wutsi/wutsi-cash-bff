@@ -78,6 +78,7 @@ class CashoutScreen(
                                     currency = tenant.currency,
                                     moneyColor = Theme.PRIMARY_COLOR,
                                     numberFormat = tenant.numberFormat,
+                                    keyboardButtonSize = 65.0
                                 ),
                                 Container(
                                     padding = 10.0,
