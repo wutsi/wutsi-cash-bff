@@ -255,10 +255,10 @@ class HistoryScreen(
     ): String {
         if (tx.type == "CASHIN") {
             val paymentMethod = paymentMethods[tx.paymentMethodToken]
-            return getText("page.history.cashout.caption", arrayOf(paymentMethod?.maskedNumber ?: ""))
+            return getText("page.history.cashout.caption", arrayOf(getPhoneNumber(paymentMethod)))
         } else if (tx.type == "CASHOUT") {
             val paymentMethod = paymentMethods[tx.paymentMethodToken]
-            return getText("page.history.cashin.caption", arrayOf(paymentMethod?.maskedNumber ?: ""))
+            return getText("page.history.cashin.caption", arrayOf(getPhoneNumber(paymentMethod)))
         } else {
             val account = getAccount(tx, accounts)
             return if (tx.accountId == securityManager.currentUserId())
@@ -267,6 +267,11 @@ class HistoryScreen(
                 getText("page.history.transfer.from.caption", arrayOf(account?.displayName ?: ""))
         }
     }
+
+    private fun getPhoneNumber(paymentMethod: PaymentMethodSummary?): String =
+        formattedPhoneNumber(paymentMethod?.phone?.number, paymentMethod?.phone?.country)
+            ?: paymentMethod?.maskedNumber
+            ?: ""
 
     private fun getAccount(tx: TransactionSummary, accounts: Map<Long, AccountSummary>): AccountSummary? =
         if (tx.accountId == securityManager.currentUserId())
