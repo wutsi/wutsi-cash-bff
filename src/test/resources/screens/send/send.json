@@ -11,23 +11,6 @@
       "attributes": {},
       "children": [
         {
-          "type": "Container",
-          "attributes": {
-            "padding": 10.0
-          },
-          "children": [
-            {
-              "type": "Text",
-              "attributes": {
-                "caption": "Your Balance: 50,000 XAF",
-                "color": "#FFFFFF",
-                "alignment": "Center"
-              },
-              "children": []
-            }
-          ]
-        },
-        {
           "type": "Form",
           "attributes": {},
           "children": [
@@ -86,6 +69,7 @@
   "appBar": {
     "type": "AppBar",
     "attributes": {
+      "title": "Balance: 50,000 XAF",
       "elevation": 0.0,
       "backgroundColor": "#1D7EDF",
       "foregroundColor": "#FFFFFF",

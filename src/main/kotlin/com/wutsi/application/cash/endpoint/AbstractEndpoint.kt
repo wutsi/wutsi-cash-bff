@@ -3,6 +3,7 @@ package com.wutsi.application.cash.endpoint
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.wutsi.application.cash.exception.PasswordInvalidException
 import com.wutsi.application.cash.exception.TransactionException
+import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Dialog
 import com.wutsi.flutter.sdui.enums.ActionType.Page
@@ -11,6 +12,8 @@ import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.DialogType.Error
 import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.core.logging.KVLogger
+import com.wutsi.platform.payment.WutsiPaymentApi
+import com.wutsi.platform.payment.core.Money
 import com.wutsi.platform.tenant.dto.MobileCarrier
 import com.wutsi.platform.tenant.dto.Tenant
 import org.slf4j.LoggerFactory
@@ -25,10 +28,16 @@ abstract class AbstractEndpoint {
     private lateinit var messages: MessageSource
 
     @Autowired
-    private lateinit var logger: KVLogger
+    protected lateinit var logger: KVLogger
 
     @Autowired
     private lateinit var phoneNumberUtil: PhoneNumberUtil
+
+    @Autowired
+    protected lateinit var paymentApi: WutsiPaymentApi
+
+    @Autowired
+    protected lateinit var securityManager: SecurityManager
 
     @ExceptionHandler(Throwable::class)
     fun onThrowable(ex: Throwable): Action =
@@ -108,4 +117,17 @@ abstract class AbstractEndpoint {
 
     protected fun getMobileCarrier(paymentMethod: PaymentMethodSummary, tenant: Tenant): MobileCarrier? =
         tenant.mobileCarriers.findLast { it.code.equals(paymentMethod.provider, true) }
+
+    protected fun getBalance(tenant: Tenant): Money {
+        try {
+            val userId = securityManager.currentUserId()
+            val balance = paymentApi.getBalance(userId).balance
+            return Money(
+                value = balance.amount,
+                currency = balance.currency
+            )
+        } catch (ex: Throwable) {
+            return Money(currency = tenant.currency)
+        }
+    }
 }

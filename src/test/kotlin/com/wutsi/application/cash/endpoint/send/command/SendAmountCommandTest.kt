@@ -11,14 +11,12 @@ import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.account.dto.ListPaymentMethodResponse
 import com.wutsi.platform.account.dto.PaymentMethodSummary
-import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.dto.Balance
 import com.wutsi.platform.payment.dto.GetBalanceResponse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.context.MessageSource
 import java.util.Locale
@@ -33,9 +31,6 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
 
     @Autowired
     private lateinit var messages: MessageSource
-
-    @MockBean
-    private lateinit var paymentApi: WutsiPaymentApi
 
     @BeforeEach
     override fun setUp() {

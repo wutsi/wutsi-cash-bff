@@ -8,13 +8,11 @@ import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.ListPaymentMethodResponse
 import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountResponse
-import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.dto.SearchTransactionResponse
 import com.wutsi.platform.payment.dto.TransactionSummary
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.web.server.LocalServerPort
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -22,12 +20,9 @@ import java.time.ZoneOffset
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class HistoryScreenTest : AbstractEndpointTest() {
     @LocalServerPort
-    public val port: Int = 0
+    val port: Int = 0
 
     private lateinit var url: String
-
-    @MockBean
-    private lateinit var paymentApi: WutsiPaymentApi
 
     @BeforeEach
     override fun setUp() {

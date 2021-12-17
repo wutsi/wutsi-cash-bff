@@ -3,7 +3,6 @@ package com.wutsi.application.cash.endpoint.history.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.endpoint.Theme
-import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.util.StringUtil
 import com.wutsi.flutter.sdui.AppBar
@@ -26,7 +25,6 @@ import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountRequest
-import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.dto.SearchTransactionRequest
 import com.wutsi.platform.payment.dto.TransactionSummary
 import com.wutsi.platform.tenant.dto.MobileCarrier
@@ -43,8 +41,6 @@ import java.time.format.DateTimeFormatter
 class HistoryScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
-    private val securityManager: SecurityManager,
-    private val paymentApi: WutsiPaymentApi,
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {

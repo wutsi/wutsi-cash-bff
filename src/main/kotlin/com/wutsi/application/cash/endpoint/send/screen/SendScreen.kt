@@ -3,7 +3,6 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.endpoint.Theme
-import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
@@ -15,15 +14,10 @@ import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.MoneyWithKeyboard
 import com.wutsi.flutter.sdui.Screen
-import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType.Command
 import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.InputType.Submit
-import com.wutsi.flutter.sdui.enums.TextAlignment
-import com.wutsi.platform.payment.WutsiPaymentApi
-import com.wutsi.platform.payment.core.Money
-import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -35,8 +29,6 @@ import java.text.DecimalFormat
 class SendScreen(
     private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
-    private val paymentApi: WutsiPaymentApi,
-    private val securityManager: SecurityManager,
 
     @Value("\${wutsi.application.shell-url}") private val shellUrl: String
 ) : AbstractQuery() {
@@ -52,6 +44,7 @@ class SendScreen(
                 elevation = 0.0,
                 backgroundColor = Theme.PRIMARY_COLOR,
                 foregroundColor = Theme.WHITE_COLOR,
+                title = getText("page.send.app-bar.title", arrayOf(balanceText)),
                 leading = IconButton(
                     icon = Theme.ICON_HISTORY,
                     action = Action(
@@ -71,14 +64,6 @@ class SendScreen(
             ),
             child = Column(
                 children = listOf(
-                    Container(
-                        padding = 10.0,
-                        child = Text(
-                            alignment = TextAlignment.Center,
-                            color = Theme.WHITE_COLOR,
-                            caption = getText("page.send.your-balance", arrayOf(balanceText)),
-                        )
-                    ),
                     Form(
                         children = listOf(
                             Container(
@@ -111,17 +96,4 @@ class SendScreen(
             ),
         ).toWidget()
     }
-
-    private fun getBalance(tenant: Tenant): Money =
-        try {
-            val userId = securityManager.currentUserId()
-            val balance = paymentApi.getBalance(userId).balance
-
-            Money(
-                value = balance.amount,
-                currency = balance.currency
-            )
-        } catch (ex: Throwable) {
-            Money(currency = tenant.currency)
-        }
 }

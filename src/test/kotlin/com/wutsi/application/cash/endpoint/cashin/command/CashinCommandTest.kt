@@ -9,7 +9,6 @@ import com.wutsi.application.cash.endpoint.cashin.dto.CashinRequest
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.DialogType
-import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashinResponse
@@ -20,7 +19,6 @@ import feign.RequestTemplate
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.web.server.LocalServerPort
 import java.nio.charset.Charset
 import kotlin.test.assertEquals
@@ -31,9 +29,6 @@ internal class CashinCommandTest : AbstractEndpointTest() {
     val port: Int = 0
 
     private lateinit var url: String
-
-    @MockBean
-    private lateinit var paymentApi: WutsiPaymentApi
 
     @BeforeEach
     override fun setUp() {

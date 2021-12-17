@@ -7,8 +7,6 @@ import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType.Route
-import com.wutsi.platform.core.logging.KVLogger
-import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.dto.CreateTransferRequest
 import feign.FeignException
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/commands/send")
 class SendCommand(
-    private val logger: KVLogger,
-    private val paymentApi: WutsiPaymentApi,
     private val tenantProvider: TenantProvider,
     private val urlBuilder: URLBuilder,
     private val objectMapper: ObjectMapper,

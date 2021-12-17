@@ -16,22 +16,6 @@
           "attributes": {},
           "children": [
             {
-              "type": "Container",
-              "attributes": {
-                "padding": 10.0
-              },
-              "children": [
-                {
-                  "type": "Text",
-                  "attributes": {
-                    "caption": "Your Balance: 50,000 XAF",
-                    "alignment": "Center"
-                  },
-                  "children": []
-                }
-              ]
-            },
-            {
               "type": "Form",
               "attributes": {},
               "children": [
@@ -120,7 +104,7 @@
   "appBar": {
     "type": "AppBar",
     "attributes": {
-      "title": "Cash Out",
+      "title": "Balance: 50,000 XAF",
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
       "foregroundColor": "#000000"

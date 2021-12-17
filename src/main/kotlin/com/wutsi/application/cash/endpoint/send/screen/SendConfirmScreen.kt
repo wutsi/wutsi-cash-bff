@@ -3,7 +3,6 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.endpoint.Theme
-import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.application.cash.util.StringUtil.initials
@@ -47,7 +46,6 @@ class SendConfirmScreen(
     private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
     private val userApi: WutsiAccountApi,
-    private val securityManager: SecurityManager,
     @Value("\${wutsi.application.login-url}") private val loginUrl: String,
 ) : AbstractQuery() {
     @PostMapping

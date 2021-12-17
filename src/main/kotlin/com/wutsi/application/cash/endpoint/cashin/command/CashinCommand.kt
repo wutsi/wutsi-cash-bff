@@ -11,8 +11,6 @@ import com.wutsi.flutter.sdui.Dialog
 import com.wutsi.flutter.sdui.enums.ActionType.Prompt
 import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.DialogType.Error
-import com.wutsi.platform.core.logging.KVLogger
-import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashinRequest
 import com.wutsi.platform.tenant.dto.Tenant
@@ -27,9 +25,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/commands/cashin")
 class CashinCommand(
-    private val paymentApi: WutsiPaymentApi,
     private val tenantProvider: TenantProvider,
-    private val logger: KVLogger,
     private val urlBuilder: URLBuilder,
     private val objectMapper: ObjectMapper,
 ) : AbstractCommand() {

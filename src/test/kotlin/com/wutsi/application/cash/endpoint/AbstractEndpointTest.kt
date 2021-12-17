@@ -19,6 +19,9 @@ import com.wutsi.platform.core.test.TestTokenProvider
 import com.wutsi.platform.core.tracing.TracingContext
 import com.wutsi.platform.core.tracing.spring.SpringTracingRequestInterceptor
 import com.wutsi.platform.core.util.URN
+import com.wutsi.platform.payment.WutsiPaymentApi
+import com.wutsi.platform.payment.dto.Balance
+import com.wutsi.platform.payment.dto.GetBalanceResponse
 import com.wutsi.platform.tenant.WutsiTenantApi
 import com.wutsi.platform.tenant.dto.GetTenantResponse
 import com.wutsi.platform.tenant.dto.Limits
@@ -53,6 +56,9 @@ abstract class AbstractEndpointTest {
 
     @MockBean
     protected lateinit var accountApi: WutsiAccountApi
+
+    @MockBean
+    protected lateinit var paymentApi: WutsiPaymentApi
 
     @Autowired
     private lateinit var messages: MessageSource
@@ -129,6 +135,13 @@ abstract class AbstractEndpointTest {
             status = "ACTIVE",
         )
         doReturn(GetAccountResponse(account)).whenever(accountApi).getAccount(any())
+
+        val balance = Balance(
+            amount = 100000.0,
+            currency = "XAF",
+            userId = USER_ID
+        )
+        doReturn(GetBalanceResponse(balance)).whenever(paymentApi).getBalance(any())
 
         rest = createResTemplate()
     }

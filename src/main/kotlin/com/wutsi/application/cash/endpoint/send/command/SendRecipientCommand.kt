@@ -2,7 +2,6 @@ package com.wutsi.application.cash.endpoint.send.command
 
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.send.dto.SendRecipientRequest
-import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Dialog
@@ -11,7 +10,6 @@ import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.SearchAccountRequest
-import com.wutsi.platform.core.logging.KVLogger
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -22,10 +20,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/commands/send/recipient")
 class SendRecipientCommand(
-    private val logger: KVLogger,
     private val urlBuilder: URLBuilder,
     private val accountApi: WutsiAccountApi,
-    private val securityManager: SecurityManager
 ) : AbstractCommand() {
     @PostMapping
     fun index(

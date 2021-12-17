@@ -3,7 +3,6 @@ package com.wutsi.application.cash.endpoint.cashout.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.cash.endpoint.Theme
-import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
@@ -16,16 +15,11 @@ import com.wutsi.flutter.sdui.Form
 import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.MoneyWithKeyboard
 import com.wutsi.flutter.sdui.Screen
-import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType.Command
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.InputType.Submit
-import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
-import com.wutsi.platform.payment.WutsiPaymentApi
-import com.wutsi.platform.payment.core.Money
-import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -37,8 +31,6 @@ class CashoutScreen(
     private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
-    private val securityManager: SecurityManager,
-    private val paymentApi: WutsiPaymentApi,
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {
@@ -55,19 +47,12 @@ class CashoutScreen(
                 elevation = 0.0,
                 backgroundColor = Theme.WHITE_COLOR,
                 foregroundColor = Theme.BLACK_COLOR,
-                title = getText("page.cashout.app-bar.title")
+                title = getText("page.cashout.app-bar.title", arrayOf(balanceText))
             ),
             child = Container(
                 alignment = Center,
                 child = Column(
                     children = listOf(
-                        Container(
-                            padding = 10.0,
-                            child = Text(
-                                alignment = TextAlignment.Center,
-                                caption = getText("page.cashout.your-balance", arrayOf(balanceText)),
-                            ),
-                        ),
                         Form(
                             children = listOf(
                                 Container(
@@ -112,18 +97,5 @@ class CashoutScreen(
                 )
             ),
         ).toWidget()
-    }
-
-    private fun getBalance(tenant: Tenant): Money {
-        try {
-            val userId = securityManager.currentUserId()
-            val balance = paymentApi.getBalance(userId).balance
-            return Money(
-                value = balance.amount,
-                currency = balance.currency
-            )
-        } catch (ex: Throwable) {
-            return Money(currency = tenant.currency)
-        }
     }
 }
