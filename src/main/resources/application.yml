@@ -41,6 +41,9 @@ wutsi:
     login-url: https://wutsi-login-bff-test.herokuapp.com
     shell-url: https://wutsi-shell-bff-test.herokuapp.com
   platform:
+    cache:
+      type: local
+      name: ${wutsi.application.name}
     security:
       type: jwt
     tracing:

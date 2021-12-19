@@ -3,3 +3,10 @@ wutsi:
     server-url: https://wutsi-cash-bff-prod.herokuapp.com
     login-url: https://wutsi-login-bff-prod.herokuapp.com
     shell-url: https://wutsi-shell-bff-prod.herokuapp.com
+  platform:
+    cache:
+      type: memcached
+      memcached:
+        username: ${MEMCACHIER_USERNAME}
+        password: ${MEMCACHIER_PASSWORD}
+        servers: ${MEMCACHIER_SERVERS}
