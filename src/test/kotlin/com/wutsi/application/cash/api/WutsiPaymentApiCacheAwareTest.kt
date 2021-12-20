@@ -3,6 +3,7 @@ package com.wutsi.application.cash.api
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.doThrow
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
@@ -65,7 +66,39 @@ internal class WutsiPaymentApiCacheAwareTest {
     @Test
     fun getBalanceFromServer() {
         // GIVEN
-        doReturn(null).whenever(cache).get("balance_$USER_ID")
+        doReturn(null).whenever(cache).get("balance_$USER_ID", GetBalanceResponse::class.java)
+
+        val result = GetBalanceResponse()
+        doReturn(result).whenever(delegate).getBalance(USER_ID)
+
+        // WHEN
+        val response = api.getBalance(USER_ID)
+
+        // THEN
+        assertEquals(result, response)
+        verify(cache).put("balance_$USER_ID", response)
+    }
+
+    @Test
+    fun getBalanceFromServerOnCacheReadError() {
+        // GIVEN
+        doReturn(null).whenever(cache).get("balance_$USER_ID", GetBalanceResponse::class.java)
+        doThrow(RuntimeException::class).whenever(cache).get("balance_$USER_ID", GetBalanceResponse::class.java)
+
+        val result = GetBalanceResponse()
+        doReturn(result).whenever(delegate).getBalance(USER_ID)
+
+        // WHEN
+        val response = api.getBalance(USER_ID)
+
+        // THEN
+        assertEquals(result, response)
+    }
+
+    @Test
+    fun getBalanceFromServerOnCacheWriteError() {
+        // GIVEN
+        doThrow(RuntimeException::class).whenever(cache).put("balance_$USER_ID", GetBalanceResponse::class.java)
 
         val result = GetBalanceResponse()
         doReturn(result).whenever(delegate).getBalance(USER_ID)

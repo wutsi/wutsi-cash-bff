@@ -77,15 +77,33 @@ class WutsiPaymentApiCacheAware(
 
     override fun getBalance(accountId: Long): GetBalanceResponse {
         // Fetch the balance from cache
-        val cached = cache.get(getBalanceCacheKey(), GetBalanceResponse::class.java)
+        val key = getBalanceCacheKey()
+        val cached = getBalanceFromCache(key)
         if (cached != null)
             return cached
 
         // Fetch the balance from backend
-        val response = delegate.getBalance(accountId)
-        cache.put(getBalanceCacheKey(), response)
-        return response
+        return addToCache(key, delegate.getBalance(accountId))
     }
+
+    private fun getBalanceFromCache(key: String): GetBalanceResponse? =
+        try {
+            cache.get(key, GetBalanceResponse::class.java)
+        } catch (ex: Exception) {
+            LOGGER.warn("Unable to resolve from cache $key", ex)
+            null
+        }
+
+    private fun addToCache(key: String, value: GetBalanceResponse): GetBalanceResponse {
+        try {
+            cache.put(key, value)
+        } catch (ex: Exception) {
+            LOGGER.warn("Unable to store into the cache: $key", ex)
+        }
+
+        return value
+    }
+
 
     override fun getTransaction(id: String): GetTransactionResponse =
         delegate.getTransaction(id)
@@ -101,7 +119,11 @@ class WutsiPaymentApiCacheAware(
 
     private fun evictBalance(accountId: Long) {
         val key = getBalanceCacheKey(accountId)
-        cache.evict(key)
+        try {
+            cache.evict(key)
+        } catch (ex: Exception) {
+            LOGGER.warn("Unable to evict from cashe $key", ex)
+        }
     }
 
     private fun getBalanceCacheKey(): String =

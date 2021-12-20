@@ -1,6 +1,8 @@
 package com.wutsi.application.cash.api
 
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.doThrow
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
@@ -40,9 +42,41 @@ internal class WutsiTenantApiCacheAwareTest {
     }
 
     @Test
-    fun getTenantFromBackend() {
+    fun getTenantFromServer() {
         // GIVEN
         doReturn(null).whenever(cache).get("tenant_1")
+
+        val result = GetTenantResponse()
+        doReturn(result).whenever(delegate).getTenant(1L)
+
+        // WHEN
+        val response = api.getTenant(1L)
+
+        // THEN
+        assertEquals(result, response)
+        verify(cache).put("tenant_1", response)
+    }
+
+    @Test
+    fun getTenantFromServerCacheReadError() {
+        // GIVEN
+        doThrow(RuntimeException::class).whenever(cache).get("tenant_1")
+
+        val result = GetTenantResponse()
+        doReturn(result).whenever(delegate).getTenant(1L)
+
+        // WHEN
+        val response = api.getTenant(1L)
+
+        // THEN
+        assertEquals(result, response)
+    }
+
+    @Test
+    fun getTenantFromServerCacheWriteError() {
+        // GIVEN
+        doReturn(null).whenever(cache).get("tenant_1")
+        doThrow(RuntimeException::class).whenever(cache).put(any(), any())
 
         val result = GetTenantResponse()
         doReturn(result).whenever(delegate).getTenant(1L)
