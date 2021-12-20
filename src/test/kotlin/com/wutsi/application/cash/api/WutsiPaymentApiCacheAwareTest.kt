@@ -170,5 +170,4 @@ internal class WutsiPaymentApiCacheAwareTest {
             }
             """.trimIndent()
         )
-
 }
