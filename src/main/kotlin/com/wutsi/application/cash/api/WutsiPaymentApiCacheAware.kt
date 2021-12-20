@@ -36,13 +36,14 @@ class WutsiPaymentApiCacheAware(
         )
     }
 
-    // Event handler
+    // EventListener override
     @EventListener
     fun onEvent(event: Event) {
         LOGGER.info("onEvent(${event.type}, ...)")
 
         if (isPaymentEvent(event)) {
             val payload = mapper.readValue(event.payload, TransactionEventPayload::class.java)
+            LOGGER.info("Evicting Balance#${payload.accountId}")
             evictBalance(payload.accountId)
         }
     }
@@ -104,7 +105,6 @@ class WutsiPaymentApiCacheAware(
         return value
     }
 
-
     override fun getTransaction(id: String): GetTransactionResponse =
         delegate.getTransaction(id)
 
@@ -122,7 +122,7 @@ class WutsiPaymentApiCacheAware(
         try {
             cache.evict(key)
         } catch (ex: Exception) {
-            LOGGER.warn("Unable to evict from cashe $key", ex)
+            LOGGER.warn("Unable to evict from cache $key", ex)
         }
     }
 

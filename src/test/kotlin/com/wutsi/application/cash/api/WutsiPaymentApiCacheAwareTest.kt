@@ -61,6 +61,7 @@ internal class WutsiPaymentApiCacheAwareTest {
         // THEN
         assertEquals(result, response)
         verify(delegate, never()).getBalance(1L)
+        verify(cache, never()).put("balance_$USER_ID", response)
     }
 
     @Test

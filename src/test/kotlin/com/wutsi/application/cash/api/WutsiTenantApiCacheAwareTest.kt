@@ -39,6 +39,7 @@ internal class WutsiTenantApiCacheAwareTest {
         // THEN
         assertEquals(result, response)
         verify(delegate, never()).getTenant(1L)
+        verify(cache, never()).put("tenant_1", response)
     }
 
     @Test
