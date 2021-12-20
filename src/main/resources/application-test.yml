@@ -1,6 +1,7 @@
 wutsi:
   application:
-    server-url: https://wutsi-cash-bff-test.herokuapp.com
+    gateway-url: https://wutsi-gateway-test.herokuapp.com
+    server-url: ${wutsi.application.gateway-url}/cash
   platform:
     cache:
       type: memcached
