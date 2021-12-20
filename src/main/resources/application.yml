@@ -46,6 +46,12 @@ wutsi:
       name: ${wutsi.application.name}
     security:
       type: jwt
+    stream:
+      name: ${wutsi.application.name}
+      type: local
+      rabbitmq:
+        dlq:
+          replay-cron: "0 */5 * * * *"  # Every 5 minutes
     tracing:
       client-id: ${wutsi.application.name}
 

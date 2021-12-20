@@ -1,5 +1,6 @@
 package com.wutsi.application.cash.api
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
@@ -7,6 +8,7 @@ import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.service.SecurityManager
+import com.wutsi.platform.core.stream.Event
 import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.dto.CreateCashinRequest
 import com.wutsi.platform.payment.dto.CreateCashinResponse
@@ -19,6 +21,7 @@ import com.wutsi.platform.payment.dto.GetTransactionResponse
 import com.wutsi.platform.payment.dto.RunJobResponse
 import com.wutsi.platform.payment.dto.SearchTransactionRequest
 import com.wutsi.platform.payment.dto.SearchTransactionResponse
+import com.wutsi.platform.payment.event.EventURN
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -32,7 +35,7 @@ internal class WutsiPaymentApiCacheAwareTest {
     private lateinit var delegate: WutsiPaymentApi
     private lateinit var cache: Cache
     private lateinit var securityManager: SecurityManager
-    private lateinit var api: WutsiPaymentApi
+    private lateinit var api: WutsiPaymentApiCacheAware
 
     @BeforeEach
     fun setUp() {
@@ -42,7 +45,7 @@ internal class WutsiPaymentApiCacheAwareTest {
         securityManager = mock()
         doReturn(USER_ID).whenever(securityManager).currentUserId()
 
-        api = WutsiPaymentApiCacheAware(delegate, securityManager, cache)
+        api = WutsiPaymentApiCacheAware(delegate, securityManager, cache, ObjectMapper())
     }
 
     @Test
@@ -133,4 +136,39 @@ internal class WutsiPaymentApiCacheAwareTest {
         val response = api.runJob("any")
         assertEquals(result, response)
     }
+
+    @Test
+    fun transactionFailed() {
+        val event = createEvent(EventURN.TRANSACTION_FAILED.urn)
+        api.onEvent(event)
+
+        verify(cache).evict("balance_$USER_ID")
+    }
+
+    @Test
+    fun transactionSuccessfull() {
+        val event = createEvent(EventURN.TRANSACTION_SUCCESSFULL.urn)
+        api.onEvent(event)
+
+        verify(cache).evict("balance_$USER_ID")
+    }
+
+    @Test
+    fun transactionPending() {
+        val event = createEvent(EventURN.TRANSACTION_PENDING.urn)
+        api.onEvent(event)
+
+        verify(cache).evict("balance_$USER_ID")
+    }
+
+    private fun createEvent(type: String): Event =
+        Event(
+            type = type,
+            payload = """
+            {
+                "accountId": $USER_ID
+            }
+            """.trimIndent()
+        )
+
 }

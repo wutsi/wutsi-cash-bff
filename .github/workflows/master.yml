@@ -35,6 +35,7 @@ jobs:
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY_TEST}}
           HEROKU_APP: wutsi-cash-bff-test
+          CLOUDAMQP_URL: ${{secrets.CLOUDAMQP_URL_TEST}}
         run: |
           heroku apps | grep ${HEROKU_APP} && echo 'app: ${HEROKU_APP} exists' ||  heroku apps:create ${HEROKU_APP}
           heroku buildpacks:clear --app ${HEROKU_APP}
@@ -51,6 +52,7 @@ jobs:
         env:
           HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY_PROD}}
           HEROKU_APP: wutsi-cash-bff-prod
+          CLOUDAMQP_URL: ${{secrets.CLOUDAMQP_URL_PROD}}
         run: |
           heroku apps | grep ${HEROKU_APP} && echo 'app: ${HEROKU_APP} exists' ||  heroku apps:create ${HEROKU_APP}
           heroku buildpacks:clear --app ${HEROKU_APP}

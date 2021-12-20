@@ -8,3 +8,7 @@ wutsi:
         username: ${MEMCACHIER_USERNAME}
         password: ${MEMCACHIER_PASSWORD}
         servers: ${MEMCACHIER_SERVERS}
+    stream:
+      type: rabbitmq
+      rabbitmq:
+        url: ${CLOUDAMQP_URL}
