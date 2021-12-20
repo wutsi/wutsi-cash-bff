@@ -5,7 +5,6 @@ import com.wutsi.application.cash.api.WutsiPaymentApiCacheAware
 import com.wutsi.application.cash.service.SecurityManager
 import com.wutsi.platform.core.security.feign.FeignApiKeyRequestInterceptor
 import com.wutsi.platform.core.security.feign.FeignAuthorizationRequestInterceptor
-import com.wutsi.platform.core.stream.EventStream
 import com.wutsi.platform.core.tracing.feign.FeignTracingRequestInterceptor
 import com.wutsi.platform.payment.Environment.PRODUCTION
 import com.wutsi.platform.payment.Environment.SANDBOX
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.core.env.Profiles
-import javax.annotation.PostConstruct
 
 @Configuration
 class PaymentApiConfiguration(
@@ -26,14 +24,8 @@ class PaymentApiConfiguration(
     private val mapper: ObjectMapper,
     private val env: Environment,
     private val securityManager: SecurityManager,
-    private val cache: Cache,
-    private val eventStream: EventStream,
+    private val cache: Cache
 ) {
-    @PostConstruct
-    fun init() {
-        eventStream.subscribeTo("wutsi-payment")
-    }
-
     @Bean
     fun paymentApi(): WutsiPaymentApi =
         WutsiPaymentApiCacheAware(
