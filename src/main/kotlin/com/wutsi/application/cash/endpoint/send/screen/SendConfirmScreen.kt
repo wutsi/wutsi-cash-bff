@@ -45,7 +45,7 @@ import java.text.DecimalFormat
 class SendConfirmScreen(
     private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
-    private val userApi: WutsiAccountApi,
+    private val accountApi: WutsiAccountApi,
     @Value("\${wutsi.application.login-url}") private val loginUrl: String,
 ) : AbstractQuery() {
     @PostMapping
@@ -238,7 +238,7 @@ class SendConfirmScreen(
     ).toWidget()
 
     private fun findRecipient(phoneNumber: String): AccountSummary? {
-        val accounts = userApi.searchAccount(
+        val accounts = accountApi.searchAccount(
             SearchAccountRequest(
                 phoneNumber = phoneNumber
             )
@@ -250,10 +250,10 @@ class SendConfirmScreen(
     }
 
     private fun findRecipient(id: Long): Account =
-        userApi.getAccount(id).account
+        accountApi.getAccount(id).account
 
     private fun returnUrl(amount: Double, recipient: AccountSummary): String {
-        val me = userApi.getAccount(securityManager.currentUserId()).account
+        val me = accountApi.getAccount(securityManager.currentUserId()).account
         return "?phone=" + encodeURLParam(me.phone?.number) +
             "&icon=" + Theme.ICON_LOCK +
             "&screen-id=" + Page.SEND_PIN +
