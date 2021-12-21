@@ -25,7 +25,7 @@
                   "attributes": {
                     "name": "amount",
                     "keyboardColor": "#FFFFFF",
-                    "moneyColor": "#FFFFFF",
+                    "moneyColor": "#4CAF50",
                     "maxLength": 7,
                     "value": 0,
                     "currency": "XAF",

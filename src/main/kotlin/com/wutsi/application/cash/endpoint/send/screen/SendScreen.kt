@@ -72,7 +72,7 @@ class SendScreen(
                                     name = "amount",
                                     maxLength = 7,
                                     currency = tenant.currency,
-                                    moneyColor = Theme.WHITE_COLOR,
+                                    moneyColor = Theme.SUCCESS_COLOR,
                                     keyboardColor = Theme.WHITE_COLOR,
                                     numberFormat = tenant.numberFormat,
                                     value = 0
