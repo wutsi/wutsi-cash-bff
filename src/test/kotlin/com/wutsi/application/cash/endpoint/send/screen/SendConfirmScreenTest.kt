@@ -9,7 +9,6 @@ import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.GetAccountResponse
 import com.wutsi.platform.account.dto.Phone
 import com.wutsi.platform.account.dto.SearchAccountResponse
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
@@ -17,12 +16,7 @@ import org.springframework.boot.web.server.LocalServerPort
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class SendConfirmScreenTest : AbstractEndpointTest() {
     @LocalServerPort
-    public val port: Int = 0
-
-    @BeforeEach
-    override fun setUp() {
-        super.setUp()
-    }
+    val port: Int = 0
 
     @Test
     fun phone() {
