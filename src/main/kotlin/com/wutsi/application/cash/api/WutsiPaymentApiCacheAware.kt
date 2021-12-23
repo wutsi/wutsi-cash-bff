@@ -12,7 +12,6 @@ import com.wutsi.platform.payment.dto.CreateTransferRequest
 import com.wutsi.platform.payment.dto.CreateTransferResponse
 import com.wutsi.platform.payment.dto.GetBalanceResponse
 import com.wutsi.platform.payment.dto.GetTransactionResponse
-import com.wutsi.platform.payment.dto.RunJobResponse
 import com.wutsi.platform.payment.dto.SearchTransactionRequest
 import com.wutsi.platform.payment.dto.SearchTransactionResponse
 import com.wutsi.platform.payment.event.EventURN
@@ -39,8 +38,6 @@ class WutsiPaymentApiCacheAware(
     // EventListener override
     @EventListener
     fun onEvent(event: Event) {
-        LOGGER.info("onEvent(${event.type}, ...)")
-
         if (isPaymentEvent(event)) {
             val payload = mapper.readValue(event.payload, TransactionEventPayload::class.java)
             LOGGER.info("Evicting Balance#${payload.accountId}")
@@ -107,9 +104,6 @@ class WutsiPaymentApiCacheAware(
 
     override fun getTransaction(id: String): GetTransactionResponse =
         delegate.getTransaction(id)
-
-    override fun runJob(name: String): RunJobResponse =
-        delegate.runJob(name)
 
     override fun searchTransaction(request: SearchTransactionRequest): SearchTransactionResponse =
         delegate.searchTransaction(request)

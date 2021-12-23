@@ -2,7 +2,6 @@ package com.wutsi.application.cash.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wutsi.application.cash.api.WutsiTenantApiCacheAware
-import com.wutsi.platform.core.security.feign.FeignApiKeyRequestInterceptor
 import com.wutsi.platform.core.security.feign.FeignAuthorizationRequestInterceptor
 import com.wutsi.platform.core.tracing.feign.FeignTracingRequestInterceptor
 import com.wutsi.platform.tenant.Environment.PRODUCTION
@@ -19,7 +18,6 @@ import org.springframework.core.env.Profiles
 class TenantApiConfiguration(
     private val authorizationRequestInterceptor: FeignAuthorizationRequestInterceptor,
     private val tracingRequestInterceptor: FeignTracingRequestInterceptor,
-    private val apiKeyRequestInterceptor: FeignApiKeyRequestInterceptor,
     private val mapper: ObjectMapper,
     private val env: Environment,
     private val cache: Cache
@@ -31,7 +29,6 @@ class TenantApiConfiguration(
                 env = environment(),
                 mapper = mapper,
                 interceptors = listOf(
-                    apiKeyRequestInterceptor,
                     tracingRequestInterceptor,
                     authorizationRequestInterceptor
                 )

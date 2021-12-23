@@ -19,7 +19,6 @@ import com.wutsi.platform.payment.dto.CreateTransferRequest
 import com.wutsi.platform.payment.dto.CreateTransferResponse
 import com.wutsi.platform.payment.dto.GetBalanceResponse
 import com.wutsi.platform.payment.dto.GetTransactionResponse
-import com.wutsi.platform.payment.dto.RunJobResponse
 import com.wutsi.platform.payment.dto.SearchTransactionRequest
 import com.wutsi.platform.payment.dto.SearchTransactionResponse
 import com.wutsi.platform.payment.event.EventURN
@@ -159,15 +158,6 @@ internal class WutsiPaymentApiCacheAwareTest {
         doReturn(result).whenever(delegate).searchTransaction(any())
 
         val response = api.searchTransaction(SearchTransactionRequest())
-        assertEquals(result, response)
-    }
-
-    @Test
-    fun runJob() {
-        val result = RunJobResponse()
-        doReturn(result).whenever(delegate).runJob(any())
-
-        val response = api.runJob("any")
         assertEquals(result, response)
     }
 
