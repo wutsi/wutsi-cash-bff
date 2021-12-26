@@ -45,13 +45,6 @@ class SendScreen(
                 backgroundColor = Theme.PRIMARY_COLOR,
                 foregroundColor = Theme.WHITE_COLOR,
                 title = getText("page.send.app-bar.title", arrayOf(balanceText)),
-                leading = IconButton(
-                    icon = Theme.ICON_HISTORY,
-                    action = Action(
-                        type = Route,
-                        url = urlBuilder.build("history")
-                    )
-                ),
                 actions = listOf(
                     IconButton(
                         icon = Theme.ICON_SETTINGS,

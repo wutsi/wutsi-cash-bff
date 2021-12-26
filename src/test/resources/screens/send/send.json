@@ -85,18 +85,7 @@
             "url": "https://wutsi-gateway-test.herokuapp.com/shell/settings"
           }
         }
-      ],
-      "leading": {
-        "type": "IconButton",
-        "attributes": {
-          "icon": "e314"
-        },
-        "children": [],
-        "action": {
-          "type": "Route",
-          "url": "http://localhost:0/history"
-        }
-      }
+      ]
     },
     "children": []
   }
