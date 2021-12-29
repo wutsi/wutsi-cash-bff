@@ -55,7 +55,7 @@ class PayScanScreen(
                     ),
                     Flexible(
                         child = QrView(
-                            submitUrl = urlBuilder.build("/pay/process?amount=$amount")
+                            submitUrl = urlBuilder.build("pay/process?amount=$amount")
                         )
                     ),
                 ),
