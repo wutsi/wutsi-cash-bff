@@ -269,9 +269,9 @@ class HistoryScreen(
         tx: TransactionSummary
     ): String {
         if (tx.type == "CASHIN") {
-            return getText("page.history.cashout.caption")
-        } else if (tx.type == "CASHOUT") {
             return getText("page.history.cashin.caption")
+        } else if (tx.type == "CASHOUT") {
+            return getText("page.history.cashout.caption")
         } else {
             return if (tx.accountId == securityManager.currentUserId())
                 getText("page.history.transfer.to.caption")
