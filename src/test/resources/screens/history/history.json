@@ -115,14 +115,15 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Add Cash From: 11111"
+                                            "caption": "Cashout"
                                           },
                                           "children": []
                                         },
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Sample description"
+                                            "caption": "11111",
+                                            "color": "#95A5A6"
                                           },
                                           "children": []
                                         },
@@ -255,14 +256,15 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Add Cash From: 11111"
+                                            "caption": "Cashout"
                                           },
                                           "children": []
                                         },
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Sample description"
+                                            "caption": "11111",
+                                            "color": "#95A5A6"
                                           },
                                           "children": []
                                         }
@@ -297,7 +299,7 @@
                                           "type": "Text",
                                           "attributes": {
                                             "caption": "10,000 XAF",
-                                            "color": "#1D7EDF",
+                                            "color": "#4CAF50",
                                             "bold": true,
                                             "alignment": "Right"
                                           },
@@ -393,14 +395,15 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "To: Name 100"
+                                            "caption": "Transfer"
                                           },
                                           "children": []
                                         },
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Sample description"
+                                            "caption": "Name 100",
+                                            "color": "#95A5A6"
                                           },
                                           "children": []
                                         }
@@ -434,8 +437,8 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "10,000 XAF",
-                                            "color": "#1D7EDF",
+                                            "caption": "-10,000 XAF",
+                                            "color": "#8B0000",
                                             "bold": true,
                                             "alignment": "Right"
                                           },
@@ -531,14 +534,15 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "From: Name 101"
+                                            "caption": "Reception"
                                           },
                                           "children": []
                                         },
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Sample description"
+                                            "caption": "Name 101",
+                                            "color": "#95A5A6"
                                           },
                                           "children": []
                                         },
@@ -679,14 +683,15 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "From: Name 101"
+                                            "caption": "Reception"
                                           },
                                           "children": []
                                         },
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Sample description"
+                                            "caption": "Name 101",
+                                            "color": "#95A5A6"
                                           },
                                           "children": []
                                         }
@@ -721,7 +726,7 @@
                                           "type": "Text",
                                           "attributes": {
                                             "caption": "10,000 XAF",
-                                            "color": "#1D7EDF",
+                                            "color": "#4CAF50",
                                             "bold": true,
                                             "alignment": "Right"
                                           },
@@ -809,14 +814,15 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Cash out To: 22222"
+                                            "caption": "Cashin"
                                           },
                                           "children": []
                                         },
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Sample description"
+                                            "caption": "22222",
+                                            "color": "#95A5A6"
                                           },
                                           "children": []
                                         }
@@ -850,8 +856,8 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "10,000 XAF",
-                                            "color": "#1D7EDF",
+                                            "caption": "-10,000 XAF",
+                                            "color": "#8B0000",
                                             "bold": true,
                                             "alignment": "Right"
                                           },

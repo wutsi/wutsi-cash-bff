@@ -70,11 +70,11 @@ class SendRecipientScreen(
             length = 2,
             child = Screen(
                 id = Page.SEND_RECIPIENT,
-                backgroundColor = Theme.WHITE_COLOR,
+                backgroundColor = Theme.COLOR_WHITE,
                 appBar = AppBar(
                     elevation = 0.0,
-                    backgroundColor = Theme.PRIMARY_COLOR,
-                    foregroundColor = Theme.WHITE_COLOR,
+                    backgroundColor = Theme.COLOR_PRIMARY,
+                    foregroundColor = Theme.COLOR_WHITE,
                     title = getText("page.send-recipient.title"),
                     actions = listOf(
                         IconButton(
@@ -116,8 +116,8 @@ class SendRecipientScreen(
                                     "page.send-recipient.phone.title"
                                 ),
                                 alignment = TextAlignment.Center,
-                                size = Theme.LARGE_TEXT_SIZE,
-                                color = Theme.PRIMARY_COLOR,
+                                size = Theme.TEXT_SIZE_LARGE,
+                                color = Theme.COLOR_PRIMARY,
                                 bold = true
                             )
                         ),
@@ -129,7 +129,7 @@ class SendRecipientScreen(
                                     "page.send-recipient.phone.sub-title"
                                 ),
                                 alignment = TextAlignment.Center,
-                                color = Theme.BLACK_COLOR,
+                                color = Theme.COLOR_BLACK,
                             )
                         ),
                         Container(
@@ -183,8 +183,8 @@ class SendRecipientScreen(
                                 "page.send-recipient.contact.title"
                             ),
                             alignment = TextAlignment.Left,
-                            size = Theme.LARGE_TEXT_SIZE,
-                            color = Theme.PRIMARY_COLOR,
+                            size = Theme.TEXT_SIZE_LARGE,
+                            color = Theme.COLOR_PRIMARY,
                             bold = true,
                         )
                     ),
@@ -196,10 +196,10 @@ class SendRecipientScreen(
                                 "page.send-recipient.contact.sub-title"
                             ),
                             alignment = TextAlignment.Left,
-                            color = Theme.BLACK_COLOR,
+                            color = Theme.COLOR_BLACK,
                         )
                     ),
-                    Divider(color = Theme.DIVIDER_COLOR),
+                    Divider(color = Theme.COLOR_DIVIDER),
                     Flexible(
                         child = ListView(
                             children = accounts.map { toListItem(it, amount, tenant) },
@@ -220,7 +220,7 @@ class SendRecipientScreen(
             child = account.pictureUrl?.let { Image(width = 48.0, height = 48.0, url = it) }
                 ?: Text(
                     caption = StringUtil.initials(account.displayName),
-                    size = Theme.X_LARGE_TEXT_SIZE,
+                    size = Theme.TEXT_SIZE_X_LARGE,
                     bold = true
                 )
         ),

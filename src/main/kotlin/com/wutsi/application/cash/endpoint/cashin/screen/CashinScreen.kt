@@ -45,8 +45,8 @@ class CashinScreen(
             id = Page.CASHIN,
             appBar = AppBar(
                 elevation = 0.0,
-                backgroundColor = Theme.WHITE_COLOR,
-                foregroundColor = Theme.BLACK_COLOR,
+                backgroundColor = Theme.COLOR_WHITE,
+                foregroundColor = Theme.COLOR_BLACK,
                 title = getText("page.cashin.app-bar.title", arrayOf(balanceText))
             ),
             child = Container(
@@ -77,7 +77,7 @@ class CashinScreen(
                                         name = "amount",
                                         maxLength = 7,
                                         currency = tenant.currency,
-                                        moneyColor = Theme.PRIMARY_COLOR,
+                                        moneyColor = Theme.COLOR_PRIMARY,
                                         numberFormat = tenant.numberFormat,
                                         keyboardButtonSize = 65.0
                                     ),

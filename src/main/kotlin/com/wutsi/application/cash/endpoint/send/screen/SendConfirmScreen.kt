@@ -88,11 +88,11 @@ class SendConfirmScreen(
         val amountText = DecimalFormat(tenant.monetaryFormat).format(amount)
         return Screen(
             id = Page.SEND_CONFIRM,
-            backgroundColor = Theme.WHITE_COLOR,
+            backgroundColor = Theme.COLOR_WHITE,
             appBar = AppBar(
                 elevation = 0.0,
-                backgroundColor = Theme.WHITE_COLOR,
-                foregroundColor = Theme.BLACK_COLOR,
+                backgroundColor = Theme.COLOR_WHITE,
+                foregroundColor = Theme.COLOR_BLACK,
                 title = getText("page.send-confirm.title"),
                 actions = listOf(
                     IconButton(
@@ -135,8 +135,8 @@ class SendConfirmScreen(
                                     child = Text(
                                         caption = recipient.displayName ?: "",
                                         alignment = TextAlignment.Center,
-                                        size = Theme.X_LARGE_TEXT_SIZE,
-                                        color = Theme.PRIMARY_COLOR,
+                                        size = Theme.TEXT_SIZE_X_LARGE,
+                                        color = Theme.COLOR_PRIMARY,
                                         bold = true,
                                     )
                                 ),
@@ -144,8 +144,8 @@ class SendConfirmScreen(
                                     Text(
                                         caption = formattedPhoneNumber(it)!!,
                                         alignment = TextAlignment.Center,
-                                        color = Theme.BLACK_COLOR,
-                                        size = Theme.X_LARGE_TEXT_SIZE,
+                                        color = Theme.COLOR_BLACK,
+                                        size = Theme.TEXT_SIZE_X_LARGE,
                                     )
                                 } ?: Container()
                             )
@@ -172,8 +172,8 @@ class SendConfirmScreen(
         id = Page.SEND_RECIPIENT_NOT_FOUND,
         appBar = AppBar(
             elevation = 0.0,
-            backgroundColor = Theme.WHITE_COLOR,
-            foregroundColor = Theme.BLACK_COLOR,
+            backgroundColor = Theme.COLOR_WHITE,
+            foregroundColor = Theme.COLOR_BLACK,
             actions = listOf(
                 IconButton(
                     icon = Theme.ICON_CANCEL,
@@ -193,7 +193,7 @@ class SendConfirmScreen(
                     child = Icon(
                         code = Theme.ICON_ERROR,
                         size = 80.0,
-                        color = Theme.DANGER_COLOR
+                        color = Theme.COLOR_DANGER
                     )
                 ),
                 Container(
@@ -202,7 +202,7 @@ class SendConfirmScreen(
                     child = Text(
                         caption = getText("page.send-confirm.recipient-not-found"),
                         alignment = TextAlignment.Center,
-                        size = Theme.X_LARGE_TEXT_SIZE,
+                        size = Theme.TEXT_SIZE_X_LARGE,
                     )
                 ),
                 Text(
@@ -214,7 +214,7 @@ class SendConfirmScreen(
                     child = Text(
                         caption = getText("page.send-confirm.invite", arrayOf(tenant.name)),
                         alignment = TextAlignment.Center,
-                        size = Theme.X_LARGE_TEXT_SIZE,
+                        size = Theme.TEXT_SIZE_X_LARGE,
                     )
                 ),
                 Container(

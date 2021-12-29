@@ -54,8 +54,8 @@ class HistoryScreen(
             id = Page.HISTORY,
             appBar = AppBar(
                 elevation = 0.0,
-                backgroundColor = Theme.WHITE_COLOR,
-                foregroundColor = Theme.BLACK_COLOR,
+                backgroundColor = Theme.COLOR_WHITE,
+                foregroundColor = Theme.COLOR_BLACK,
                 title = getText("page.history.app-bar.title", arrayOf(balanceText))
             ),
             child = Column(
@@ -64,7 +64,7 @@ class HistoryScreen(
                         padding = 10.0,
                         child = Text(getText("page.history.title", arrayOf(limit))),
                     ),
-                    Divider(color = Theme.DIVIDER_COLOR, height = 1.0),
+                    Divider(color = Theme.COLOR_DIVIDER, height = 1.0),
                     Flexible(
                         child = transactionsWidget(limit, tenant)
                     )
@@ -82,7 +82,7 @@ class HistoryScreen(
                 child = Text(
                     getText("page.history.no-transaction"),
                     bold = true,
-                    size = Theme.LARGE_TEXT_SIZE,
+                    size = Theme.TEXT_SIZE_LARGE,
                     alignment = TextAlignment.Center
                 )
             )
@@ -176,7 +176,7 @@ class HistoryScreen(
                 child = account?.pictureUrl?.let { Image(width = 48.0, height = 48.0, url = it) }
                     ?: Text(
                         caption = StringUtil.initials(account?.displayName),
-                        size = Theme.X_LARGE_TEXT_SIZE,
+                        size = Theme.TEXT_SIZE_X_LARGE,
                         bold = true
                     )
             )
@@ -190,13 +190,14 @@ class HistoryScreen(
     ): WidgetAware {
         val children = mutableListOf<WidgetAware>(
             Text(
-                caption = toCaption1(tx, accounts, paymentMethods)
+                caption = toCaption1(tx)
             ),
         )
 
-        if (!tx.description.isNullOrEmpty()) {
+        val caption2 = toCaption2(tx, accounts, paymentMethods)
+        if (caption2 != null) {
             children.add(
-                Text(caption = tx.description!!)
+                Text(caption = caption2, color = Theme.COLOR_GRAY)
             )
         }
 
@@ -205,8 +206,8 @@ class HistoryScreen(
                 Text(
                     caption = getText("transaction.status.${tx.status}"),
                     bold = true,
-                    color = color(tx),
-                    size = Theme.SMALL_TEXT_SIZE
+                    color = toColor(tx),
+                    size = Theme.TEXT_SIZE_SMALL
                 )
             )
         }
@@ -226,45 +227,70 @@ class HistoryScreen(
             crossAxisAlignment = CrossAxisAlignment.end,
             children = listOf(
                 Text(
-                    caption = moneyFormat.format(tx.amount),
+                    caption = moneyFormat.format(toDisplayAmount(tx)),
                     bold = true,
-                    color = color(tx),
+                    color = toColor(tx),
                     alignment = TextAlignment.Right
                 ),
                 Text(
                     caption = tx.created.format(dateFormat),
-                    size = Theme.SMALL_TEXT_SIZE,
+                    size = Theme.TEXT_SIZE_SMALL,
                     alignment = TextAlignment.Right
                 )
             ),
         )
     }
 
-    private fun color(tx: TransactionSummary): String =
-        when (tx.status) {
-            "SUCCESSFUL" -> Theme.PRIMARY_COLOR
-            "FAILED" -> Theme.DANGER_COLOR
-            "PENDING" -> Theme.WARNING_COLOR
-            else -> Theme.BLACK_COLOR
+    private fun toDisplayAmount(tx: TransactionSummary): Double =
+        when (tx.type.uppercase()) {
+            "CASHOUT" -> -tx.amount
+            "CASHIN" -> tx.amount
+            else -> if (tx.recipientId == securityManager.currentUserId())
+                tx.amount
+            else
+                -tx.amount
+        }
+
+    private fun toColor(tx: TransactionSummary): String =
+        when (tx.status.uppercase()) {
+            "FAILED" -> Theme.COLOR_DANGER
+            "PENDING" -> Theme.COLOR_WARNING
+            else -> when (tx.type.uppercase()) {
+                "CASHIN" -> Theme.COLOR_SUCCESS
+                "CASHOUT" -> Theme.COLOR_DANGER
+                else -> if (tx.recipientId == securityManager.currentUserId())
+                    Theme.COLOR_SUCCESS
+                else
+                    Theme.COLOR_DANGER
+            }
         }
 
     private fun toCaption1(
+        tx: TransactionSummary
+    ): String {
+        if (tx.type == "CASHIN") {
+            return getText("page.history.cashout.caption")
+        } else if (tx.type == "CASHOUT") {
+            return getText("page.history.cashin.caption")
+        } else {
+            return if (tx.accountId == securityManager.currentUserId())
+                getText("page.history.transfer.to.caption")
+            else
+                getText("page.history.transfer.from.caption")
+        }
+    }
+
+    private fun toCaption2(
         tx: TransactionSummary,
         accounts: Map<Long, AccountSummary>,
         paymentMethods: Map<String, PaymentMethodSummary>
-    ): String {
-        if (tx.type == "CASHIN") {
+    ): String? {
+        if (tx.type == "CASHIN" || tx.type == "CASHOUT") {
             val paymentMethod = paymentMethods[tx.paymentMethodToken]
-            return getText("page.history.cashout.caption", arrayOf(getPhoneNumber(paymentMethod)))
-        } else if (tx.type == "CASHOUT") {
-            val paymentMethod = paymentMethods[tx.paymentMethodToken]
-            return getText("page.history.cashin.caption", arrayOf(getPhoneNumber(paymentMethod)))
+            return getPhoneNumber(paymentMethod)
         } else {
             val account = getAccount(tx, accounts)
-            return if (tx.accountId == securityManager.currentUserId())
-                getText("page.history.transfer.to.caption", arrayOf(account?.displayName ?: ""))
-            else
-                getText("page.history.transfer.from.caption", arrayOf(account?.displayName ?: ""))
+            return account?.displayName
         }
     }
 

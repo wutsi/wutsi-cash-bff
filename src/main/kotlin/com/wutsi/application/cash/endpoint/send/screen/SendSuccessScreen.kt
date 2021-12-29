@@ -36,7 +36,7 @@ class SendSuccessScreen(private val tenantProvider: TenantProvider) : AbstractQu
             safe = true,
             appBar = AppBar(
                 elevation = 0.0,
-                backgroundColor = Theme.WHITE_COLOR,
+                backgroundColor = Theme.COLOR_WHITE,
                 automaticallyImplyLeading = false
             ),
             child = Column(
@@ -48,7 +48,7 @@ class SendSuccessScreen(private val tenantProvider: TenantProvider) : AbstractQu
                         child = Icon(
                             code = Theme.ICON_CHECK,
                             size = 80.0,
-                            color = Theme.SUCCESS_COLOR
+                            color = Theme.COLOR_SUCCESS
                         )
                     ),
                     Container(
@@ -59,7 +59,7 @@ class SendSuccessScreen(private val tenantProvider: TenantProvider) : AbstractQu
                                 "page.send-success.message", arrayOf(formattedAmount, recipientName)
                             ),
                             alignment = TextAlignment.Center,
-                            size = Theme.X_LARGE_TEXT_SIZE,
+                            size = Theme.TEXT_SIZE_X_LARGE,
                         )
                     ),
                     Container(

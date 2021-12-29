@@ -71,8 +71,8 @@ class PayProcessScreen(
             id = Page.PAY_ERROR,
             appBar = AppBar(
                 elevation = 0.0,
-                backgroundColor = Theme.WHITE_COLOR,
-                foregroundColor = Theme.BLACK_COLOR,
+                backgroundColor = Theme.COLOR_WHITE,
+                foregroundColor = Theme.COLOR_BLACK,
                 title = getText("page.pay-process.app-bar.title"),
             ),
             child = Column(
@@ -91,7 +91,7 @@ class PayProcessScreen(
                         child = Icon(
                             code = Theme.ICON_ERROR,
                             size = 80.0,
-                            color = Theme.DANGER_COLOR
+                            color = Theme.COLOR_DANGER
                         )
                     ),
                     Container(
@@ -100,8 +100,8 @@ class PayProcessScreen(
                         child = Text(
                             caption = error,
                             alignment = TextAlignment.Center,
-                            size = Theme.X_LARGE_TEXT_SIZE,
-                            color = Theme.DANGER_COLOR
+                            size = Theme.TEXT_SIZE_X_LARGE,
+                            color = Theme.COLOR_DANGER
                         )
                     ),
                     Container(
@@ -124,8 +124,8 @@ class PayProcessScreen(
             id = Page.PAY_SUCCESS,
             appBar = AppBar(
                 elevation = 0.0,
-                backgroundColor = Theme.WHITE_COLOR,
-                foregroundColor = Theme.BLACK_COLOR,
+                backgroundColor = Theme.COLOR_WHITE,
+                foregroundColor = Theme.COLOR_BLACK,
                 title = getText("page.pay-process.app-bar.title"),
             ),
             child = Column(
@@ -144,7 +144,7 @@ class PayProcessScreen(
                         child = Icon(
                             code = Theme.ICON_CHECK,
                             size = 80.0,
-                            color = Theme.SUCCESS_COLOR
+                            color = Theme.COLOR_SUCCESS
                         )
                     ),
                     Container(
@@ -153,7 +153,7 @@ class PayProcessScreen(
                         child = Text(
                             caption = getText("page.pay-process.success"),
                             alignment = TextAlignment.Center,
-                            size = Theme.X_LARGE_TEXT_SIZE,
+                            size = Theme.TEXT_SIZE_X_LARGE,
                         )
                     ),
                     Container(

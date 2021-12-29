@@ -36,11 +36,11 @@ class PayScreen(
         val tenant = tenantProvider.get()
         return Screen(
             id = Page.PAY,
-            backgroundColor = Theme.PRIMARY_COLOR,
+            backgroundColor = Theme.COLOR_PRIMARY,
             appBar = AppBar(
                 elevation = 0.0,
-                backgroundColor = Theme.PRIMARY_COLOR,
-                foregroundColor = Theme.WHITE_COLOR,
+                backgroundColor = Theme.COLOR_PRIMARY,
+                foregroundColor = Theme.COLOR_WHITE,
                 title = getText("page.pay.app-bar.title"),
                 actions = listOf(
                     IconButton(
@@ -62,8 +62,8 @@ class PayScreen(
                                     name = "amount",
                                     maxLength = 7,
                                     currency = tenant.currency,
-                                    moneyColor = Theme.WHITE_COLOR,
-                                    keyboardColor = Theme.WHITE_COLOR,
+                                    moneyColor = Theme.COLOR_WHITE,
+                                    keyboardColor = Theme.COLOR_WHITE,
                                     numberFormat = tenant.numberFormat,
                                     value = 0
                                 ),

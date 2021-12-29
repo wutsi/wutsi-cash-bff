@@ -29,7 +29,7 @@ class CashinPendingScreen : AbstractQuery() {
         safe = true,
         appBar = AppBar(
             elevation = 0.0,
-            backgroundColor = Theme.WHITE_COLOR,
+            backgroundColor = Theme.COLOR_WHITE,
             automaticallyImplyLeading = false
         ),
         child = Column(
@@ -41,7 +41,7 @@ class CashinPendingScreen : AbstractQuery() {
                     child = Icon(
                         code = Theme.ICON_PENDING,
                         size = 80.0,
-                        color = Theme.PRIMARY_COLOR
+                        color = Theme.COLOR_PRIMARY
                     )
                 ),
                 Container(
@@ -52,7 +52,7 @@ class CashinPendingScreen : AbstractQuery() {
                             "page.cashin-pending.message_1"
                         ),
                         alignment = TextAlignment.Center,
-                        size = Theme.X_LARGE_TEXT_SIZE,
+                        size = Theme.TEXT_SIZE_X_LARGE,
                     )
                 ),
                 Container(
@@ -63,7 +63,7 @@ class CashinPendingScreen : AbstractQuery() {
                             "page.cashin-pending.message_2"
                         ),
                         alignment = TextAlignment.Center,
-                        size = Theme.X_LARGE_TEXT_SIZE,
+                        size = Theme.TEXT_SIZE_X_LARGE,
                     )
                 ),
                 Container(

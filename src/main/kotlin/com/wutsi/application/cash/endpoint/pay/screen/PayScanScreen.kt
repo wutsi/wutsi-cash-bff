@@ -33,8 +33,8 @@ class PayScanScreen(
             id = Page.PAY_SCAN,
             appBar = AppBar(
                 elevation = 0.0,
-                backgroundColor = Theme.WHITE_COLOR,
-                foregroundColor = Theme.BLACK_COLOR,
+                backgroundColor = Theme.COLOR_WHITE,
+                foregroundColor = Theme.COLOR_BLACK,
                 title = getText("page.pay-span.app-bar.title"),
             ),
             child = Column(
@@ -51,7 +51,7 @@ class PayScanScreen(
                     Container(
                         padding = 10.0,
                         alignment = Alignment.Center,
-                        child = Text(getText("page.pay-span.title"), size = Theme.LARGE_TEXT_SIZE),
+                        child = Text(getText("page.pay-span.title"), size = Theme.TEXT_SIZE_LARGE),
                     ),
                     Flexible(
                         child = QrView(
