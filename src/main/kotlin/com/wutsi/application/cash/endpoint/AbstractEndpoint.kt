@@ -45,14 +45,16 @@ abstract class AbstractEndpoint {
 
     @ExceptionHandler(TransactionException::class)
     fun onTransactionException(ex: TransactionException): Action {
-        val message = try {
+        val message = getErrorMessage(ex)
+        return createErrorAction(ex, message)
+    }
+
+    protected fun getErrorMessage(ex: TransactionException): String =
+        try {
             getText("prompt.error.transaction-failed.${ex.error.name}")
         } catch (ex: Exception) {
             getText("prompt.error.transaction-failed")
         }
-
-        return createErrorAction(ex, message)
-    }
 
     @ExceptionHandler(PasswordInvalidException::class)
     fun onPasswordInvalid(ex: PasswordInvalidException): Action =

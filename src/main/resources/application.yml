@@ -68,6 +68,8 @@ logging:
             WutsiContactApi: DEBUG
           payment:
             WutsiPaymentApi: DEBUG
+          qr:
+            WutsiQrApi: DEBUG
           tenant:
             WutsiTenantApi: DEBUG
   pattern:

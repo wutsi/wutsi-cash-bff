@@ -14,4 +14,8 @@ object Page {
     const val SEND_PIN = "page.send.pin"
     const val SEND_SUCCESS = "page.send.success"
     const val HISTORY = "page.history"
+    const val PAY = "page.pay"
+    const val PAY_SCAN = "page.pay.scan"
+    const val PAY_ERROR = "page.pay.error"
+    const val PAY_SUCCESS = "page.pay.success"
 }

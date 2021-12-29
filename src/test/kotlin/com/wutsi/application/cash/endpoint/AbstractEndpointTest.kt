@@ -181,7 +181,7 @@ abstract class AbstractEndpointTest {
         assertJsonEquals(expectedPath, response.body)
     }
 
-    private fun assertJsonEquals(expectedPath: String, value: Any?) {
+    protected fun assertJsonEquals(expectedPath: String, value: Any?) {
         val input = AbstractEndpointTest::class.java.getResourceAsStream(expectedPath)
         val expected = mapper.readValue(input, Any::class.java)
 

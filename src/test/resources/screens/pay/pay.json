@@ -1,0 +1,92 @@
+{
+  "type": "Screen",
+  "attributes": {
+    "id": "page.pay",
+    "safe": false,
+    "backgroundColor": "#1D7EDF"
+  },
+  "children": [
+    {
+      "type": "Column",
+      "attributes": {},
+      "children": [
+        {
+          "type": "Form",
+          "attributes": {},
+          "children": [
+            {
+              "type": "Container",
+              "attributes": {
+                "padding": 10.0
+              },
+              "children": [
+                {
+                  "type": "MoneyWithKeyboard",
+                  "attributes": {
+                    "name": "amount",
+                    "keyboardColor": "#FFFFFF",
+                    "moneyColor": "#FFFFFF",
+                    "maxLength": 7,
+                    "value": 0,
+                    "currency": "XAF",
+                    "numberFormat": "#,###,##0"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "attributes": {
+                "padding": 10.0
+              },
+              "children": [
+                {
+                  "type": "Input",
+                  "attributes": {
+                    "name": "command",
+                    "hideText": false,
+                    "required": false,
+                    "caption": "Submit",
+                    "enabled": true,
+                    "readOnly": false,
+                    "type": "Submit",
+                    "minLength": 0
+                  },
+                  "children": [],
+                  "action": {
+                    "type": "Command",
+                    "url": "http://localhost:0/commands/pay/amount"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appBar": {
+    "type": "AppBar",
+    "attributes": {
+      "title": "Payment",
+      "elevation": 0.0,
+      "backgroundColor": "#1D7EDF",
+      "foregroundColor": "#FFFFFF",
+      "actions": [
+        {
+          "type": "IconButton",
+          "attributes": {
+            "icon": "e57f"
+          },
+          "children": [],
+          "action": {
+            "type": "Route",
+            "url": "https://wutsi-gateway-test.herokuapp.com/shell/settings"
+          }
+        }
+      ]
+    },
+    "children": []
+  }
+}
