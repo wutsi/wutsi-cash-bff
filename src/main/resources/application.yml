@@ -47,12 +47,6 @@ wutsi:
       name: ${wutsi.application.name}
     security:
       type: jwt
-    stream:
-      name: ${wutsi.application.name}
-      type: local
-      subscriptions:
-        - wutsi-account
-        - wutsi-payment
     tracing:
       client-id: ${wutsi.application.name}
 
