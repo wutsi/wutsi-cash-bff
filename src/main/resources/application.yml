@@ -42,9 +42,6 @@ wutsi:
     login-url: ${wutsi.application.gateway-url}/login
     shell-url: ${wutsi.application.gateway-url}/shell
   platform:
-    cache:
-      type: local
-      name: ${wutsi.application.name}
     security:
       type: jwt
     tracing:
