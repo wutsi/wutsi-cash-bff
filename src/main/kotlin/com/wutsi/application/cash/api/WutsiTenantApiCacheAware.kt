@@ -10,7 +10,7 @@ class WutsiTenantApiCacheAware(
     private val cache: Cache
 ) : WutsiTenantApi {
     companion object {
-        private val LOGGER = LoggerFactory.getLogger(WutsiPaymentApiCacheAware::class.java)
+        private val LOGGER = LoggerFactory.getLogger(WutsiTenantApiCacheAware::class.java)
     }
 
     override fun getTenant(id: Long): GetTenantResponse {

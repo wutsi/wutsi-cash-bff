@@ -172,6 +172,8 @@ internal class WutsiPaymentApiCacheAwareTest {
 
         val response = api.createPayment(CreatePaymentRequest())
         assertEquals(result, response)
+
+        verify(cache).evict("balance_$USER_ID")
     }
 
     @Test

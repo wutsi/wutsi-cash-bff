@@ -18,7 +18,7 @@ import org.springframework.boot.web.server.LocalServerPort
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class SendRecipientScreenTest : AbstractEndpointTest() {
     @LocalServerPort
-    public val port: Int = 0
+    val port: Int = 0
 
     private lateinit var url: String
 
@@ -47,6 +47,13 @@ internal class SendRecipientScreenTest : AbstractEndpointTest() {
         doReturn(SearchAccountResponse(accounts)).whenever(accountApi).searchAccount(any())
 
         assertEndpointEquals("/screens/send/recipient.json", url)
+    }
+
+    @Test
+    fun noContacts() {
+        doReturn(SearchContactResponse()).whenever(contactApi).searchContact(any())
+
+        assertEndpointEquals("/screens/send/recipient-no-contact.json", url)
     }
 
     private fun createContact(contactId: Long) = ContactSummary(

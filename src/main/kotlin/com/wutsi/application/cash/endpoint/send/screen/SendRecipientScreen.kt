@@ -86,17 +86,27 @@ class SendRecipientScreen(
                         )
                     ),
                     bottom = TabBar(
-                        tabs = listOf(
-                            Tab(icon = Theme.ICON_CONTACT, caption = getText("page.send-recipient.tab.contact")),
-                            Tab(icon = Theme.ICON_PHONE, caption = getText("page.send-recipient.tab.phone"))
-                        )
+                        tabs = if (contacts.isEmpty())
+                            listOf(
+                                Tab(icon = Theme.ICON_PHONE, caption = getText("page.send-recipient.tab.phone"))
+                            )
+                        else
+                            listOf(
+                                Tab(icon = Theme.ICON_CONTACT, caption = getText("page.send-recipient.tab.contact")),
+                                Tab(icon = Theme.ICON_PHONE, caption = getText("page.send-recipient.tab.phone"))
+                            )
                     )
                 ),
                 child = TabBarView(
-                    children = listOf(
-                        contactTab(contacts, amount, tenant),
-                        phoneTab(amount, amountText, tenant)
-                    )
+                    children = if (contacts.isEmpty())
+                        listOf(
+                            phoneTab(amount, amountText, tenant)
+                        )
+                    else
+                        listOf(
+                            contactTab(contacts, amount, tenant),
+                            phoneTab(amount, amountText, tenant)
+                        )
                 )
             )
         ).toWidget()

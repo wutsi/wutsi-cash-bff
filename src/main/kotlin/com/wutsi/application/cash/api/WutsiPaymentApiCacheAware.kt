@@ -77,6 +77,17 @@ class WutsiPaymentApiCacheAware(
         }
     }
 
+    override fun createPayment(request: CreatePaymentRequest): CreatePaymentResponse {
+        try {
+            return delegate.createPayment(request)
+        } finally {
+            evictBalance()
+        }
+    }
+
+    override fun requestPayment(request: RequestPaymentRequest): RequestPaymentResponse =
+        delegate.requestPayment(request)
+
     override fun getBalance(accountId: Long): GetBalanceResponse {
         // Fetch the balance from cache
         val key = getBalanceCacheKey()
@@ -129,10 +140,4 @@ class WutsiPaymentApiCacheAware(
 
     private fun getBalanceCacheKey(accountId: Long): String =
         "balance_$accountId"
-
-    override fun createPayment(request: CreatePaymentRequest): CreatePaymentResponse =
-        delegate.createPayment(request)
-
-    override fun requestPayment(request: RequestPaymentRequest): RequestPaymentResponse =
-        delegate.requestPayment(request)
 }
