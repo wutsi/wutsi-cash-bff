@@ -6,7 +6,6 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.platform.payment.dto.Balance
 import com.wutsi.platform.payment.dto.GetBalanceResponse
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
@@ -16,22 +15,25 @@ internal class SendScreenTest : AbstractEndpointTest() {
     @LocalServerPort
     val port: Int = 0
 
-    private lateinit var url: String
-
-    @BeforeEach
-    override fun setUp() {
-        super.setUp()
-
-        url = "http://localhost:$port/send"
-    }
-
     @Test
-    fun index() {
+    fun sendTo() {
         // GIVEN
         val balance = Balance(amount = 50000.0, currency = "XAF")
         doReturn(GetBalanceResponse(balance)).whenever(paymentApi).getBalance(any())
 
         // THEN
+        val url = "http://localhost:$port/send"
         assertEndpointEquals("/screens/send/send.json", url)
+    }
+
+    @Test
+    fun sendToRecipient() {
+        // GIVEN
+        val balance = Balance(amount = 50000.0, currency = "XAF")
+        doReturn(GetBalanceResponse(balance)).whenever(paymentApi).getBalance(any())
+
+        // THEN
+        val url = "http://localhost:$port/send?account-id=123"
+        assertEndpointEquals("/screens/send/send-to-recipient.json", url)
     }
 }

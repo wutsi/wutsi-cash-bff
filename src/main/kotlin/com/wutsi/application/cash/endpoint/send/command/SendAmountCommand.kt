@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
@@ -29,7 +30,10 @@ class SendAmountCommand(
     @Value("\${wutsi.application.shell-url}") private val shellUrl: String
 ) : AbstractCommand() {
     @PostMapping
-    fun index(@RequestBody @Valid request: SendAmountRequest): Action {
+    fun index(
+        @RequestParam(name = "account-id", required = false) accountId: Long? = null,
+        @RequestBody @Valid request: SendAmountRequest
+    ): Action {
         logger.add("amount", request.amount)
 
         // Validate
@@ -38,10 +42,16 @@ class SendAmountCommand(
             return action
 
         // Goto next page
-        return Action(
-            type = Route,
-            url = urlBuilder.build("send/recipient?amount=${request.amount}")
-        )
+        return if (accountId == null)
+            Action(
+                type = Route,
+                url = urlBuilder.build("send/recipient?amount=${request.amount}")
+            )
+        else
+            Action(
+                type = Route,
+                url = urlBuilder.build("send/confirm?amount=${request.amount}&account-id=$accountId")
+            )
     }
 
     private fun validate(request: SendAmountRequest): Action? {

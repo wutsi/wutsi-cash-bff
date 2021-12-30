@@ -21,6 +21,7 @@ import com.wutsi.flutter.sdui.enums.InputType.Submit
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.text.DecimalFormat
 
@@ -33,7 +34,7 @@ class SendScreen(
     @Value("\${wutsi.application.shell-url}") private val shellUrl: String
 ) : AbstractQuery() {
     @PostMapping
-    fun index(): Widget {
+    fun index(@RequestParam(name = "account-id", required = false) accountId: Long? = null): Widget {
         val tenant = tenantProvider.get()
         val balance = getBalance(tenant)
         val balanceText = DecimalFormat(tenant.monetaryFormat).format(balance.value)
@@ -79,7 +80,11 @@ class SendScreen(
                                     caption = getText("page.send.button.submit"),
                                     action = Action(
                                         type = Command,
-                                        url = urlBuilder.build("commands/send/amount")
+                                        url = urlBuilder.build("commands/send/amount"),
+                                        parameters = if (accountId == null)
+                                            null
+                                        else
+                                            mapOf("account-id" to accountId.toString())
                                     )
                                 )
                             )

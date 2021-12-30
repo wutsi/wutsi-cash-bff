@@ -21,6 +21,7 @@ import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.context.MessageSource
 import java.util.Locale
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class SendAmountCommandTest : AbstractEndpointTest() {
@@ -55,6 +56,25 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
         val action = response.body
         assertEquals(Route, action.type)
         assertEquals("http://localhost:0/send/recipient?amount=1000.0", action.url)
+        assertNull(action.parameters)
+    }
+
+    @Test
+    fun successWithAccountId() {
+        // WHEN
+        url = "http://localhost:$port/commands/send/amount?account-id=555"
+        val request = SendAmountRequest(
+            amount = 1000.0
+        )
+        val response = rest.postForEntity(url, request, Action::class.java)
+
+        // THEN
+        assertEquals(200, response.statusCodeValue)
+
+        val action = response.body
+        assertEquals(Route, action.type)
+        assertEquals("http://localhost:0/send/confirm?amount=1000.0&account-id=555", action.url)
+        assertNull(action.parameters)
     }
 
     @Test
