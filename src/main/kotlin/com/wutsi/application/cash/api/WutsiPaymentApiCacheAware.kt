@@ -8,10 +8,14 @@ import com.wutsi.platform.payment.dto.CreateCashinRequest
 import com.wutsi.platform.payment.dto.CreateCashinResponse
 import com.wutsi.platform.payment.dto.CreateCashoutRequest
 import com.wutsi.platform.payment.dto.CreateCashoutResponse
+import com.wutsi.platform.payment.dto.CreatePaymentRequest
+import com.wutsi.platform.payment.dto.CreatePaymentResponse
 import com.wutsi.platform.payment.dto.CreateTransferRequest
 import com.wutsi.platform.payment.dto.CreateTransferResponse
 import com.wutsi.platform.payment.dto.GetBalanceResponse
 import com.wutsi.platform.payment.dto.GetTransactionResponse
+import com.wutsi.platform.payment.dto.RequestPaymentRequest
+import com.wutsi.platform.payment.dto.RequestPaymentResponse
 import com.wutsi.platform.payment.dto.SearchTransactionRequest
 import com.wutsi.platform.payment.dto.SearchTransactionResponse
 import com.wutsi.platform.payment.event.EventURN
@@ -125,4 +129,10 @@ class WutsiPaymentApiCacheAware(
 
     private fun getBalanceCacheKey(accountId: Long): String =
         "balance_$accountId"
+
+    override fun createPayment(request: CreatePaymentRequest): CreatePaymentResponse =
+        delegate.createPayment(request)
+
+    override fun requestPayment(request: RequestPaymentRequest): RequestPaymentResponse =
+        delegate.requestPayment(request)
 }
