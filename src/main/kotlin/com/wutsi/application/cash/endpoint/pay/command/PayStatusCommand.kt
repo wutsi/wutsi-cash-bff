@@ -34,6 +34,7 @@ class PayStatusCommand(
         @RequestParam amount: Double
     ): Action {
         logger.add("payment_request_id", paymentRequestId)
+        logger.add("amount", amount)
 
         try {
             var retries = 0

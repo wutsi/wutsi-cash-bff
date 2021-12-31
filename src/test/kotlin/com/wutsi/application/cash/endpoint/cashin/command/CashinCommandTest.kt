@@ -12,15 +12,10 @@ import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashinResponse
-import feign.FeignException
-import feign.Request
-import feign.Request.HttpMethod.POST
-import feign.RequestTemplate
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
-import java.nio.charset.Charset
 import kotlin.test.assertEquals
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -164,25 +159,4 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(getText("prompt.error.amount-required"), action.prompt?.attributes?.get("message"))
     }
-
-    private fun createFeignException(errorCode: String, downstreamError: ErrorCode) = FeignException.Conflict(
-        "",
-        Request.create(
-            POST,
-            "https://www.google.ca",
-            emptyMap(),
-            "".toByteArray(),
-            Charset.defaultCharset(),
-            RequestTemplate()
-        ),
-        """
-            {
-                "error":{
-                    "code": "$errorCode",
-                    "downstreamCode": "$downstreamError"
-                }
-            }
-        """.trimIndent().toByteArray(),
-        emptyMap()
-    )
 }

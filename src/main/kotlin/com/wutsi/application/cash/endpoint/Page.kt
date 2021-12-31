@@ -17,5 +17,5 @@ object Page {
     const val PAY = "page.pay"
     const val PAY_QR_CODE = "page.pay.qr-code"
     const val PAY_SUCCESS = "page.pay.success"
-    const val PAY_ERROR = "page.pay.error"
+    const val PAY_CONFIRM = "page.pay.confirm"
 }

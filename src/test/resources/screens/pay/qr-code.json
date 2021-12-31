@@ -79,7 +79,7 @@
                 {
                   "type": "Text",
                   "attributes": {
-                    "caption": "After the user scans the QR code, press the button CONTINUE to receive for the payment"
+                    "caption": "After the user scans the QR code, press the button CONTINUE to receive the payment"
                   },
                   "children": []
                 }

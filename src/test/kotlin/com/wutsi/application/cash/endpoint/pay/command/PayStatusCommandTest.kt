@@ -17,10 +17,8 @@ import com.wutsi.platform.payment.dto.TransactionSummary
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
-import org.springframework.context.MessageSource
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class PayStatusCommandTest : AbstractEndpointTest() {
@@ -28,9 +26,6 @@ internal class PayStatusCommandTest : AbstractEndpointTest() {
     val port: Int = 0
 
     private lateinit var url: String
-
-    @Autowired
-    private lateinit var messages: MessageSource
 
     @BeforeEach
     override fun setUp() {

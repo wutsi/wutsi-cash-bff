@@ -18,6 +18,7 @@ import com.wutsi.platform.core.tracing.TracingContext
 import com.wutsi.platform.core.tracing.spring.SpringTracingRequestInterceptor
 import com.wutsi.platform.core.util.URN
 import com.wutsi.platform.payment.WutsiPaymentApi
+import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.dto.Balance
 import com.wutsi.platform.payment.dto.GetBalanceResponse
 import com.wutsi.platform.tenant.WutsiTenantApi
@@ -27,11 +28,15 @@ import com.wutsi.platform.tenant.dto.Logo
 import com.wutsi.platform.tenant.dto.MobileCarrier
 import com.wutsi.platform.tenant.dto.PhonePrefix
 import com.wutsi.platform.tenant.dto.Tenant
+import feign.FeignException
+import feign.Request
+import feign.RequestTemplate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.web.client.RestTemplate
+import java.nio.charset.Charset
 import java.util.UUID
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
@@ -191,4 +196,25 @@ abstract class AbstractEndpointTest {
 
     protected fun getText(key: String, args: Array<Any?> = emptyArray()) =
         messages.getMessage(key, args, LocaleContextHolder.getLocale()) ?: key
+
+    protected fun createFeignException(errorCode: String, downstreamError: ErrorCode) = FeignException.Conflict(
+        "",
+        Request.create(
+            Request.HttpMethod.POST,
+            "https://www.google.ca",
+            emptyMap(),
+            "".toByteArray(),
+            Charset.defaultCharset(),
+            RequestTemplate()
+        ),
+        """
+            {
+                "error":{
+                    "code": "$errorCode",
+                    "downstreamCode": "$downstreamError"
+                }
+            }
+        """.trimIndent().toByteArray(),
+        emptyMap()
+    )
 }

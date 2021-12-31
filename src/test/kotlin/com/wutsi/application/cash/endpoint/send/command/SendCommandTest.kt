@@ -11,17 +11,11 @@ import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.payment.core.ErrorCode
-import com.wutsi.platform.payment.core.ErrorCode.NONE
 import com.wutsi.platform.payment.dto.CreateTransferResponse
-import feign.FeignException
-import feign.Request
-import feign.Request.HttpMethod.POST
-import feign.RequestTemplate
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
-import java.nio.charset.Charset
 import kotlin.test.assertEquals
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -60,7 +54,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
     @Test
     fun transferFailed() {
         // Given
-        val ex = createFeignException("failed")
+        val ex = createFeignException("failed", ErrorCode.UNEXPECTED_ERROR)
         doThrow(ex).whenever(paymentApi).createTransfer(any())
 
         // WHEN
@@ -75,7 +69,10 @@ internal class SendCommandTest : AbstractEndpointTest() {
         val action = response.body
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
-        assertEquals(getText("prompt.error.transaction-failed"), action.prompt?.attributes?.get("message"))
+        assertEquals(
+            getText("prompt.error.transaction-failed.UNEXPECTED_ERROR"),
+            action.prompt?.attributes?.get("message")
+        )
     }
 
     @Test
@@ -125,25 +122,4 @@ internal class SendCommandTest : AbstractEndpointTest() {
             action.prompt?.attributes?.get("message")
         )
     }
-
-    private fun createFeignException(code: String, errorCode: ErrorCode = NONE) = FeignException.Conflict(
-        "failed",
-        Request.create(
-            POST,
-            "https://www.google.ca",
-            emptyMap(),
-            "".toByteArray(),
-            Charset.defaultCharset(),
-            RequestTemplate()
-        ),
-        """
-            {
-                "error":{
-                    "code": "$code",
-                    "downstreamCode": "$errorCode"
-                }
-            }
-        """.trimIndent().toByteArray(),
-        emptyMap()
-    )
 }
