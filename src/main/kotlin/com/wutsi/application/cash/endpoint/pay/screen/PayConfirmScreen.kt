@@ -20,6 +20,7 @@ import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.platform.account.WutsiAccountApi
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -31,7 +32,9 @@ import java.text.DecimalFormat
 class PayConfirmScreen(
     private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
-    private val accountApi: WutsiAccountApi
+    private val accountApi: WutsiAccountApi,
+
+    @Value("\${wutsi.application.login-url}") private val loginUrl: String,
 ) : AbstractQuery() {
     @PostMapping
     fun index(@RequestParam(name = "payment-request-id") paymentRequestId: String): Widget {
@@ -93,13 +96,29 @@ class PayConfirmScreen(
                         child = Button(
                             caption = getText("page.pay-confirm.button.pay", arrayOf(ammoutText)),
                             action = Action(
-                                type = ActionType.Command,
-                                url = urlBuilder.build("commands/pay?payment-request-id=$paymentRequestId")
+                                type = ActionType.Route,
+                                url = urlBuilder.build(loginUrl, getLoginUrlPath(paymentRequestId)),
                             )
                         )
                     )
                 ),
             )
         ).toWidget()
+    }
+
+    private fun getLoginUrlPath(paymentRequestId: String): String {
+        val me = accountApi.getAccount(securityManager.currentUserId()).account
+        return "?phone=" + encodeURLParam(me.phone!!.number) +
+            "&icon=" + Theme.ICON_LOCK +
+            "&screen-id=" + Page.PAY_PIN +
+            "&title=" + encodeURLParam(getText("page.pay-pin.title")) +
+            "&sub-title=" + encodeURLParam(getText("page.pay-pin.sub-title")) +
+            "&auth=false" +
+            "&return-to-route=false" +
+            "&return-url=" + encodeURLParam(
+            urlBuilder.build(
+                "commands/pay?payment-request-id=$paymentRequestId"
+            )
+        )
     }
 }

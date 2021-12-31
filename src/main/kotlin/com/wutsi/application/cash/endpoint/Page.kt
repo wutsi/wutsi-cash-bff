@@ -18,4 +18,5 @@ object Page {
     const val PAY_QR_CODE = "page.pay.qr-code"
     const val PAY_SUCCESS = "page.pay.success"
     const val PAY_CONFIRM = "page.pay.confirm"
+    const val PAY_PIN = "page.pay.pin"
 }

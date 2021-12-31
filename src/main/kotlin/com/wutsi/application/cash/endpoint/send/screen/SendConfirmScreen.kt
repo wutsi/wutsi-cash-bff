@@ -158,7 +158,7 @@ class SendConfirmScreen(
                                 caption = getText("page.send-confirm.button.submit", arrayOf(amountText)),
                                 action = Action(
                                     type = ActionType.Route,
-                                    url = urlBuilder.build(loginUrl, loginUrlPath(amount, recipient)),
+                                    url = urlBuilder.build(loginUrl, getLoginUrlPath(amount, recipient)),
                                 )
                             )
                         )
@@ -252,7 +252,7 @@ class SendConfirmScreen(
     private fun findRecipient(id: Long): Account =
         accountApi.getAccount(id).account
 
-    private fun loginUrlPath(amount: Double, recipient: AccountSummary): String {
+    private fun getLoginUrlPath(amount: Double, recipient: AccountSummary): String {
         val me = accountApi.getAccount(securityManager.currentUserId()).account
         return "?phone=" + encodeURLParam(me.phone!!.number) +
             "&icon=" + Theme.ICON_LOCK +

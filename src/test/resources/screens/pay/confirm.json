@@ -87,8 +87,8 @@
               },
               "children": [],
               "action": {
-                "type": "Command",
-                "url": "http://localhost:0/commands/pay?payment-request-id=1111"
+                "type": "Route",
+                "url": "https://wutsi-gateway-test.herokuapp.com/login/?phone=%2B237699999999&icon=e3ae&screen-id=page.pay.pin&title=Authorization&sub-title=Enter+your+PIN+to+authorize+the+transaction&auth=false&return-to-route=false&return-url=http%3A%2F%2Flocalhost%3A0%2Fcommands%2Fpay%3Fpayment-request-id%3D1111"
               }
             }
           ]
