@@ -112,7 +112,7 @@ class PayQrCodeScreen(
                             caption = getText("page.pay-qr-code.button.continue"),
                             action = Action(
                                 type = Command,
-                                url = urlBuilder.build("commands/wait-payment?payment-request-id=$paymentRequestId")
+                                url = urlBuilder.build("commands/status?payment-request-id=$paymentRequestId&amount=$amount")
                             )
                         )
                     )

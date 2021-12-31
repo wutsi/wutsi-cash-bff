@@ -104,7 +104,7 @@
               "children": [],
               "action": {
                 "type": "Command",
-                "url": "http://localhost:0/commands/wait-payment?payment-request-id=1111"
+                "url": "http://localhost:0/commands/status?payment-request-id=1111&amount=5000.0"
               }
             }
           ]
