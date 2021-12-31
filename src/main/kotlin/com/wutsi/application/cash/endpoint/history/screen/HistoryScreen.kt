@@ -242,6 +242,7 @@ class HistoryScreen(
         when (tx.type.uppercase()) {
             "CASHOUT" -> -tx.amount
             "CASHIN" -> tx.amount
+            "PAYMENT" -> -tx.amount
             else -> if (tx.recipientId == securityManager.currentUserId())
                 tx.amount
             else
@@ -255,6 +256,7 @@ class HistoryScreen(
             else -> when (tx.type.uppercase()) {
                 "CASHIN" -> Theme.COLOR_SUCCESS
                 "CASHOUT" -> Theme.COLOR_DANGER
+                "PAYMENT" -> Theme.COLOR_DANGER
                 else -> if (tx.recipientId == securityManager.currentUserId())
                     Theme.COLOR_SUCCESS
                 else
@@ -269,6 +271,8 @@ class HistoryScreen(
             return getText("page.history.cashin.caption")
         } else if (tx.type == "CASHOUT") {
             return getText("page.history.cashout.caption")
+        } else if (tx.type == "PAYMENT") {
+            return getText("page.history.payment.caption")
         } else {
             return if (tx.accountId == securityManager.currentUserId())
                 getText("page.history.transfer.to.caption")
