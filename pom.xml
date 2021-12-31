@@ -18,8 +18,8 @@
   </parent>
 
   <properties>
-    <jacoco.threshold.line>0.94</jacoco.threshold.line>
-    <jacoco.threshold.class>0.94</jacoco.threshold.class>
+    <jacoco.threshold.line>0.90</jacoco.threshold.line>
+    <jacoco.threshold.class>0.90</jacoco.threshold.class>
     <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
     <jdk.version>11</jdk.version>
 
@@ -30,12 +30,12 @@
     <klint.version>0.43.2</klint.version>
     <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
     <libphonenumber.version>8.12.40</libphonenumber.version>
-    <sdui-kotlin.version>0.0.53</sdui-kotlin.version>
+    <sdui-kotlin.version>0.0.54</sdui-kotlin.version>
     <wutsi-platform-core.version>0.0.91</wutsi-platform-core.version>
     <wutsi-account.version>1.0.24</wutsi-account.version>
     <wutsi-contact.version>0.0.4</wutsi-contact.version>
-    <wutsi-payment.version>0.0.27</wutsi-payment.version>
-    <wutsi-qr.version>0.0.2</wutsi-qr.version>
+    <wutsi-payment.version>0.0.28</wutsi-payment.version>
+    <wutsi-qr.version>0.0.4</wutsi-qr.version>
     <wutsi-tenant.version>0.0.11</wutsi-tenant.version>
     <wutsi-platform-payment.version>0.0.65</wutsi-platform-payment.version>
   </properties>

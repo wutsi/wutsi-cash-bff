@@ -112,9 +112,6 @@ class HistoryScreen(
             .map { it.token to it }.toMap()
 
     private fun findAccounts(txs: List<TransactionSummary>): Map<Long, AccountSummary> {
-        if (txs.isEmpty())
-            return emptyMap()
-
         val accountIds = txs.map { it.accountId }.toMutableSet()
         accountIds.addAll(txs.mapNotNull { it.recipientId })
 

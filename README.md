@@ -6,12 +6,8 @@
 
 # wutsi-cash-bff
 
-`wutsi-cash-bff` manage the experiences for managing cash:
+`wutsi-cash-bff` manage the experiences for:
 
-Figmas:
-
-- [Add Cash](https://www.figma.com/file/cwHu4uWFhPiQhYdt7AzpCs/Wutsi-eWallet?node-id=104%3A7)
-- [Cash Out](https://www.figma.com/file/cwHu4uWFhPiQhYdt7AzpCs/Wutsi-eWallet?node-id=112%3A71)
-- [Send Cash](https://www.figma.com/file/cwHu4uWFhPiQhYdt7AzpCs/Wutsi-eWallet?node-id=112%3A43)
-- [Transactions](https://www.figma.com/file/cwHu4uWFhPiQhYdt7AzpCs/Wutsi-eWallet?node-id=126%3A103)
-
+- sending money
+- paying
+- cashin and cashout

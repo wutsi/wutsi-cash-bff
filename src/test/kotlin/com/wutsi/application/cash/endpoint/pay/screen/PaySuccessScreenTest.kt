@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-internal class PayScanScreenTest : AbstractEndpointTest() {
+internal class PaySuccessScreenTest : AbstractEndpointTest() {
     @LocalServerPort
     val port: Int = 0
 
@@ -17,11 +17,11 @@ internal class PayScanScreenTest : AbstractEndpointTest() {
     override fun setUp() {
         super.setUp()
 
-        url = "http://localhost:$port/pay/scan?amount=5000"
+        url = "http://localhost:$port/pay/success?amount=5000"
     }
 
     @Test
     fun index() {
-        assertEndpointEquals("/screens/pay/scan.json", url)
+        assertEndpointEquals("/screens/pay/success.json", url)
     }
 }
