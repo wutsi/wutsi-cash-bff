@@ -60,9 +60,9 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
     }
 
     @Test
-    fun successWithAccountId() {
+    fun successWithRecipientId() {
         // WHEN
-        url = "http://localhost:$port/commands/send/amount?account-id=555"
+        url = "http://localhost:$port/commands/send/amount?recipient-id=555"
         val request = SendAmountRequest(
             amount = 1000.0
         )
@@ -73,7 +73,7 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         assertEquals(Route, action.type)
-        assertEquals("http://localhost:0/send/confirm?amount=1000.0&account-id=555", action.url)
+        assertEquals("http://localhost:0/send/confirm?amount=1000.0&recipient-id=555", action.url)
         assertNull(action.parameters)
     }
 

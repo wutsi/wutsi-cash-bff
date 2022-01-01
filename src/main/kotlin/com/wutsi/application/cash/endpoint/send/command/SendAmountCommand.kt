@@ -31,7 +31,7 @@ class SendAmountCommand(
 ) : AbstractCommand() {
     @PostMapping
     fun index(
-        @RequestParam(name = "account-id", required = false) accountId: Long? = null,
+        @RequestParam(name = "recipient-id", required = false) recipientId: Long? = null,
         @RequestBody @Valid request: SendAmountRequest
     ): Action {
         logger.add("amount", request.amount)
@@ -42,7 +42,7 @@ class SendAmountCommand(
             return action
 
         // Goto next page
-        return if (accountId == null)
+        return if (recipientId == null)
             Action(
                 type = Route,
                 url = urlBuilder.build("send/recipient?amount=${request.amount}")
@@ -50,7 +50,7 @@ class SendAmountCommand(
         else
             Action(
                 type = Route,
-                url = urlBuilder.build("send/confirm?amount=${request.amount}&account-id=$accountId")
+                url = urlBuilder.build("send/confirm?amount=${request.amount}&recipient-id=$recipientId")
             )
     }
 
