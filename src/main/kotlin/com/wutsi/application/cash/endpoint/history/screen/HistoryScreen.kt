@@ -218,7 +218,7 @@ class HistoryScreen(
     private fun amount(tx: TransactionSummary, tenant: Tenant): WidgetAware {
         val moneyFormat = DecimalFormat(tenant.monetaryFormat)
         val locale = LocaleContextHolder.getLocale()
-        val dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy", locale)
+        val dateFormat = DateTimeFormatter.ofPattern(tenant.dateFormat, locale)
         return Column(
             mainAxisAlignment = MainAxisAlignment.spaceBetween,
             crossAxisAlignment = CrossAxisAlignment.end,
