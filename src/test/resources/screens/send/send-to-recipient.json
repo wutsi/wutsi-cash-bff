@@ -58,7 +58,7 @@
                     "type": "Command",
                     "url": "http://localhost:0/commands/send/amount",
                     "parameters": {
-                      "account-id": "123"
+                      "recipient-id": "123"
                     }
                   }
                 }

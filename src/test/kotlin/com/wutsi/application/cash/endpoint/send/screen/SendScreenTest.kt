@@ -33,7 +33,7 @@ internal class SendScreenTest : AbstractEndpointTest() {
         doReturn(GetBalanceResponse(balance)).whenever(paymentApi).getBalance(any())
 
         // THEN
-        val url = "http://localhost:$port/send?account-id=123"
+        val url = "http://localhost:$port/send?recipient-id=123"
         assertEndpointEquals("/screens/send/send-to-recipient.json", url)
     }
 }

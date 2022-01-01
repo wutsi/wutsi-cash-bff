@@ -34,7 +34,7 @@ class SendScreen(
     @Value("\${wutsi.application.shell-url}") private val shellUrl: String
 ) : AbstractQuery() {
     @PostMapping
-    fun index(@RequestParam(name = "account-id", required = false) accountId: Long? = null): Widget {
+    fun index(@RequestParam(name = "recipient-id", required = false) recipientId: Long? = null): Widget {
         val tenant = tenantProvider.get()
         val balance = getBalance(tenant)
         val balanceText = DecimalFormat(tenant.monetaryFormat).format(balance.value)
@@ -81,10 +81,10 @@ class SendScreen(
                                     action = Action(
                                         type = Command,
                                         url = urlBuilder.build("commands/send/amount"),
-                                        parameters = if (accountId == null)
+                                        parameters = if (recipientId == null)
                                             null
                                         else
-                                            mapOf("account-id" to accountId.toString())
+                                            mapOf("recipient-id" to recipientId.toString())
                                     )
                                 )
                             )
