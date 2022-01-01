@@ -12,6 +12,7 @@ import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.CircleAvatar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
+import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.Image
 import com.wutsi.flutter.sdui.MoneyText
 import com.wutsi.flutter.sdui.Screen
@@ -49,6 +50,15 @@ class PayConfirmScreen(
                 backgroundColor = Theme.COLOR_WHITE,
                 foregroundColor = Theme.COLOR_BLACK,
                 title = getText("page.pay-confirm.app-bar.title"),
+                actions = listOf(
+                    IconButton(
+                        icon = Theme.ICON_CANCEL,
+                        action = Action(
+                            type = ActionType.Route,
+                            url = "route:/~"
+                        )
+                    )
+                )
             ),
             child = Column(
                 children = listOf(
