@@ -142,7 +142,7 @@ class SendConfirmScreen(
                         alignment = Alignment.Center,
                         child = MoneyText(
                             value = amount,
-                            currency = tenant.currency,
+                            currency = tenant.currencySymbol,
                             numberFormat = tenant.numberFormat,
                         )
                     ),

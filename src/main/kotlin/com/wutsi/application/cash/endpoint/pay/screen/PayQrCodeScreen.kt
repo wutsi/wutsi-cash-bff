@@ -68,7 +68,7 @@ class PayQrCodeScreen(
                         padding = 10.0,
                         child = MoneyText(
                             value = amount,
-                            currency = tenant.currency,
+                            currency = tenant.currencySymbol,
                             numberFormat = tenant.numberFormat,
                         ),
                     ),

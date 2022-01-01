@@ -71,7 +71,7 @@
               "type": "MoneyText",
               "attributes": {
                 "value": 50000.0,
-                "currency": "XAF",
+                "currency": "CFA",
                 "numberFormat": "#,###,##0"
               },
               "children": []

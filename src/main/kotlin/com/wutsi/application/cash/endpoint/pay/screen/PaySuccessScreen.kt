@@ -95,7 +95,7 @@ class PaySuccessScreen(
                         alignment = Alignment.Center,
                         child = MoneyText(
                             value = paymentRequest.amount,
-                            currency = tenant.currency,
+                            currency = tenant.currencySymbol,
                             numberFormat = tenant.numberFormat,
                         )
                     ),
