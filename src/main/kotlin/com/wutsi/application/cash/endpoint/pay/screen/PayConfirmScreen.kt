@@ -41,7 +41,7 @@ class PayConfirmScreen(
         val tenant = tenantProvider.get()
         val paymentRequest = paymentApi.getPaymentRequest(paymentRequestId).paymentRequest
         val merchant = accountApi.getAccount(paymentRequest.accountId).account
-        val ammoutText = DecimalFormat(tenant.monetaryFormat).format(paymentRequest.amount)
+        val amountText = DecimalFormat(tenant.monetaryFormat).format(paymentRequest.amount)
         return Screen(
             id = Page.PAY_CONFIRM,
             appBar = AppBar(
@@ -94,7 +94,7 @@ class PayConfirmScreen(
                         padding = 10.0,
                         alignment = Alignment.Center,
                         child = Button(
-                            caption = getText("page.pay-confirm.button.pay", arrayOf(ammoutText)),
+                            caption = getText("page.pay-confirm.button.pay", arrayOf(amountText)),
                             action = Action(
                                 type = ActionType.Route,
                                 url = urlBuilder.build(loginUrl, getLoginUrlPath(paymentRequestId)),

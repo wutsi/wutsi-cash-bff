@@ -1,0 +1,157 @@
+{
+  "type": "Screen",
+  "attributes": {
+    "id": "page.pay.error",
+    "safe": false
+  },
+  "children": [
+    {
+      "type": "Column",
+      "attributes": {},
+      "children": [
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center",
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "CircleAvatar",
+              "attributes": {
+                "radius": 32.0
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "MH",
+                    "bold": true,
+                    "size": 30.0
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center"
+          },
+          "children": [
+            {
+              "type": "Text",
+              "attributes": {
+                "caption": "Maison H",
+                "bold": true,
+                "size": 16.0
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center",
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "MoneyText",
+              "attributes": {
+                "value": 50000.0,
+                "currency": "XAF",
+                "numberFormat": "#,###,##0"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center"
+          },
+          "children": [
+            {
+              "type": "Icon",
+              "attributes": {
+                "code": "e237",
+                "size": 80.0,
+                "color": "#8B0000"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center",
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "Text",
+              "attributes": {
+                "caption": "Sorry! You do not have enough in your Wallet.",
+                "color": "#8B0000",
+                "bold": true,
+                "alignment": "Center"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "padding": 20.0
+          },
+          "children": [
+            {
+              "type": "Button",
+              "attributes": {
+                "caption": "Done",
+                "padding": 15.0,
+                "type": "Elevated"
+              },
+              "children": [],
+              "action": {
+                "type": "Route",
+                "url": "route:/~"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appBar": {
+    "type": "AppBar",
+    "attributes": {
+      "title": "Payment",
+      "elevation": 0.0,
+      "backgroundColor": "#FFFFFF",
+      "foregroundColor": "#000000",
+      "automaticallyImplyLeading": false,
+      "actions": [
+        {
+          "type": "IconButton",
+          "attributes": {
+            "icon": "ef28"
+          },
+          "children": [],
+          "action": {
+            "type": "Route",
+            "url": "route:/~"
+          }
+        }
+      ]
+    },
+    "children": []
+  }
+}

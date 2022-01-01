@@ -21,11 +21,9 @@ class PayCommand(
 ) : AbstractCommand() {
     @PostMapping
     fun index(
-        @RequestParam(name = "payment-request-id") paymentRequestId: String,
-        @RequestParam amount: Double
+        @RequestParam(name = "payment-request-id") paymentRequestId: String
     ): Action {
         logger.add("payment_request_id", paymentRequestId)
-        logger.add("amount", amount)
 
         try {
             val response = paymentApi.createPayment(
@@ -38,10 +36,14 @@ class PayCommand(
             logger.add("transaction_status", response.status)
             return Action(
                 type = ActionType.Route,
-                url = urlBuilder.build("pay/success?amount=$amount")
+                url = urlBuilder.build("pay/success?payment-request-id=$paymentRequestId")
             )
         } catch (ex: FeignException) {
-            throw TransactionException.of(mapper, ex)
+            val error = TransactionException.of(mapper, ex).error
+            return Action(
+                type = ActionType.Route,
+                url = urlBuilder.build("pay/success?payment-request-id=$paymentRequestId&error=$error")
+            )
         }
     }
 }

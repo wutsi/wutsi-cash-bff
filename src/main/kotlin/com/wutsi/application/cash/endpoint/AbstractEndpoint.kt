@@ -13,6 +13,7 @@ import com.wutsi.flutter.sdui.enums.DialogType.Error
 import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.core.logging.KVLogger
 import com.wutsi.platform.payment.WutsiPaymentApi
+import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Money
 import com.wutsi.platform.tenant.dto.MobileCarrier
 import com.wutsi.platform.tenant.dto.Tenant
@@ -50,9 +51,12 @@ abstract class AbstractEndpoint {
     }
 
     protected fun getErrorMessage(ex: TransactionException): String =
-        getErrorMessage(ex.error.name)
+        getTransactionErrorMessage(ex.error)
 
-    protected fun getErrorMessage(error: String?): String =
+    protected fun getTransactionErrorMessage(error: ErrorCode): String =
+        getTransactionErrorMessage(error.name)
+
+    protected fun getTransactionErrorMessage(error: String?): String =
         try {
             getText("prompt.error.transaction-failed.$error")
         } catch (ex: Exception) {

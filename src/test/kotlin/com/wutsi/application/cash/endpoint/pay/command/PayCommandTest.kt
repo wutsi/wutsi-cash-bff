@@ -9,6 +9,8 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType
+import com.wutsi.platform.account.dto.Account
+import com.wutsi.platform.account.dto.GetAccountResponse
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreatePaymentRequest
@@ -30,6 +32,8 @@ internal class PayCommandTest : AbstractEndpointTest() {
 
     private lateinit var paymentRequest: PaymentRequest
 
+    private lateinit var merchant: Account
+
     @BeforeEach
     override fun setUp() {
         super.setUp()
@@ -43,6 +47,12 @@ internal class PayCommandTest : AbstractEndpointTest() {
             currency = "XAF",
         )
         doReturn(GetPaymentRequestResponse(paymentRequest)).whenever(paymentApi).getPaymentRequest(any())
+
+        merchant = Account(
+            id = paymentRequest.accountId,
+            displayName = "Maison H"
+        )
+        doReturn(GetAccountResponse(merchant)).whenever(accountApi).getAccount(paymentRequest.accountId)
     }
 
     @Test
@@ -63,7 +73,7 @@ internal class PayCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         assertEquals(ActionType.Route, action.type)
-        assertEquals("http://localhost:0/pay/success?amount=1000.0", action.url)
+        assertEquals("http://localhost:0/pay/success?payment-request-id=1111", action.url)
     }
 
     @Test
@@ -83,10 +93,7 @@ internal class PayCommandTest : AbstractEndpointTest() {
         assertEquals(paymentRequest.id, req.firstValue.requestId)
 
         val action = response.body
-        assertEquals(ActionType.Prompt, action.type)
-        assertEquals(
-            getText("prompt.error.transaction-failed.EXPIRED"),
-            action.prompt?.attributes?.get("message")
-        )
+        assertEquals(ActionType.Route, action.type)
+        assertEquals("http://localhost:0/pay/success?payment-request-id=1111&error=EXPIRED", action.url)
     }
 }

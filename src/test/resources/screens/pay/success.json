@@ -1,88 +1,132 @@
 {
-  "type": "Screen",
-  "attributes": {
-    "id": "page.pay.success",
-    "safe": true
+  "type" : "Screen",
+  "attributes" : {
+    "id" : "page.pay.success",
+    "safe" : false
   },
-  "children": [
-    {
-      "type": "Column",
-      "attributes": {},
-      "children": [
-        {
-          "type": "Container",
-          "attributes": {
-            "padding": 40.0
-          },
-          "children": []
+  "children" : [ {
+    "type" : "Column",
+    "attributes" : { },
+    "children" : [ {
+      "type" : "Container",
+      "attributes" : {
+        "alignment" : "Center",
+        "padding" : 10.0
+      },
+      "children" : [ {
+        "type" : "CircleAvatar",
+        "attributes" : {
+          "radius" : 32.0
         },
-        {
-          "type": "Container",
-          "attributes": {
-            "alignment": "Center",
-            "padding": 20.0
+        "children" : [ {
+          "type" : "Text",
+          "attributes" : {
+            "caption" : "MH",
+            "bold" : true,
+            "size" : 30.0
           },
-          "children": [
-            {
-              "type": "Icon",
-              "attributes": {
-                "code": "e856",
-                "size": 80.0,
-                "color": "#4CAF50"
-              },
-              "children": []
-            }
-          ]
+          "children" : [ ]
+        } ]
+      } ]
+    }, {
+      "type" : "Container",
+      "attributes" : {
+        "alignment" : "Center"
+      },
+      "children" : [ {
+        "type" : "Text",
+        "attributes" : {
+          "caption" : "Maison H",
+          "bold" : true,
+          "size" : 16.0
         },
-        {
-          "type": "Container",
-          "attributes": {
-            "alignment": "Center",
-            "padding": 10.0
-          },
-          "children": [
-            {
-              "type": "Text",
-              "attributes": {
-                "caption": "The payment of 5,000 XAF has been successful",
-                "size": 18.0,
-                "alignment": "Center"
-              },
-              "children": []
-            }
-          ]
+        "children" : [ ]
+      } ]
+    }, {
+      "type" : "Container",
+      "attributes" : {
+        "alignment" : "Center",
+        "padding" : 10.0
+      },
+      "children" : [ {
+        "type" : "MoneyText",
+        "attributes" : {
+          "value" : 50000.0,
+          "currency" : "XAF",
+          "numberFormat" : "#,###,##0"
         },
-        {
-          "type": "Container",
-          "attributes": {
-            "padding": 10.0
-          },
-          "children": [
-            {
-              "type": "Button",
-              "attributes": {
-                "caption": "Done",
-                "padding": 15.0,
-                "type": "Elevated"
-              },
-              "children": [],
-              "action": {
-                "type": "Route",
-                "url": "route:/~"
-              }
-            }
-          ]
+        "children" : [ ]
+      } ]
+    }, {
+      "type" : "Container",
+      "attributes" : {
+        "alignment" : "Center"
+      },
+      "children" : [ {
+        "type" : "Icon",
+        "attributes" : {
+          "code" : "e856",
+          "size" : 80.0,
+          "color" : "#4CAF50"
+        },
+        "children" : [ ]
+      } ]
+    }, {
+      "type" : "Container",
+      "attributes" : {
+        "alignment" : "Center",
+        "padding" : 10.0
+      },
+      "children" : [ {
+        "type" : "Text",
+        "attributes" : {
+          "caption" : "",
+          "color" : "#8B0000",
+          "bold" : true,
+          "alignment" : "Center"
+        },
+        "children" : [ ]
+      } ]
+    }, {
+      "type" : "Container",
+      "attributes" : {
+        "padding" : 20.0
+      },
+      "children" : [ {
+        "type" : "Button",
+        "attributes" : {
+          "caption" : "Done",
+          "padding" : 15.0,
+          "type" : "Elevated"
+        },
+        "children" : [ ],
+        "action" : {
+          "type" : "Route",
+          "url" : "route:/~"
         }
-      ]
-    }
-  ],
-  "appBar": {
-    "type": "AppBar",
-    "attributes": {
-      "elevation": 0.0,
-      "backgroundColor": "#FFFFFF",
-      "automaticallyImplyLeading": false
+      } ]
+    } ]
+  } ],
+  "appBar" : {
+    "type" : "AppBar",
+    "attributes" : {
+      "title" : "Payment",
+      "elevation" : 0.0,
+      "backgroundColor" : "#FFFFFF",
+      "foregroundColor" : "#000000",
+      "automaticallyImplyLeading" : false,
+      "actions" : [ {
+        "type" : "IconButton",
+        "attributes" : {
+          "icon" : "ef28"
+        },
+        "children" : [ ],
+        "action" : {
+          "type" : "Route",
+          "url" : "route:/~"
+        }
+      } ]
     },
-    "children": []
+    "children" : [ ]
   }
 }

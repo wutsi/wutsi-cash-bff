@@ -61,7 +61,7 @@ class PayStatusCommand(
                     prompt = Dialog(
                         type = DialogType.Error,
                         title = getText("prompt.error.title"),
-                        message = getErrorMessage(tx?.errorCode)
+                        message = getTransactionErrorMessage(tx?.errorCode)
                     ).toWidget()
                 )
         } catch (ex: FeignException) {
