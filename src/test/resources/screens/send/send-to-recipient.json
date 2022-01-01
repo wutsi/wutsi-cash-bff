@@ -28,7 +28,7 @@
                     "moneyColor": "#FFFFFF",
                     "maxLength": 7,
                     "value": 0,
-                    "currency": "XAF",
+                    "currency": "CFA",
                     "numberFormat": "#,###,##0"
                   },
                   "children": []

@@ -67,7 +67,7 @@
                         "name": "amount",
                         "moneyColor": "#1D7EDF",
                         "maxLength": 7,
-                        "currency": "XAF",
+                        "currency": "CFA",
                         "keyboardButtonSize": 65.0,
                         "numberFormat": "#,###,##0"
                       },

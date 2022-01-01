@@ -76,7 +76,7 @@ class CashinScreen(
                                     child = MoneyWithKeyboard(
                                         name = "amount",
                                         maxLength = 7,
-                                        currency = tenant.currency,
+                                        currency = tenant.currencySymbol,
                                         moneyColor = Theme.COLOR_PRIMARY,
                                         numberFormat = tenant.numberFormat,
                                         keyboardButtonSize = 65.0

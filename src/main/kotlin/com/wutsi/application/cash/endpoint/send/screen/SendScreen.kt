@@ -65,7 +65,7 @@ class SendScreen(
                                 child = MoneyWithKeyboard(
                                     name = "amount",
                                     maxLength = 7,
-                                    currency = tenant.currency,
+                                    currency = tenant.currencySymbol,
                                     moneyColor = Theme.COLOR_WHITE,
                                     keyboardColor = Theme.COLOR_WHITE,
                                     numberFormat = tenant.numberFormat,
