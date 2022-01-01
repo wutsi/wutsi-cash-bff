@@ -12,7 +12,7 @@
         {
           "type": "Container",
           "attributes": {
-            "padding": 40.0
+            "padding": 20.0
           },
           "children": []
         },
@@ -20,7 +20,68 @@
           "type": "Container",
           "attributes": {
             "alignment": "Center",
-            "padding": 20.0
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "CircleAvatar",
+              "attributes": {
+                "radius": 48.0
+              },
+              "children": [
+                {
+                  "type": "Image",
+                  "attributes": {
+                    "url": "https://www.goo.com/1.png"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center",
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "Text",
+              "attributes": {
+                "caption": "Roger Milla",
+                "color": "#1D7EDF",
+                "bold": true,
+                "size": 18.0,
+                "alignment": "Center"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center",
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "MoneyText",
+              "attributes": {
+                "value": 3000.0,
+                "currency": "XAF",
+                "numberFormat": "#,###,##0"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "alignment": "Center"
           },
           "children": [
             {
@@ -44,8 +105,9 @@
             {
               "type": "Text",
               "attributes": {
-                "caption": "3,000 XAF sent to YoMan",
-                "size": 18.0,
+                "caption": "",
+                "color": "#8B0000",
+                "bold": true,
                 "alignment": "Center"
               },
               "children": []
@@ -81,7 +143,20 @@
     "attributes": {
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
-      "automaticallyImplyLeading": false
+      "automaticallyImplyLeading": false,
+      "actions": [
+        {
+          "type": "IconButton",
+          "attributes": {
+            "icon": "ef28"
+          },
+          "children": [],
+          "action": {
+            "type": "Route",
+            "url": "route:/~"
+          }
+        }
+      ]
     },
     "children": []
   }

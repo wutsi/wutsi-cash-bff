@@ -40,7 +40,7 @@ internal class SendConfirmScreenTest : AbstractEndpointTest() {
         val account = Account(id = 111, displayName = "Ray Sponsible", phone = Phone(number = "+237999999999"))
         doReturn(GetAccountResponse(account)).whenever(accountApi).getAccount(any())
 
-        val url = "http://localhost:$port/send/confirm?amount=3000&account-id=55"
+        val url = "http://localhost:$port/send/confirm?amount=3000&recipient-id=55"
         assertEndpointEquals("/screens/send/confirm-id.json", url)
     }
 }

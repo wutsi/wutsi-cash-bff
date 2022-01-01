@@ -62,33 +62,30 @@ class PayConfirmScreen(
             ),
             child = Column(
                 children = listOf(
+                    Container(padding = 20.0),
                     Container(
                         padding = 10.0,
                         alignment = Alignment.Center,
-                        child = if (!merchant.pictureUrl.isNullOrBlank())
-                            CircleAvatar(
-                                radius = 32.0,
-                                child = Image(
-                                    width = 64.0,
-                                    height = 64.0,
-                                    url = merchant.pictureUrl!!
-                                )
-                            )
-                        else
-                            CircleAvatar(
-                                radius = 32.0,
-                                child = Text(
+                        child = CircleAvatar(
+                            radius = 48.0,
+                            child = if (!merchant.pictureUrl.isNullOrBlank())
+                                Image(url = merchant.pictureUrl!!)
+                            else
+                                Text(
                                     caption = StringUtil.initials(merchant.displayName),
                                     size = 30.0,
                                     bold = true
                                 )
-                            )
+                        )
                     ),
                     Container(
                         padding = 10.0,
                         alignment = Alignment.Center,
                         child = Text(
-                            merchant.displayName ?: "", size = Theme.TEXT_SIZE_LARGE, bold = true
+                            merchant.displayName ?: "",
+                            size = Theme.TEXT_SIZE_X_LARGE,
+                            bold = true,
+                            color = Theme.COLOR_PRIMARY,
                         )
                     ),
                     Container(

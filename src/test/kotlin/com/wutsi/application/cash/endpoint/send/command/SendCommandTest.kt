@@ -7,9 +7,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.application.cash.endpoint.send.dto.SendRequest
 import com.wutsi.flutter.sdui.Action
-import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.ActionType.Route
-import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.dto.CreateTransferResponse
 import org.junit.jupiter.api.BeforeEach
@@ -48,11 +46,11 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         assertEquals(Route, action.type)
-        assertEquals("http://localhost:0/send/success?amount=3000.0&recipient-name=YoMan", action.url)
+        assertEquals("http://localhost:0/send/success?amount=3000.0&recipient-id=111", action.url)
     }
 
     @Test
-    fun transferFailed() {
+    fun error() {
         // Given
         val ex = createFeignException("failed", ErrorCode.UNEXPECTED_ERROR)
         doThrow(ex).whenever(paymentApi).createTransfer(any())
@@ -67,59 +65,10 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(200, response.statusCodeValue)
 
         val action = response.body
-        assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
+        assertEquals(Route, action.type)
         assertEquals(
-            getText("prompt.error.transaction-failed.UNEXPECTED_ERROR"),
-            action.prompt?.attributes?.get("message")
-        )
-    }
-
-    @Test
-    fun notEnoughFunds() {
-        // Given
-        val ex = createFeignException("failed", ErrorCode.NOT_ENOUGH_FUNDS)
-        doThrow(ex).whenever(paymentApi).createTransfer(any())
-
-        // WHEN
-        val request = SendRequest(
-            pin = "123456"
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
-
-        // THEN
-        assertEquals(200, response.statusCodeValue)
-
-        val action = response.body
-        assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
-        assertEquals(
-            getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS"),
-            action.prompt?.attributes?.get("message")
-        )
-    }
-
-    @Test
-    fun payeeNotAllowedToReceive() {
-        // Given
-        val ex = createFeignException("failed", ErrorCode.PAYEE_NOT_ALLOWED_TO_RECEIVE)
-        doThrow(ex).whenever(paymentApi).createTransfer(any())
-
-        // WHEN
-        val request = SendRequest(
-            pin = "123456"
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
-
-        // THEN
-        assertEquals(200, response.statusCodeValue)
-
-        val action = response.body
-        assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
-        assertEquals(
-            getText("prompt.error.transaction-failed.PAYEE_NOT_ALLOWED_TO_RECEIVE"),
-            action.prompt?.attributes?.get("message")
+            "http://localhost:0/send/success?error=UNEXPECTED_ERROR&amount=3000.0&recipient-id=111",
+            action.url
         )
     }
 }

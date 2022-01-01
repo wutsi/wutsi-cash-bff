@@ -43,11 +43,17 @@ class SendCommand(
             return Action(
                 type = Route,
                 url = urlBuilder.build(
-                    "send/success?amount=$amount&recipient-name=" + encodeURLParam(recipientName)
+                    "send/success?amount=$amount&recipient-id=$recipientId"
                 )
             )
         } catch (ex: FeignException) {
-            throw TransactionException.of(objectMapper, ex)
+            val error = TransactionException.of(objectMapper, ex).error
+            return Action(
+                type = Route,
+                url = urlBuilder.build(
+                    "send/success?error=$error&amount=$amount&recipient-id=$recipientId"
+                )
+            )
         }
     }
 }

@@ -16,15 +16,15 @@ import com.wutsi.flutter.sdui.Icon
 import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.Image
 import com.wutsi.flutter.sdui.Input
+import com.wutsi.flutter.sdui.MoneyText
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.ActionType.Route
+import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.Alignment.Center
-import com.wutsi.flutter.sdui.enums.CrossAxisAlignment
 import com.wutsi.flutter.sdui.enums.InputType.Submit
-import com.wutsi.flutter.sdui.enums.MainAxisAlignment.center
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.Account
@@ -52,13 +52,13 @@ class SendConfirmScreen(
     fun index(
         @RequestParam amount: Double,
         @RequestParam("phone-number", required = false) phoneNumber: String? = null,
-        @RequestParam("account-id", required = false) accountId: Long? = null
+        @RequestParam("recipient-id", required = false) recipientId: Long? = null
     ): Widget {
-        if (phoneNumber == null && accountId == null) {
+        if (phoneNumber == null && recipientId == null) {
             throw BadRequestException(
                 error = Error(
                     code = "no-recipient",
-                    message = "phone-number and account-id are missing"
+                    message = "phone-number and recipient-id are missing"
                 )
             )
         }
@@ -72,7 +72,7 @@ class SendConfirmScreen(
             else
                 confirm(amount, xphoneNumber, recipient, tenant)
         } else {
-            val recipient = findRecipient(accountId!!)
+            val recipient = findRecipient(recipientId!!)
             val summary = AccountSummary(
                 id = recipient.id,
                 displayName = recipient.displayName,
@@ -104,62 +104,57 @@ class SendConfirmScreen(
                     )
                 )
             ),
-            child = Container(
-                alignment = Center,
-                padding = 20.0,
-                child = Column(
-                    children = listOf(
-                        Container(
-                            padding = 20.0
-                        ),
-                        Column(
-                            mainAxisAlignment = center,
-                            crossAxisAlignment = CrossAxisAlignment.center,
-                            children = listOf(
-                                Container(
-                                    padding = 10.0,
-                                    alignment = Center,
-                                    child = CircleAvatar(
-                                        radius = 48.0,
-                                        child = if (recipient.pictureUrl.isNullOrEmpty())
-                                            Text(initials(recipient.displayName))
-                                        else
-                                            Image(
-                                                url = recipient.pictureUrl!!
-                                            )
-                                    )
-                                ),
-                                Container(
-                                    padding = 10.0,
-                                    alignment = Center,
-                                    child = Text(
-                                        caption = recipient.displayName ?: "",
-                                        alignment = TextAlignment.Center,
-                                        size = Theme.TEXT_SIZE_X_LARGE,
-                                        color = Theme.COLOR_PRIMARY,
-                                        bold = true,
-                                    )
-                                ),
-                                phoneNumber?.let {
-                                    Text(
-                                        caption = formattedPhoneNumber(it)!!,
-                                        alignment = TextAlignment.Center,
-                                        color = Theme.COLOR_BLACK,
-                                        size = Theme.TEXT_SIZE_X_LARGE,
-                                    )
-                                } ?: Container()
-                            )
-                        ),
-                        Container(
-                            padding = 10.0,
-                            child = Input(
-                                name = "command",
-                                type = Submit,
-                                caption = getText("page.send-confirm.button.submit", arrayOf(amountText)),
-                                action = Action(
-                                    type = ActionType.Route,
-                                    url = urlBuilder.build(loginUrl, getLoginUrlPath(amount, recipient)),
-                                )
+            child = Column(
+                children = listOf(
+                    Container(padding = 20.0),
+                    Container(
+                        padding = 10.0,
+                        alignment = Center,
+                        child = CircleAvatar(
+                            radius = 48.0,
+                            child = if (recipient.pictureUrl.isNullOrEmpty())
+                                Text(initials(recipient.displayName))
+                            else
+                                Image(url = recipient.pictureUrl!!)
+                        )
+                    ),
+                    Container(
+                        padding = 10.0,
+                        alignment = Center,
+                        child = Text(
+                            caption = recipient.displayName ?: "",
+                            alignment = TextAlignment.Center,
+                            size = Theme.TEXT_SIZE_X_LARGE,
+                            color = Theme.COLOR_PRIMARY,
+                            bold = true,
+                        )
+                    ),
+                    phoneNumber?.let {
+                        Text(
+                            caption = formattedPhoneNumber(it)!!,
+                            alignment = TextAlignment.Center,
+                            color = Theme.COLOR_BLACK,
+                            size = Theme.TEXT_SIZE_X_LARGE,
+                        )
+                    } ?: Container(),
+                    Container(
+                        padding = 10.0,
+                        alignment = Alignment.Center,
+                        child = MoneyText(
+                            value = amount,
+                            currency = tenant.currency,
+                            numberFormat = tenant.numberFormat,
+                        )
+                    ),
+                    Container(
+                        padding = 10.0,
+                        child = Input(
+                            name = "command",
+                            type = Submit,
+                            caption = getText("page.send-confirm.button.submit", arrayOf(amountText)),
+                            action = Action(
+                                type = ActionType.Route,
+                                url = urlBuilder.build(loginUrl, getLoginUrlPath(amount, recipient)),
                             )
                         )
                     )
