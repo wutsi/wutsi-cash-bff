@@ -23,7 +23,6 @@ internal class SendSuccessScreenTest : AbstractEndpointTest() {
     override fun setUp() {
         super.setUp()
 
-
         recipient = Account(
             id = recipientId,
             displayName = "Roger Milla",
