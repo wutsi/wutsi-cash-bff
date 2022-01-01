@@ -92,16 +92,15 @@ class PayQrCodeScreen(
                         ),
                     ),
                     Container(
-                        padding = 20.0,
-                        margin = 20.0,
+                        padding = 10.0,
+                        margin = 10.0,
                         alignment = Alignment.Center,
                         background = Theme.COLOR_PRIMARY_LIGHT,
                         border = 1.0,
-                        borderRadius = 5.0,
+                        borderRadius = 3.0,
                         child = Column(
                             children = listOf(
-                                Text(getText("page.pay-qr-code.message_1")),
-                                Text(getText("page.pay-qr-code.message_2")),
+                                Text(getText("page.pay-qr-code.message")),
                             )
                         )
                     ),
@@ -112,7 +111,7 @@ class PayQrCodeScreen(
                             caption = getText("page.pay-qr-code.button.continue"),
                             action = Action(
                                 type = Command,
-                                url = urlBuilder.build("commands/status?payment-request-id=$paymentRequestId&amount=$amount")
+                                url = urlBuilder.build("commands/pay/status?payment-request-id=$paymentRequestId&amount=$amount")
                             )
                         )
                     )
