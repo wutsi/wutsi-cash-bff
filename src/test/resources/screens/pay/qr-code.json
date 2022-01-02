@@ -72,33 +72,11 @@
                 {
                   "type": "Text",
                   "attributes": {
-                    "caption": "Present the QR code to the customer to continue the payment, then click on CONTINUE"
+                    "caption": "Present the QR code to the customer to perform the payment. You'll receive a notification once the payment completed"
                   },
                   "children": []
                 }
               ]
-            }
-          ]
-        },
-        {
-          "type": "Container",
-          "attributes": {
-            "alignment": "Center",
-            "padding": 10.0
-          },
-          "children": [
-            {
-              "type": "Button",
-              "attributes": {
-                "caption": "Continue",
-                "padding": 15.0,
-                "type": "Elevated"
-              },
-              "children": [],
-              "action": {
-                "type": "Command",
-                "url": "http://localhost:0/commands/pay/status?payment-request-id=1111&amount=5000.0"
-              }
             }
           ]
         }
@@ -116,12 +94,12 @@
         {
           "type": "IconButton",
           "attributes": {
-            "icon": "e57f"
+            "icon": "ef28"
           },
           "children": [],
           "action": {
             "type": "Route",
-            "url": "https://wutsi-gateway-test.herokuapp.com/shell/settings"
+            "url": "route:/~"
           }
         }
       ]

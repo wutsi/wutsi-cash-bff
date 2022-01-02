@@ -7,7 +7,6 @@ import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
-import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.Center
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
@@ -17,7 +16,6 @@ import com.wutsi.flutter.sdui.QrImage
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
-import com.wutsi.flutter.sdui.enums.ActionType.Command
 import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.CrossAxisAlignment
@@ -53,10 +51,10 @@ class PayQrCodeScreen(
                 title = getText("page.pay-qr-code.app-bar.title"),
                 actions = listOf(
                     IconButton(
-                        icon = Theme.ICON_SETTINGS,
+                        icon = Theme.ICON_CANCEL,
                         action = Action(
                             type = Route,
-                            url = urlBuilder.build(shellUrl, "settings")
+                            url = "route:/~"
                         )
                     )
                 )
@@ -104,17 +102,6 @@ class PayQrCodeScreen(
                             )
                         )
                     ),
-                    Container(
-                        padding = 10.0,
-                        alignment = Alignment.Center,
-                        child = Button(
-                            caption = getText("page.pay-qr-code.button.continue"),
-                            action = Action(
-                                type = Command,
-                                url = urlBuilder.build("commands/pay/status?payment-request-id=$paymentRequestId&amount=$amount")
-                            )
-                        )
-                    )
                 ),
             ),
         ).toWidget()
