@@ -46,17 +46,14 @@ abstract class AbstractEndpoint {
 
     @ExceptionHandler(TransactionException::class)
     fun onTransactionException(ex: TransactionException): Action {
-        val message = getErrorMessage(ex)
+        val message = getTransactionErrorMessage(ex.error)
         return createErrorAction(ex, message)
     }
-
-    protected fun getErrorMessage(ex: TransactionException): String =
-        getTransactionErrorMessage(ex.error)
 
     protected fun getTransactionErrorMessage(error: ErrorCode): String =
         getTransactionErrorMessage(error.name)
 
-    protected fun getTransactionErrorMessage(error: String?): String =
+    private fun getTransactionErrorMessage(error: String?): String =
         try {
             getText("prompt.error.transaction-failed.$error")
         } catch (ex: Exception) {
@@ -85,8 +82,7 @@ abstract class AbstractEndpoint {
         logger.add("action_url", action.url)
         logger.add("action_prompt_type", action.prompt?.type)
         logger.add("action_prompt_message", action.prompt?.attributes?.get("message"))
-        logger.add("exception", e::class.java)
-        logger.add("exception_message", e.message)
+        logger.setException(e)
 
         LoggerFactory.getLogger(this::class.java).error("Unexpected error", e)
     }
