@@ -60,7 +60,6 @@ class SendRecipientScreen(
         val amountText = DecimalFormat(tenant.monetaryFormat).format(amount)
         val contacts = contactApi.searchContact(
             SearchContactRequest(
-                accountId = securityManager.currentUserId(),
                 limit = 100,
                 offset = 0,
             )
