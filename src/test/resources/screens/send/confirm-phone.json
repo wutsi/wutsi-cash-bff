@@ -81,7 +81,7 @@
             {
               "type": "MoneyText",
               "attributes": {
-                "value": 3000.0,
+                "value": 3100.0,
                 "currency": "CFA",
                 "numberFormat": "#,###,##0"
               },
@@ -92,7 +92,24 @@
         {
           "type": "Container",
           "attributes": {
-            "padding": 10.0
+            "alignment": "Center"
+          },
+          "children": [
+            {
+              "type": "Text",
+              "attributes": {
+                "caption": "Transaction Fees: 100 XAF",
+                "bold": true,
+                "size": 16.0
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "padding": 20.0
           },
           "children": [
             {
@@ -101,7 +118,7 @@
                 "name": "command",
                 "hideText": false,
                 "required": false,
-                "caption": "Send 3,000 XAF",
+                "caption": "Send 3,100 XAF",
                 "enabled": true,
                 "readOnly": false,
                 "type": "Submit",

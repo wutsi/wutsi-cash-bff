@@ -32,6 +32,7 @@ import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.SearchAccountRequest
 import com.wutsi.platform.core.error.Error
 import com.wutsi.platform.core.error.exception.BadRequestException
+import com.wutsi.platform.payment.dto.ComputeTransactionFeesRequest
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
@@ -85,7 +86,27 @@ class SendConfirmScreen(
     }
 
     private fun confirm(amount: Double, phoneNumber: String?, recipient: AccountSummary, tenant: Tenant): Widget {
-        val amountText = DecimalFormat(tenant.monetaryFormat).format(amount)
+        // Get fees
+        val response = paymentApi.computeTransactionFees(
+            request = ComputeTransactionFeesRequest(
+                amount = amount,
+                transactionType = "TRANSFER",
+                recipientId = recipient.id
+            )
+        )
+
+        // Adjust amount
+        val fmt = DecimalFormat(tenant.monetaryFormat)
+        val adjustedAmount: Double
+        val fees: Double?
+        if (response.applyToSender) {
+            adjustedAmount = amount + response.fees
+            fees = response.fees
+        } else {
+            adjustedAmount = amount
+            fees = null
+        }
+
         return Screen(
             id = Page.SEND_CONFIRM,
             backgroundColor = Theme.COLOR_WHITE,
@@ -141,17 +162,27 @@ class SendConfirmScreen(
                         padding = 10.0,
                         alignment = Alignment.Center,
                         child = MoneyText(
-                            value = amount,
+                            value = adjustedAmount,
                             currency = tenant.currencySymbol,
                             numberFormat = tenant.numberFormat,
                         )
                     ),
                     Container(
-                        padding = 10.0,
+                        alignment = Alignment.Center,
+                        child = fees?.let {
+                            Text(
+                                getText("page.send-confirm.fees", arrayOf(fmt.format(it))),
+                                bold = true,
+                                size = Theme.TEXT_SIZE_LARGE
+                            )
+                        }
+                    ),
+                    Container(
+                        padding = 20.0,
                         child = Input(
                             name = "command",
                             type = Submit,
-                            caption = getText("page.send-confirm.button.submit", arrayOf(amountText)),
+                            caption = getText("page.send-confirm.button.submit", arrayOf(fmt.format(adjustedAmount))),
                             action = Action(
                                 type = ActionType.Route,
                                 url = urlBuilder.build(loginUrl, getLoginUrlPath(amount, recipient)),
