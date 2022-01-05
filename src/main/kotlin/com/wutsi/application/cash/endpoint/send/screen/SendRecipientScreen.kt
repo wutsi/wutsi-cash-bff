@@ -238,7 +238,7 @@ class SendRecipientScreen(
             url = urlBuilder.build("send/confirm"),
             parameters = mapOf(
                 "amount" to amount.toString(),
-                "account-id" to account.id.toString()
+                "recipient-id" to account.id.toString()
             )
         )
     )

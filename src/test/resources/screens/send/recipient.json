@@ -112,7 +112,7 @@
                                 "url": "http://localhost:0/send/confirm",
                                 "parameters": {
                                   "amount": "3000.0",
-                                  "account-id": "101"
+                                  "recipient-id": "101"
                                 }
                               }
                             },
@@ -146,7 +146,7 @@
                                 "url": "http://localhost:0/send/confirm",
                                 "parameters": {
                                   "amount": "3000.0",
-                                  "account-id": "100"
+                                  "recipient-id": "100"
                                 }
                               }
                             }
