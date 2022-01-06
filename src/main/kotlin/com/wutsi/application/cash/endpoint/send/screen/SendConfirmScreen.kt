@@ -185,7 +185,7 @@ class SendConfirmScreen(
                             caption = getText("page.send-confirm.button.submit", arrayOf(fmt.format(adjustedAmount))),
                             action = Action(
                                 type = ActionType.Route,
-                                url = urlBuilder.build(loginUrl, getLoginUrlPath(amount, recipient)),
+                                url = urlBuilder.build(loginUrl, getLoginUrlPath(adjustedAmount, recipient)),
                             )
                         )
                     )

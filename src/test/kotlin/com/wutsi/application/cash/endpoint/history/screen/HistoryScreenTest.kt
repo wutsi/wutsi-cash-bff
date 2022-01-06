@@ -73,8 +73,9 @@ internal class HistoryScreenTest : AbstractEndpointTest() {
             recipientId = recipientId,
             type = "TRANSFER",
             status = status,
-            net = 10000.0,
+            net = 9000.0,
             amount = 10000.0,
+            fees = 1000.0,
             description = "Sample description",
             created = OffsetDateTime.of(2021, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC)
         )

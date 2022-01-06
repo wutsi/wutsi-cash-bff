@@ -238,15 +238,21 @@ class HistoryScreen(
         )
     }
 
-    private fun toDisplayAmount(tx: TransactionSummary): Double =
-        when (tx.type.uppercase()) {
-            "CASHOUT" -> -tx.amount
-            "CASHIN" -> tx.amount
+    private fun toDisplayAmount(tx: TransactionSummary): Double {
+        val amount = if (tx.recipientId == securityManager.currentUserId())
+            tx.net
+        else
+            tx.amount
+
+        return when (tx.type.uppercase()) {
+            "CASHOUT" -> -amount
+            "CASHIN" -> amount
             else -> if (tx.recipientId == securityManager.currentUserId())
-                tx.amount
+                amount
             else
-                -tx.amount
+                -amount
         }
+    }
 
     private fun toColor(tx: TransactionSummary): String =
         when (tx.status.uppercase()) {
