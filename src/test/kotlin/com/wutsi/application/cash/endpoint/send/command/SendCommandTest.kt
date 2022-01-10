@@ -1,20 +1,25 @@
 package com.wutsi.application.cash.endpoint.send.command
 
 import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.doThrow
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.application.cash.endpoint.send.dto.SendRequest
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.platform.payment.core.ErrorCode
+import com.wutsi.platform.payment.dto.ComputeTransactionFeesResponse
+import com.wutsi.platform.payment.dto.CreateTransferRequest
 import com.wutsi.platform.payment.dto.CreateTransferResponse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class SendCommandTest : AbstractEndpointTest() {
@@ -28,6 +33,12 @@ internal class SendCommandTest : AbstractEndpointTest() {
         super.setUp()
 
         url = "http://localhost:$port/commands/send?amount=3000.0&recipient-id=111&recipient-name=YoMan"
+
+        val response = ComputeTransactionFeesResponse(
+            fees = 100.0,
+            applyToSender = true
+        )
+        doReturn(response).whenever(paymentApi).computeTransactionFees(any())
     }
 
     @Test
@@ -43,6 +54,13 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         // THEN
         assertEquals(200, response.statusCodeValue)
+
+        val req = argumentCaptor<CreateTransferRequest>()
+        verify(paymentApi).createTransfer(req.capture())
+        assertEquals(3100.0, req.firstValue.amount)
+        assertEquals("XAF", req.firstValue.currency)
+        assertEquals(111L, req.firstValue.recipientId)
+        assertNull(req.firstValue.description)
 
         val action = response.body
         assertEquals(Route, action.type)
@@ -63,6 +81,13 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         // THEN
         assertEquals(200, response.statusCodeValue)
+
+        val req = argumentCaptor<CreateTransferRequest>()
+        verify(paymentApi).createTransfer(req.capture())
+        assertEquals(3100.0, req.firstValue.amount)
+        assertEquals("XAF", req.firstValue.currency)
+        assertEquals(111L, req.firstValue.recipientId)
+        assertNull(req.firstValue.description)
 
         val action = response.body
         assertEquals(Route, action.type)

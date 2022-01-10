@@ -97,15 +97,7 @@ class SendConfirmScreen(
 
         // Adjust amount
         val fmt = DecimalFormat(tenant.monetaryFormat)
-        val adjustedAmount: Double
-        val fees: Double?
-        if (response.applyToSender) {
-            adjustedAmount = amount + response.fees
-            fees = response.fees
-        } else {
-            adjustedAmount = amount
-            fees = null
-        }
+        val fees: Double? = if (response.applyToSender) response.fees else null
 
         return Screen(
             id = Page.SEND_CONFIRM,
@@ -162,7 +154,7 @@ class SendConfirmScreen(
                         padding = 10.0,
                         alignment = Alignment.Center,
                         child = MoneyText(
-                            value = adjustedAmount,
+                            value = amount,
                             currency = tenant.currencySymbol,
                             numberFormat = tenant.numberFormat,
                         )
@@ -182,10 +174,10 @@ class SendConfirmScreen(
                         child = Input(
                             name = "command",
                             type = Submit,
-                            caption = getText("page.send-confirm.button.submit", arrayOf(fmt.format(adjustedAmount))),
+                            caption = getText("page.send-confirm.button.submit", arrayOf(fmt.format(amount))),
                             action = Action(
                                 type = ActionType.Route,
-                                url = urlBuilder.build(loginUrl, getLoginUrlPath(adjustedAmount, recipient)),
+                                url = urlBuilder.build(loginUrl, getLoginUrlPath(amount, recipient)),
                             )
                         )
                     )

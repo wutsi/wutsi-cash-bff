@@ -7,6 +7,7 @@ import com.wutsi.application.cash.service.TenantProvider
 import com.wutsi.application.cash.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType.Route
+import com.wutsi.platform.payment.dto.ComputeTransactionFeesRequest
 import com.wutsi.platform.payment.dto.CreateTransferRequest
 import feign.FeignException
 import org.springframework.web.bind.annotation.PostMapping
@@ -29,11 +30,20 @@ class SendCommand(
     ): Action {
         val tenant = tenantProvider.get()
         try {
+            // Get fees
+            val fees = paymentApi.computeTransactionFees(
+                request = ComputeTransactionFeesRequest(
+                    amount = amount,
+                    transactionType = "TRANSFER",
+                    recipientId = recipientId
+                )
+            ).fees
+
             // Perform the transfer
             val response = paymentApi.createTransfer(
                 CreateTransferRequest(
                     recipientId = recipientId,
-                    amount = amount,
+                    amount = amount + fees,
                     currency = tenant.currency
                 )
             )
