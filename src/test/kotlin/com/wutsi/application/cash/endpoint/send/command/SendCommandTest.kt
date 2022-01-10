@@ -57,7 +57,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val req = argumentCaptor<CreateTransferRequest>()
         verify(paymentApi).createTransfer(req.capture())
-        assertEquals(3100.0, req.firstValue.amount)
+        assertEquals(3000.0, req.firstValue.amount)
         assertEquals("XAF", req.firstValue.currency)
         assertEquals(111L, req.firstValue.recipientId)
         assertNull(req.firstValue.description)
@@ -84,7 +84,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val req = argumentCaptor<CreateTransferRequest>()
         verify(paymentApi).createTransfer(req.capture())
-        assertEquals(3100.0, req.firstValue.amount)
+        assertEquals(3000.0, req.firstValue.amount)
         assertEquals("XAF", req.firstValue.currency)
         assertEquals(111L, req.firstValue.recipientId)
         assertNull(req.firstValue.description)
