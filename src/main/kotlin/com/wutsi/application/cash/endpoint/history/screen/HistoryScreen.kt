@@ -2,9 +2,9 @@ package com.wutsi.application.cash.endpoint.history.screen
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
-import com.wutsi.application.cash.endpoint.Theme
-import com.wutsi.application.cash.service.TenantProvider
-import com.wutsi.application.cash.util.StringUtil
+import com.wutsi.application.shared.Theme
+import com.wutsi.application.shared.service.StringUtil
+import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.CircleAvatar
 import com.wutsi.flutter.sdui.Column
@@ -100,14 +100,14 @@ class HistoryScreen(
     private fun findTransactions(limit: Int): List<TransactionSummary> =
         paymentApi.searchTransaction(
             SearchTransactionRequest(
-                accountId = securityManager.currentUserId(),
+                accountId = securityContext.currentUserId(),
                 limit = limit,
                 offset = 0
             )
         ).transactions
 
     private fun findPaymentMethods(): Map<String, PaymentMethodSummary> =
-        accountApi.listPaymentMethods(securityManager.currentUserId())
+        accountApi.listPaymentMethods(securityContext.currentUserId())
             .paymentMethods
             .map { it.token to it }.toMap()
 
@@ -239,7 +239,7 @@ class HistoryScreen(
     }
 
     private fun toDisplayAmount(tx: TransactionSummary): Double {
-        val amount = if (tx.recipientId == securityManager.currentUserId())
+        val amount = if (tx.recipientId == securityContext.currentUserId())
             tx.net
         else
             tx.amount
@@ -247,7 +247,7 @@ class HistoryScreen(
         return when (tx.type.uppercase()) {
             "CASHOUT" -> -amount
             "CASHIN" -> amount
-            else -> if (tx.recipientId == securityManager.currentUserId())
+            else -> if (tx.recipientId == securityContext.currentUserId())
                 amount
             else
                 -amount
@@ -261,7 +261,7 @@ class HistoryScreen(
             else -> when (tx.type.uppercase()) {
                 "CASHIN" -> Theme.COLOR_SUCCESS
                 "CASHOUT" -> Theme.COLOR_DANGER
-                else -> if (tx.recipientId == securityManager.currentUserId())
+                else -> if (tx.recipientId == securityContext.currentUserId())
                     Theme.COLOR_SUCCESS
                 else
                     Theme.COLOR_DANGER
@@ -278,7 +278,7 @@ class HistoryScreen(
         } else if (tx.type == "PAYMENT") {
             return getText("page.history.payment.caption")
         } else {
-            return if (tx.accountId == securityManager.currentUserId())
+            return if (tx.accountId == securityContext.currentUserId())
                 getText("page.history.transfer.to.caption")
             else
                 getText("page.history.transfer.from.caption")
@@ -305,7 +305,7 @@ class HistoryScreen(
             ?: ""
 
     private fun getAccount(tx: TransactionSummary, accounts: Map<Long, AccountSummary>): AccountSummary? =
-        if (tx.accountId == securityManager.currentUserId())
+        if (tx.accountId == securityContext.currentUserId())
             accounts[tx.recipientId]
         else
             accounts[tx.accountId]

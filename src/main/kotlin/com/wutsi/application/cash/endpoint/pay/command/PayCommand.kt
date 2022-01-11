@@ -3,7 +3,7 @@ package com.wutsi.application.cash.endpoint.pay.command
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.exception.TransactionException
-import com.wutsi.application.cash.service.URLBuilder
+import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.platform.payment.dto.CreatePaymentRequest

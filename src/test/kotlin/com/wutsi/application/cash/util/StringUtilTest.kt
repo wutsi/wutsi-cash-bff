@@ -1,5 +1,6 @@
 package com.wutsi.application.cash.util
 
+import com.wutsi.application.shared.service.StringUtil
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

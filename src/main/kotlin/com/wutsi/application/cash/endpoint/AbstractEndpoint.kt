@@ -3,7 +3,7 @@ package com.wutsi.application.cash.endpoint
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.wutsi.application.cash.exception.PasswordInvalidException
 import com.wutsi.application.cash.exception.TransactionException
-import com.wutsi.application.cash.service.SecurityManager
+import com.wutsi.application.shared.service.SecurityContext
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Dialog
 import com.wutsi.flutter.sdui.enums.ActionType.Page
@@ -38,7 +38,7 @@ abstract class AbstractEndpoint {
     protected lateinit var paymentApi: WutsiPaymentApi
 
     @Autowired
-    protected lateinit var securityManager: SecurityManager
+    protected lateinit var securityContext: SecurityContext
 
     @ExceptionHandler(Throwable::class)
     fun onThrowable(ex: Throwable): Action =
@@ -125,7 +125,7 @@ abstract class AbstractEndpoint {
 
     protected fun getBalance(tenant: Tenant): Money {
         try {
-            val userId = securityManager.currentUserId()
+            val userId = securityContext.currentUserId()
             val balance = paymentApi.getBalance(userId).balance
             return Money(
                 value = balance.amount,

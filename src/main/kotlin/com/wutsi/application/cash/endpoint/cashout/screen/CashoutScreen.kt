@@ -2,9 +2,9 @@ package com.wutsi.application.cash.endpoint.cashout.screen
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
-import com.wutsi.application.cash.endpoint.Theme
-import com.wutsi.application.cash.service.TenantProvider
-import com.wutsi.application.cash.service.URLBuilder
+import com.wutsi.application.shared.Theme
+import com.wutsi.application.shared.service.TenantProvider
+import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Column
@@ -36,7 +36,7 @@ class CashoutScreen(
     fun index(): Widget {
         val tenant = tenantProvider.get()
         val paymentMethods = accountApi.listPaymentMethods(
-            securityManager.currentUserId()
+            securityContext.currentUserId()
         ).paymentMethods
         val balance = getBalance(tenant)
         val balanceText = DecimalFormat(tenant.monetaryFormat).format(balance.value)

@@ -2,8 +2,8 @@ package com.wutsi.application.cash.endpoint.pay.command
 
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.pay.dto.PayAmountRequest
-import com.wutsi.application.cash.service.TenantProvider
-import com.wutsi.application.cash.service.URLBuilder
+import com.wutsi.application.shared.service.TenantProvider
+import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Dialog
 import com.wutsi.flutter.sdui.enums.ActionType.Prompt

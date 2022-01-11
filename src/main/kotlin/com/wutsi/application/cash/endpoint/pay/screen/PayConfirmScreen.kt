@@ -2,10 +2,10 @@ package com.wutsi.application.cash.endpoint.pay.screen
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
-import com.wutsi.application.cash.endpoint.Theme
-import com.wutsi.application.cash.service.TenantProvider
-import com.wutsi.application.cash.service.URLBuilder
-import com.wutsi.application.cash.util.StringUtil
+import com.wutsi.application.shared.Theme
+import com.wutsi.application.shared.service.StringUtil
+import com.wutsi.application.shared.service.TenantProvider
+import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
@@ -114,7 +114,7 @@ class PayConfirmScreen(
     }
 
     private fun getLoginUrlPath(paymentRequestId: String): String {
-        val me = accountApi.getAccount(securityManager.currentUserId()).account
+        val me = accountApi.getAccount(securityContext.currentUserId()).account
         return "?phone=" + encodeURLParam(me.phone!!.number) +
             "&icon=" + Theme.ICON_LOCK +
             "&screen-id=" + Page.PAY_PIN +

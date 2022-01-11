@@ -2,7 +2,7 @@ package com.wutsi.application.cash.endpoint.send.command
 
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.send.dto.SendRecipientRequest
-import com.wutsi.application.cash.service.URLBuilder
+import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Dialog
 import com.wutsi.flutter.sdui.enums.ActionType.Prompt
@@ -57,7 +57,7 @@ class SendRecipientCommand(
               Return no error, the confirmation page will handle this problem
              */
             return null
-        } else if (accounts[0].id == securityManager.currentUserId()) {
+        } else if (accounts[0].id == securityContext.currentUserId()) {
             return Action(
                 type = Prompt,
                 prompt = Dialog(

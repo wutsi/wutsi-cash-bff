@@ -2,7 +2,7 @@ package com.wutsi.application.cash.endpoint.send.command
 
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.send.dto.SendAmountRequest
-import com.wutsi.application.cash.service.URLBuilder
+import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.Dialog
@@ -67,7 +67,7 @@ class SendAmountCommand(
 
         val balance = getBalance()
         if (request.amount > balance.value) {
-            val paymentMethods = accountApi.listPaymentMethods(securityManager.currentUserId()).paymentMethods
+            val paymentMethods = accountApi.listPaymentMethods(securityContext.currentUserId()).paymentMethods
             if (paymentMethods.isEmpty()) {
                 return Action(
                     type = Prompt,
@@ -124,7 +124,7 @@ class SendAmountCommand(
 
     private fun getBalance(): Money {
         try {
-            val balance = paymentApi.getBalance(securityManager.currentUserId()).balance
+            val balance = paymentApi.getBalance(securityContext.currentUserId()).balance
             return Money(balance.amount, balance.currency)
         } catch (ex: FeignException.NotFound) {
             return Money(0.0, "")
