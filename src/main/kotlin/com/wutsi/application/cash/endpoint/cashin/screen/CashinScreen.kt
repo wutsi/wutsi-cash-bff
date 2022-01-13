@@ -38,7 +38,7 @@ class CashinScreen(
         val balance = getBalance(tenant)
         val balanceText = DecimalFormat(tenant.monetaryFormat).format(balance.value)
         val paymentMethods = accountApi.listPaymentMethods(
-            securityContext.currentUserId()
+            securityContext.currentAccountId()
         ).paymentMethods
 
         return Screen(

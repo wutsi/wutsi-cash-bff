@@ -125,7 +125,7 @@ abstract class AbstractEndpoint {
 
     protected fun getBalance(tenant: Tenant): Money {
         try {
-            val userId = securityContext.currentUserId()
+            val userId = securityContext.currentAccountId()
             val balance = paymentApi.getBalance(userId).balance
             return Money(
                 value = balance.amount,

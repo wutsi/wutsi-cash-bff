@@ -36,7 +36,7 @@ class CashoutScreen(
     fun index(): Widget {
         val tenant = tenantProvider.get()
         val paymentMethods = accountApi.listPaymentMethods(
-            securityContext.currentUserId()
+            securityContext.currentAccountId()
         ).paymentMethods
         val balance = getBalance(tenant)
         val balanceText = DecimalFormat(tenant.monetaryFormat).format(balance.value)

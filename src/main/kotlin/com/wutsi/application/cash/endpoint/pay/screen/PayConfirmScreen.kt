@@ -114,7 +114,7 @@ class PayConfirmScreen(
     }
 
     private fun getLoginUrlPath(paymentRequestId: String): String {
-        val me = accountApi.getAccount(securityContext.currentUserId()).account
+        val me = accountApi.getAccount(securityContext.currentAccountId()).account
         return "?phone=" + encodeURLParam(me.phone!!.number) +
             "&icon=" + Theme.ICON_LOCK +
             "&screen-id=" + Page.PAY_PIN +

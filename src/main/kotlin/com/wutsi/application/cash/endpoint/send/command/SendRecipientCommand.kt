@@ -57,7 +57,7 @@ class SendRecipientCommand(
               Return no error, the confirmation page will handle this problem
              */
             return null
-        } else if (accounts[0].id == securityContext.currentUserId()) {
+        } else if (accounts[0].id == securityContext.currentAccountId()) {
             return Action(
                 type = Prompt,
                 prompt = Dialog(

@@ -100,14 +100,14 @@ class HistoryScreen(
     private fun findTransactions(limit: Int): List<TransactionSummary> =
         paymentApi.searchTransaction(
             SearchTransactionRequest(
-                accountId = securityContext.currentUserId(),
+                accountId = securityContext.currentAccountId(),
                 limit = limit,
                 offset = 0
             )
         ).transactions
 
     private fun findPaymentMethods(): Map<String, PaymentMethodSummary> =
-        accountApi.listPaymentMethods(securityContext.currentUserId())
+        accountApi.listPaymentMethods(securityContext.currentAccountId())
             .paymentMethods
             .map { it.token to it }.toMap()
 
@@ -239,7 +239,7 @@ class HistoryScreen(
     }
 
     private fun toDisplayAmount(tx: TransactionSummary): Double {
-        val amount = if (tx.recipientId == securityContext.currentUserId())
+        val amount = if (tx.recipientId == securityContext.currentAccountId())
             tx.net
         else
             tx.amount
@@ -247,7 +247,7 @@ class HistoryScreen(
         return when (tx.type.uppercase()) {
             "CASHOUT" -> -amount
             "CASHIN" -> amount
-            else -> if (tx.recipientId == securityContext.currentUserId())
+            else -> if (tx.recipientId == securityContext.currentAccountId())
                 amount
             else
                 -amount
@@ -261,7 +261,7 @@ class HistoryScreen(
             else -> when (tx.type.uppercase()) {
                 "CASHIN" -> Theme.COLOR_SUCCESS
                 "CASHOUT" -> Theme.COLOR_DANGER
-                else -> if (tx.recipientId == securityContext.currentUserId())
+                else -> if (tx.recipientId == securityContext.currentAccountId())
                     Theme.COLOR_SUCCESS
                 else
                     Theme.COLOR_DANGER
@@ -278,7 +278,7 @@ class HistoryScreen(
         } else if (tx.type == "PAYMENT") {
             return getText("page.history.payment.caption")
         } else {
-            return if (tx.accountId == securityContext.currentUserId())
+            return if (tx.accountId == securityContext.currentAccountId())
                 getText("page.history.transfer.to.caption")
             else
                 getText("page.history.transfer.from.caption")
@@ -305,7 +305,7 @@ class HistoryScreen(
             ?: ""
 
     private fun getAccount(tx: TransactionSummary, accounts: Map<Long, AccountSummary>): AccountSummary? =
-        if (tx.accountId == securityContext.currentUserId())
+        if (tx.accountId == securityContext.currentAccountId())
             accounts[tx.recipientId]
         else
             accounts[tx.accountId]

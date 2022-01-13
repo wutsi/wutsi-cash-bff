@@ -67,7 +67,7 @@ class SendAmountCommand(
 
         val balance = getBalance()
         if (request.amount > balance.value) {
-            val paymentMethods = accountApi.listPaymentMethods(securityContext.currentUserId()).paymentMethods
+            val paymentMethods = accountApi.listPaymentMethods(securityContext.currentAccountId()).paymentMethods
             if (paymentMethods.isEmpty()) {
                 return Action(
                     type = Prompt,
@@ -124,7 +124,7 @@ class SendAmountCommand(
 
     private fun getBalance(): Money {
         try {
-            val balance = paymentApi.getBalance(securityContext.currentUserId()).balance
+            val balance = paymentApi.getBalance(securityContext.currentAccountId()).balance
             return Money(balance.amount, balance.currency)
         } catch (ex: FeignException.NotFound) {
             return Money(0.0, "")

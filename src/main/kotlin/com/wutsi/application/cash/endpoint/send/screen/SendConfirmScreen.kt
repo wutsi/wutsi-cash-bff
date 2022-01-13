@@ -271,7 +271,7 @@ class SendConfirmScreen(
         accountApi.getAccount(id).account
 
     private fun getLoginUrlPath(amount: Double, recipient: AccountSummary): String {
-        val me = accountApi.getAccount(securityContext.currentUserId()).account
+        val me = accountApi.getAccount(securityContext.currentAccountId()).account
         return "?phone=" + encodeURLParam(me.phone!!.number) +
             "&icon=" + Theme.ICON_LOCK +
             "&screen-id=" + Page.SEND_PIN +
