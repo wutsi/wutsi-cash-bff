@@ -5,7 +5,6 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.doThrow
 import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
-import com.wutsi.application.cash.endpoint.cashin.dto.CashinRequest
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.DialogType
@@ -29,7 +28,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
     override fun setUp() {
         super.setUp()
 
-        url = "http://localhost:$port/commands/cashin"
+        url = "http://localhost:$port/commands/cashin?amount=10000&payment-token=xxxx"
     }
 
     @Test
@@ -39,18 +38,14 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         doReturn(resp).whenever(paymentApi).createCashin(any())
 
         // WHEN
-        val request = CashinRequest(
-            paymentToken = "xxx",
-            amount = 10000.0
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
+        val response = rest.postForEntity(url, null, Action::class.java)
 
         // THEN
         assertEquals(200, response.statusCodeValue)
 
         val action = response.body
         assertEquals(ActionType.Route, action.type)
-        assertEquals("http://localhost:0/cashin/success?amount=${request.amount}", action.url)
+        assertEquals("http://localhost:0/cashin/success?amount=10000.0", action.url)
     }
 
     @Test
@@ -60,11 +55,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         doReturn(resp).whenever(paymentApi).createCashin(any())
 
         // WHEN
-        val request = CashinRequest(
-            paymentToken = "xxx",
-            amount = 10000.0
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
+        val response = rest.postForEntity(url, null, Action::class.java)
 
         // THEN
         assertEquals(200, response.statusCodeValue)
@@ -81,11 +72,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         doThrow(ex).whenever(paymentApi).createCashin(any())
 
         // WHEN
-        val request = CashinRequest(
-            paymentToken = "xxx",
-            amount = 10000.0
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
+        val response = rest.postForEntity(url, null, Action::class.java)
 
         // THEN
         assertEquals(200, response.statusCodeValue)
@@ -103,11 +90,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         doThrow(ex).whenever(paymentApi).createCashin(any())
 
         // WHEN
-        val request = CashinRequest(
-            paymentToken = "xxx",
-            amount = 10000.0
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
+        val response = rest.postForEntity(url, null, Action::class.java)
 
         // THEN
         assertEquals(200, response.statusCodeValue)
@@ -124,11 +107,8 @@ internal class CashinCommandTest : AbstractEndpointTest() {
     @Test
     fun minCashin() {
         // WHEN
-        val request = CashinRequest(
-            paymentToken = "xxx",
-            amount = 5.0
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
+        url = "http://localhost:$port/commands/cashin?amount=5&payment-token=xxxx"
+        val response = rest.postForEntity(url, null, Action::class.java)
 
         // THEN
         assertEquals(200, response.statusCodeValue)
@@ -145,11 +125,8 @@ internal class CashinCommandTest : AbstractEndpointTest() {
     @Test
     fun noValue() {
         // WHEN
-        val request = CashinRequest(
-            paymentToken = "xxx",
-            amount = 0.0
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
+        url = "http://localhost:$port/commands/cashin?amount=0&payment-token=xxxx"
+        val response = rest.postForEntity(url, null, Action::class.java)
 
         // THEN
         assertEquals(200, response.statusCodeValue)

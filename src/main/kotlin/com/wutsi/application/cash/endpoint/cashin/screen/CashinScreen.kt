@@ -16,7 +16,7 @@ import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.MoneyWithKeyboard
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Widget
-import com.wutsi.flutter.sdui.enums.ActionType.Command
+import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.InputType.Submit
 import com.wutsi.platform.account.WutsiAccountApi
@@ -89,8 +89,8 @@ class CashinScreen(
                                         type = Submit,
                                         caption = getText("page.cashin.button.submit"),
                                         action = Action(
-                                            type = Command,
-                                            url = urlBuilder.build("commands/cashin")
+                                            type = ActionType.Command,
+                                            url = urlBuilder.build("commands/cashin/amount")
                                         )
                                     )
                                 )

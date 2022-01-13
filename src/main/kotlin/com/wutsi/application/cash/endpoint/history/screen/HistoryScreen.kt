@@ -3,10 +3,9 @@ package com.wutsi.application.cash.endpoint.history.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
-import com.wutsi.application.shared.service.StringUtil
 import com.wutsi.application.shared.service.TenantProvider
+import com.wutsi.application.shared.ui.Avatar
 import com.wutsi.flutter.sdui.AppBar
-import com.wutsi.flutter.sdui.CircleAvatar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Divider
@@ -168,14 +167,11 @@ class HistoryScreen(
             return Image(width = 48.0, height = 48.0, url = carrier?.let { tenantProvider.logo(it) } ?: "")
         } else {
             val account = getAccount(tx, accounts)
-            return CircleAvatar(
+            return Avatar(
                 radius = 24.0,
-                child = account?.pictureUrl?.let { Image(width = 48.0, height = 48.0, url = it) }
-                    ?: Text(
-                        caption = StringUtil.initials(account?.displayName),
-                        size = Theme.TEXT_SIZE_X_LARGE,
-                        bold = true
-                    )
+                textSize = 20.0,
+                text = account?.displayName,
+                pictureUrl = account?.pictureUrl,
             )
         }
     }

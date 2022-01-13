@@ -3,18 +3,16 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
-import com.wutsi.application.shared.service.StringUtil.initials
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
+import com.wutsi.application.shared.ui.Avatar
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
-import com.wutsi.flutter.sdui.CircleAvatar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Icon
 import com.wutsi.flutter.sdui.IconButton
-import com.wutsi.flutter.sdui.Image
 import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.MoneyText
 import com.wutsi.flutter.sdui.Screen
@@ -123,12 +121,11 @@ class SendConfirmScreen(
                     Container(
                         padding = 10.0,
                         alignment = Center,
-                        child = CircleAvatar(
+                        child = Avatar(
                             radius = 48.0,
-                            child = if (recipient.pictureUrl.isNullOrEmpty())
-                                Text(initials(recipient.displayName))
-                            else
-                                Image(url = recipient.pictureUrl!!)
+                            textSize = 30.0,
+                            text = recipient.displayName,
+                            pictureUrl = recipient.pictureUrl,
                         )
                     ),
                     Container(
@@ -177,7 +174,7 @@ class SendConfirmScreen(
                             caption = getText("page.send-confirm.button.submit", arrayOf(fmt.format(amount))),
                             action = Action(
                                 type = ActionType.Route,
-                                url = urlBuilder.build(loginUrl, getLoginUrlPath(amount, recipient)),
+                                url = urlBuilder.build(loginUrl, getSubmitUrl(amount, recipient)),
                             )
                         )
                     )
@@ -270,7 +267,7 @@ class SendConfirmScreen(
     private fun findRecipient(id: Long): Account =
         accountApi.getAccount(id).account
 
-    private fun getLoginUrlPath(amount: Double, recipient: AccountSummary): String {
+    private fun getSubmitUrl(amount: Double, recipient: AccountSummary): String {
         val me = accountApi.getAccount(securityContext.currentAccountId()).account
         return "?phone=" + encodeURLParam(me.phone!!.number) +
             "&icon=" + Theme.ICON_LOCK +

@@ -3,17 +3,15 @@ package com.wutsi.application.cash.endpoint.pay.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
-import com.wutsi.application.shared.service.StringUtil
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
+import com.wutsi.application.shared.ui.Avatar
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
-import com.wutsi.flutter.sdui.CircleAvatar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.IconButton
-import com.wutsi.flutter.sdui.Image
 import com.wutsi.flutter.sdui.MoneyText
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
@@ -66,16 +64,11 @@ class PayConfirmScreen(
                     Container(
                         padding = 10.0,
                         alignment = Alignment.Center,
-                        child = CircleAvatar(
+                        child = Avatar(
                             radius = 48.0,
-                            child = if (!merchant.pictureUrl.isNullOrBlank())
-                                Image(url = merchant.pictureUrl!!)
-                            else
-                                Text(
-                                    caption = StringUtil.initials(merchant.displayName),
-                                    size = 30.0,
-                                    bold = true
-                                )
+                            textSize = 30.0,
+                            text = merchant.displayName,
+                            pictureUrl = merchant.pictureUrl,
                         )
                     ),
                     Container(

@@ -2,8 +2,10 @@ package com.wutsi.application.cash.endpoint
 
 object Page {
     const val CASHIN = "page.cashin"
+    const val CASHIN_CONFIRM = "page.cashin.confirm"
     const val CASHIN_SUCCESS = "page.cashin.success"
     const val CASHIN_PENDING = "page.cashin.pending"
+    const val CASHIN_PIN = "page.cashin.pin"
     const val CASHOUT = "page.cashout"
     const val CASHOUT_SUCCESS = "page.cashout.success"
     const val CASHOUT_PENDING = "page.cashout.pending"

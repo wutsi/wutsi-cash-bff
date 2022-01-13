@@ -3,17 +3,15 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
-import com.wutsi.application.shared.service.StringUtil
 import com.wutsi.application.shared.service.TenantProvider
+import com.wutsi.application.shared.ui.Avatar
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
-import com.wutsi.flutter.sdui.CircleAvatar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Icon
 import com.wutsi.flutter.sdui.IconButton
-import com.wutsi.flutter.sdui.Image
 import com.wutsi.flutter.sdui.MoneyText
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
@@ -67,12 +65,11 @@ class SendSuccessScreen(
                     Container(
                         padding = 10.0,
                         alignment = Center,
-                        child = CircleAvatar(
+                        child = Avatar(
                             radius = 48.0,
-                            child = if (recipient.pictureUrl.isNullOrEmpty())
-                                Text(StringUtil.initials(recipient.displayName))
-                            else
-                                Image(url = recipient.pictureUrl!!)
+                            textSize = 30.0,
+                            text = recipient.displayName,
+                            pictureUrl = recipient.pictureUrl,
                         )
                     ),
                     Container(

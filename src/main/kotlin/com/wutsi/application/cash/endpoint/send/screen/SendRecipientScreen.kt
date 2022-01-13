@@ -3,12 +3,11 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
-import com.wutsi.application.shared.service.StringUtil
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
+import com.wutsi.application.shared.ui.Avatar
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
-import com.wutsi.flutter.sdui.CircleAvatar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.DefaultTabController
@@ -16,7 +15,6 @@ import com.wutsi.flutter.sdui.Divider
 import com.wutsi.flutter.sdui.Flexible
 import com.wutsi.flutter.sdui.Form
 import com.wutsi.flutter.sdui.IconButton
-import com.wutsi.flutter.sdui.Image
 import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.ListItem
 import com.wutsi.flutter.sdui.ListView
@@ -224,14 +222,11 @@ class SendRecipientScreen(
         caption = account.displayName ?: "",
         iconRight = Theme.ICON_CHEVRON_RIGHT,
         padding = 10.0,
-        leading = CircleAvatar(
+        leading = Avatar(
             radius = 24.0,
-            child = account.pictureUrl?.let { Image(width = 48.0, height = 48.0, url = it) }
-                ?: Text(
-                    caption = StringUtil.initials(account.displayName),
-                    size = Theme.TEXT_SIZE_X_LARGE,
-                    bold = true
-                )
+            text = account.displayName,
+            pictureUrl = account.pictureUrl,
+            textSize = 20.0,
         ),
         action = Action(
             type = Route,
