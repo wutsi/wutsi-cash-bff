@@ -361,7 +361,7 @@
                                           "attributes": {
                                             "caption": "N1",
                                             "bold": true,
-                                            "size": 18.0
+                                            "size": 20.0
                                           },
                                           "children": []
                                         }
@@ -500,7 +500,7 @@
                                           "attributes": {
                                             "caption": "N1",
                                             "bold": true,
-                                            "size": 18.0
+                                            "size": 20.0
                                           },
                                           "children": []
                                         }
@@ -649,7 +649,7 @@
                                           "attributes": {
                                             "caption": "N1",
                                             "bold": true,
-                                            "size": 18.0
+                                            "size": 20.0
                                           },
                                           "children": []
                                         }

@@ -5,10 +5,7 @@ import com.wutsi.application.cash.endpoint.cashin.dto.CashinRequest
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
-import com.wutsi.flutter.sdui.Dialog
-import com.wutsi.flutter.sdui.enums.ActionType.Prompt
 import com.wutsi.flutter.sdui.enums.ActionType.Route
-import com.wutsi.flutter.sdui.enums.DialogType.Error
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -43,22 +40,14 @@ class CashinAmountCommand(
 
     private fun validate(request: CashinRequest, tenant: Tenant): Action? {
         if (request.amount == 0.0)
-            return Action(
-                type = Prompt,
-                prompt = Dialog(
-                    type = Error,
-                    message = getText("prompt.error.amount-required")
-                ).toWidget()
+            return showError(
+                message = getText("prompt.error.amount-required")
             )
 
         if (request.amount < tenant.limits.minCashin) {
             val amountText = DecimalFormat(tenant.monetaryFormat).format(tenant.limits.minCashin)
-            return Action(
-                type = Prompt,
-                prompt = Dialog(
-                    type = Error,
-                    message = getText("prompt.error.min-cashin", arrayOf(amountText))
-                ).toWidget()
+            return showError(
+                message = getText("prompt.error.min-cashin", arrayOf(amountText))
             )
         }
         return null

@@ -4,10 +4,6 @@ import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.send.dto.SendRecipientRequest
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
-import com.wutsi.flutter.sdui.Dialog
-import com.wutsi.flutter.sdui.enums.ActionType.Prompt
-import com.wutsi.flutter.sdui.enums.ActionType.Route
-import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.SearchAccountRequest
 import org.springframework.web.bind.annotation.PostMapping
@@ -34,8 +30,7 @@ class SendRecipientCommand(
         if (action != null)
             return action
 
-        return Action(
-            type = Route,
+        return gotoUrl(
             url = urlBuilder.build("send/confirm"),
             parameters = mapOf(
                 "amount" to amount.toString(),
@@ -58,12 +53,8 @@ class SendRecipientCommand(
              */
             return null
         } else if (accounts[0].id == securityContext.currentAccountId()) {
-            return Action(
-                type = Prompt,
-                prompt = Dialog(
-                    type = DialogType.Error,
-                    message = getText("prompt.error.self-transfer")
-                ).toWidget()
+            return showError(
+                message = getText("prompt.error.self-transfer")
             )
         }
 

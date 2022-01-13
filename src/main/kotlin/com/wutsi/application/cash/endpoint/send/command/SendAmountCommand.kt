@@ -43,26 +43,19 @@ class SendAmountCommand(
 
         // Goto next page
         return if (recipientId == null)
-            Action(
-                type = Route,
+            gotoUrl(
                 url = urlBuilder.build("send/recipient?amount=${request.amount}")
             )
         else
-            Action(
-                type = Route,
+            gotoUrl(
                 url = urlBuilder.build("send/confirm?amount=${request.amount}&recipient-id=$recipientId")
             )
     }
 
     private fun validate(request: SendAmountRequest): Action? {
         if (request.amount == 0.0)
-            return Action(
-                type = Prompt,
-                prompt = Dialog(
-                    type = DialogType.Error,
-                    message = getText("prompt.error.amount-required"),
-                    title = getText("prompt.error.title")
-                ).toWidget()
+            return showError(
+                message = getText("prompt.error.amount-required"),
             )
 
         val balance = getBalance()

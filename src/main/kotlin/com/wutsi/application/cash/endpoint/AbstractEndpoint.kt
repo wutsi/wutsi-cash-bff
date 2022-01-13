@@ -17,7 +17,6 @@ import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Money
 import com.wutsi.platform.tenant.dto.MobileCarrier
 import com.wutsi.platform.tenant.dto.Tenant
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
@@ -42,12 +41,12 @@ abstract class AbstractEndpoint {
 
     @ExceptionHandler(Throwable::class)
     fun onThrowable(ex: Throwable): Action =
-        createErrorAction(ex, getText("prompt.error.unexpected-error"))
+        showError(getText("prompt.error.unexpected-error"), ex)
 
     @ExceptionHandler(TransactionException::class)
     fun onTransactionException(ex: TransactionException): Action {
         val message = getTransactionErrorMessage(ex.error)
-        return createErrorAction(ex, message)
+        return showError(message, ex)
     }
 
     protected fun getTransactionErrorMessage(error: ErrorCode): String =
@@ -62,9 +61,9 @@ abstract class AbstractEndpoint {
 
     @ExceptionHandler(PasswordInvalidException::class)
     fun onPasswordInvalid(ex: PasswordInvalidException): Action =
-        createErrorAction(ex, getText("prompt.error.password-invalid"))
+        showError(getText("prompt.error.password-invalid"), ex)
 
-    private fun createErrorAction(e: Throwable, message: String): Action {
+    protected fun showError(message: String, e: Throwable? = null): Action {
         val action = Action(
             type = Prompt,
             prompt = Dialog(
@@ -73,18 +72,19 @@ abstract class AbstractEndpoint {
                 message = message
             ).toWidget()
         )
+
         log(action, e)
         return action
     }
 
-    private fun log(action: Action, e: Throwable) {
+    private fun log(action: Action, e: Throwable?) {
         logger.add("action_type", action.type)
         logger.add("action_url", action.url)
         logger.add("action_prompt_type", action.prompt?.type)
         logger.add("action_prompt_message", action.prompt?.attributes?.get("message"))
-        logger.setException(e)
-
-        LoggerFactory.getLogger(this::class.java).error("Unexpected error", e)
+        if (e != null) {
+            logger.setException(e)
+        }
     }
 
     protected fun getText(key: String, args: Array<Any?> = emptyArray()) =
@@ -95,10 +95,19 @@ abstract class AbstractEndpoint {
         url = "page:/$page"
     )
 
-    protected fun gotoRoute(path: String, replacement: Boolean? = null) = Action(
+    protected fun gotoRoute(path: String, replacement: Boolean? = null, parameters: Map<String, String>? = null) =
+        Action(
+            type = Route,
+            url = "route:$path",
+            replacement = replacement,
+            parameters = parameters
+        )
+
+    protected fun gotoUrl(url: String, replacement: Boolean? = null, parameters: Map<String, String>? = null) = Action(
         type = Route,
-        url = "route:$path",
-        replacement = replacement
+        url = url,
+        replacement = replacement,
+        parameters = parameters
     )
 
     protected fun sanitizePhoneNumber(phoneNumber: String): String {

@@ -5,7 +5,6 @@ import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
-import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.platform.payment.dto.CreatePaymentRequest
 import feign.FeignException
 import org.springframework.web.bind.annotation.PostMapping
@@ -34,14 +33,12 @@ class PayCommand(
 
             logger.add("transaction_id", response.id)
             logger.add("transaction_status", response.status)
-            return Action(
-                type = ActionType.Route,
+            return gotoUrl(
                 url = urlBuilder.build("pay/success?payment-request-id=$paymentRequestId")
             )
         } catch (ex: FeignException) {
             val error = TransactionException.of(mapper, ex).error
-            return Action(
-                type = ActionType.Route,
+            return gotoUrl(
                 url = urlBuilder.build("pay/success?payment-request-id=$paymentRequestId&error=$error")
             )
         }

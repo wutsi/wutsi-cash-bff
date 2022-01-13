@@ -33,7 +33,9 @@
                 {
                   "type": "Text",
                   "attributes": {
-                    "caption": "RS"
+                    "caption": "RS",
+                    "bold": true,
+                    "size": 30.0
                   },
                   "children": []
                 }

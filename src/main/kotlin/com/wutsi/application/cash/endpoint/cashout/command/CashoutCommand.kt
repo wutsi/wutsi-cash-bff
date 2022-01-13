@@ -7,10 +7,6 @@ import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
-import com.wutsi.flutter.sdui.Dialog
-import com.wutsi.flutter.sdui.enums.ActionType.Prompt
-import com.wutsi.flutter.sdui.enums.ActionType.Route
-import com.wutsi.flutter.sdui.enums.DialogType.Error
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashoutRequest
 import com.wutsi.platform.tenant.dto.Tenant
@@ -52,8 +48,7 @@ class CashoutCommand(
             logger.add("transaction_id", response.id)
             logger.add("transaction_status", response.status)
 
-            return Action(
-                type = Route,
+            return gotoUrl(
                 url = if (response.status == Status.SUCCESSFUL.name)
                     urlBuilder.build("cashout/success?amount=${request.amount}")
                 else
@@ -66,22 +61,14 @@ class CashoutCommand(
 
     private fun validate(request: CashoutRequest, tenant: Tenant): Action? {
         if (request.amount == 0.0)
-            return Action(
-                type = Prompt,
-                prompt = Dialog(
-                    type = Error,
-                    message = getText("prompt.error.amount-required")
-                ).toWidget()
+            return showError(
+                message = getText("prompt.error.amount-required")
             )
 
         if (request.amount < tenant.limits.minCashout) {
             val amountText = DecimalFormat(tenant.monetaryFormat).format(tenant.limits.minCashin)
-            return Action(
-                type = Prompt,
-                prompt = Dialog(
-                    type = Error,
-                    message = getText("prompt.error.min-cashout", arrayOf(amountText))
-                ).toWidget()
+            return showError(
+                message = getText("prompt.error.min-cashout", arrayOf(amountText))
             )
         }
         return null

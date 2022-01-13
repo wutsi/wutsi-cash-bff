@@ -6,10 +6,6 @@ import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
-import com.wutsi.flutter.sdui.Dialog
-import com.wutsi.flutter.sdui.enums.ActionType.Prompt
-import com.wutsi.flutter.sdui.enums.ActionType.Route
-import com.wutsi.flutter.sdui.enums.DialogType.Error
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashinRequest
 import com.wutsi.platform.tenant.dto.Tenant
@@ -50,8 +46,7 @@ class CashinCommand(
             logger.add("transaction_id", response.id)
             logger.add("transaction_status", response.status)
 
-            return Action(
-                type = Route,
+            return gotoUrl(
                 url = if (response.status == Status.SUCCESSFUL.name)
                     urlBuilder.build("cashin/success?amount=$amount")
                 else
@@ -64,22 +59,14 @@ class CashinCommand(
 
     private fun validate(amount: Double, tenant: Tenant): Action? {
         if (amount == 0.0)
-            return Action(
-                type = Prompt,
-                prompt = Dialog(
-                    type = Error,
-                    message = getText("prompt.error.amount-required")
-                ).toWidget()
+            return showError(
+                message = getText("prompt.error.amount-required")
             )
 
         if (amount < tenant.limits.minCashin) {
             val amountText = DecimalFormat(tenant.monetaryFormat).format(tenant.limits.minCashin)
-            return Action(
-                type = Prompt,
-                prompt = Dialog(
-                    type = Error,
-                    message = getText("prompt.error.min-cashin", arrayOf(amountText))
-                ).toWidget()
+            return showError(
+                message = getText("prompt.error.min-cashin", arrayOf(amountText))
             )
         }
         return null
