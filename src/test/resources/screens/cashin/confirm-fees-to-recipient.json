@@ -96,6 +96,13 @@
             {
               "type": "Container",
               "attributes": {
+                "alignment": "Center"
+              },
+              "children": []
+            },
+            {
+              "type": "Container",
+              "attributes": {
                 "padding": 20.0
               },
               "children": []
