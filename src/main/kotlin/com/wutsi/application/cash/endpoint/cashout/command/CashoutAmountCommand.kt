@@ -1,7 +1,7 @@
-package com.wutsi.application.cash.endpoint.cashin.command
+package com.wutsi.application.cash.endpoint.cashout.command
 
 import com.wutsi.application.cash.endpoint.AbstractCommand
-import com.wutsi.application.cash.endpoint.cashin.dto.CashinRequest
+import com.wutsi.application.cash.endpoint.cashout.dto.CashoutRequest
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
@@ -14,13 +14,13 @@ import java.text.DecimalFormat
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/commands/cashin/amount")
-class CashinAmountCommand(
+@RequestMapping("/commands/cashout/amount")
+class CashoutAmountCommand(
     private val tenantProvider: TenantProvider,
-    private val urlBuilder: URLBuilder,
+    private val urlBuilder: URLBuilder
 ) : AbstractCommand() {
     @PostMapping
-    fun index(@RequestBody @Valid request: CashinRequest): Action {
+    fun index(@RequestBody @Valid request: CashoutRequest): Action {
         logger.add("amount", request.amount)
         logger.add("payment_token", request.paymentToken)
 
@@ -30,22 +30,22 @@ class CashinAmountCommand(
         if (error != null)
             return error
 
-        // Cashin
+        // Cashout
         return gotoUrl(
-            url = urlBuilder.build("cashin/confirm?amount=${request.amount}&payment-token=${request.paymentToken}")
+            url = urlBuilder.build("cashout/confirm?amount=${request.amount}&payment-token=${request.paymentToken}")
         )
     }
 
-    private fun validate(request: CashinRequest, tenant: Tenant): Action? {
+    private fun validate(request: CashoutRequest, tenant: Tenant): Action? {
         if (request.amount == 0.0)
             return showError(
                 message = getText("prompt.error.amount-required")
             )
 
-        if (request.amount < tenant.limits.minCashin) {
+        if (request.amount < tenant.limits.minCashout) {
             val amountText = DecimalFormat(tenant.monetaryFormat).format(tenant.limits.minCashin)
             return showError(
-                message = getText("prompt.error.min-cashin", arrayOf(amountText))
+                message = getText("prompt.error.min-cashout", arrayOf(amountText))
             )
         }
         return null

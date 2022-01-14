@@ -1,4 +1,4 @@
-package com.wutsi.application.cash.endpoint.cashin.screen
+package com.wutsi.application.cash.endpoint.cashout.screen
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
@@ -33,8 +33,8 @@ import org.springframework.web.bind.annotation.RestController
 import java.text.DecimalFormat
 
 @RestController
-@RequestMapping("/cashin/confirm")
-class CashinConfirmScreen(
+@RequestMapping("/cashout/confirm")
+class CashoutConfirmScreen(
     private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
@@ -57,7 +57,7 @@ class CashinConfirmScreen(
         val response = paymentApi.computeTransactionFees(
             request = ComputeTransactionFeesRequest(
                 amount = amount,
-                transactionType = "CASHIN",
+                transactionType = "CASHOUT",
                 recipientId = accountId
             )
         )
@@ -69,7 +69,7 @@ class CashinConfirmScreen(
                 elevation = 0.0,
                 backgroundColor = Theme.COLOR_WHITE,
                 foregroundColor = Theme.COLOR_BLACK,
-                title = getText("page.cashin-confirm.app-bar.title", arrayOf(fmt.format(balance.value)))
+                title = getText("page.cashout-confirm.app-bar.title", arrayOf(fmt.format(balance.value)))
             ),
             child = Container(
                 alignment = Center,
@@ -108,7 +108,7 @@ class CashinConfirmScreen(
                         Container(
                             alignment = Alignment.Center,
                             child = Text(
-                                getText("page.cashin-confirm.fees", arrayOf(fmt.format(fees))),
+                                getText("page.cashout-confirm.fees", arrayOf(fmt.format(fees))),
                                 bold = true,
                                 size = Theme.TEXT_SIZE_LARGE
                             )
@@ -120,7 +120,7 @@ class CashinConfirmScreen(
                                 name = "command",
                                 type = Submit,
                                 caption = getText(
-                                    "page.cashin-confirm.button.submit",
+                                    "page.cashout-confirm.button.submit",
                                     arrayOf(fmt.format(amount))
                                 ),
                                 action = Action(
@@ -139,14 +139,14 @@ class CashinConfirmScreen(
         val me = accountApi.getAccount(securityContext.currentAccountId()).account
         return "?phone=" + encodeURLParam(me.phone!!.number) +
             "&icon=" + Theme.ICON_LOCK +
-            "&screen-id=" + Page.CASHIN_PIN +
-            "&title=" + encodeURLParam(getText("page.cashin-pin.title")) +
-            "&sub-title=" + encodeURLParam(getText("page.cashin-pin.sub-title")) +
+            "&screen-id=" + Page.CASHOUT_PIN +
+            "&title=" + encodeURLParam(getText("page.cashout-pin.title")) +
+            "&sub-title=" + encodeURLParam(getText("page.cashout-pin.sub-title")) +
             "&auth=false" +
             "&return-to-route=false" +
             "&return-url=" + encodeURLParam(
             urlBuilder.build(
-                "commands/cashin?amount=$amount&payment-token=$paymentToken"
+                "commands/cashout?amount=$amount&payment-token=$paymentToken"
             )
         )
     }

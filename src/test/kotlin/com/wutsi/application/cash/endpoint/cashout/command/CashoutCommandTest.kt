@@ -5,7 +5,6 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.doThrow
 import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
-import com.wutsi.application.cash.endpoint.cashout.dto.CashoutRequest
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.DialogType
@@ -29,7 +28,7 @@ internal class CashoutCommandTest : AbstractEndpointTest() {
     override fun setUp() {
         super.setUp()
 
-        url = "http://localhost:$port/commands/cashout"
+        url = "http://localhost:$port/commands/cashout?amount=10000&payment-token=xxx"
     }
 
     @Test
@@ -39,18 +38,14 @@ internal class CashoutCommandTest : AbstractEndpointTest() {
         doReturn(resp).whenever(paymentApi).createCashout(any())
 
         // WHEN
-        val request = CashoutRequest(
-            paymentToken = "xxx",
-            amount = 10000.0
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
+        val response = rest.postForEntity(url, null, Action::class.java)
 
         // THEN
         assertEquals(200, response.statusCodeValue)
 
         val action = response.body
         assertEquals(ActionType.Route, action.type)
-        assertEquals("http://localhost:0/cashout/success?amount=${request.amount}", action.url)
+        assertEquals("http://localhost:0/cashout/success?amount=10000.0", action.url)
     }
 
     @Test
@@ -60,11 +55,7 @@ internal class CashoutCommandTest : AbstractEndpointTest() {
         doReturn(resp).whenever(paymentApi).createCashout(any())
 
         // WHEN
-        val request = CashoutRequest(
-            paymentToken = "xxx",
-            amount = 10000.0
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
+        val response = rest.postForEntity(url, null, Action::class.java)
 
         // THEN
         assertEquals(200, response.statusCodeValue)
@@ -81,11 +72,7 @@ internal class CashoutCommandTest : AbstractEndpointTest() {
         doThrow(ex).whenever(paymentApi).createCashout(any())
 
         // WHEN
-        val request = CashoutRequest(
-            paymentToken = "xxx",
-            amount = 10000.0
-        )
-        val response = rest.postForEntity(url, request, Action::class.java)
+        val response = rest.postForEntity(url, null, Action::class.java)
 
         // THEN
         assertEquals(200, response.statusCodeValue)

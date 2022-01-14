@@ -97,7 +97,7 @@ class PayConfirmScreen(
                             caption = getText("page.pay-confirm.button.pay", arrayOf(amountText)),
                             action = Action(
                                 type = ActionType.Route,
-                                url = urlBuilder.build(loginUrl, getLoginUrlPath(paymentRequestId)),
+                                url = urlBuilder.build(loginUrl, getSubmitUrl(paymentRequestId)),
                             )
                         )
                     )
@@ -106,8 +106,8 @@ class PayConfirmScreen(
         ).toWidget()
     }
 
-    private fun getLoginUrlPath(paymentRequestId: String): String {
-        val me = accountApi.getAccount(securityContext.currentAccountId()).account
+    private fun getSubmitUrl(paymentRequestId: String): String {
+        val me = securityContext.currentAccount()
         return "?phone=" + encodeURLParam(me.phone!!.number) +
             "&icon=" + Theme.ICON_LOCK +
             "&screen-id=" + Page.PAY_PIN +

@@ -125,7 +125,8 @@ abstract class AbstractEndpointTest {
                 )
             ),
             limits = Limits(
-                minCashin = 5000.0
+                minCashin = 5000.0,
+                minCashout = 5000.0
             )
         )
         doReturn(GetTenantResponse(tenant)).whenever(tenantApi).getTenant(any())

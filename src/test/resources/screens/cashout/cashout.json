@@ -90,7 +90,7 @@
                       "children": [],
                       "action": {
                         "type": "Command",
-                        "url": "http://localhost:0/commands/cashout"
+                        "url": "http://localhost:0/commands/cashout/amount"
                       }
                     }
                   ]

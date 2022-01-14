@@ -98,7 +98,17 @@
               "attributes": {
                 "alignment": "Center"
               },
-              "children": []
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "Transaction Fees: 0 XAF",
+                    "bold": true,
+                    "size": 16.0
+                  },
+                  "children": []
+                }
+              ]
             },
             {
               "type": "Container",

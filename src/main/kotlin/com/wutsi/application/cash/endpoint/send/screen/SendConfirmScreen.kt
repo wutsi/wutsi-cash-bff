@@ -95,7 +95,7 @@ class SendConfirmScreen(
 
         // Adjust amount
         val fmt = DecimalFormat(tenant.monetaryFormat)
-        val fees: Double? = if (response.applyToSender) response.fees else null
+        val fees: Double = if (response.applyToSender) response.fees else 0.0
 
         return Screen(
             id = Page.SEND_CONFIRM,
@@ -158,13 +158,11 @@ class SendConfirmScreen(
                     ),
                     Container(
                         alignment = Alignment.Center,
-                        child = fees?.let {
-                            Text(
-                                getText("page.send-confirm.fees", arrayOf(fmt.format(it))),
-                                bold = true,
-                                size = Theme.TEXT_SIZE_LARGE
-                            )
-                        }
+                        child = Text(
+                            getText("page.send-confirm.fees", arrayOf(fmt.format(fees))),
+                            bold = true,
+                            size = Theme.TEXT_SIZE_LARGE
+                        )
                     ),
                     Container(
                         padding = 20.0,
@@ -278,9 +276,7 @@ class SendConfirmScreen(
             "&return-to-route=false" +
             "&return-url=" + encodeURLParam(
             urlBuilder.build(
-                "commands/send?amount=$amount" +
-                    "&recipient-id=${recipient.id}" +
-                    "&recipient-name=" + encodeURLParam(recipient.displayName)
+                "commands/send?amount=$amount&recipient-id=${recipient.id}&recipient-name=" + encodeURLParam(recipient.displayName)
             )
         )
     }

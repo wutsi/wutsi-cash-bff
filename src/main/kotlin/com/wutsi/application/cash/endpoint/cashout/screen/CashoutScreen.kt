@@ -88,7 +88,7 @@ class CashoutScreen(
                                         caption = getText("page.cashout.button.submit"),
                                         action = Action(
                                             type = Command,
-                                            url = urlBuilder.build("commands/cashout")
+                                            url = urlBuilder.build("commands/cashout/amount")
                                         )
                                     )
                                 )
