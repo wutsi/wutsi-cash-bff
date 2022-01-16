@@ -136,7 +136,7 @@ class CashoutConfirmScreen(
     }
 
     private fun getSubmitUrl(amount: Double, paymentToken: String): String {
-        val me = accountApi.getAccount(securityContext.currentAccountId()).account
+        val me = securityContext.currentAccount()
         return "?phone=" + encodeURLParam(me.phone!!.number) +
             "&icon=" + Theme.ICON_LOCK +
             "&screen-id=" + Page.CASHOUT_PIN +
