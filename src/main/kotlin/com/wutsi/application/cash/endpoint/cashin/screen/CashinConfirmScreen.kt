@@ -58,7 +58,7 @@ class CashinConfirmScreen(
             request = ComputeTransactionFeesRequest(
                 amount = amount,
                 transactionType = "CASHIN",
-                recipientId = accountId
+                senderId = accountId
             )
         )
         val fees: Double = if (response.applyToSender) response.fees else 0.0

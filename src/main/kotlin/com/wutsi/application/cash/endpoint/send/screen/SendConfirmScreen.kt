@@ -3,14 +3,17 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
+import com.wutsi.application.shared.service.CategoryService
 import com.wutsi.application.shared.service.TenantProvider
+import com.wutsi.application.shared.service.TogglesProvider
 import com.wutsi.application.shared.service.URLBuilder
-import com.wutsi.application.shared.ui.Avatar
+import com.wutsi.application.shared.ui.AccountProfileCard
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
+import com.wutsi.flutter.sdui.Divider
 import com.wutsi.flutter.sdui.Icon
 import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.Input
@@ -26,7 +29,6 @@ import com.wutsi.flutter.sdui.enums.InputType.Submit
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.Account
-import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.SearchAccountRequest
 import com.wutsi.platform.core.error.Error
 import com.wutsi.platform.core.error.exception.BadRequestException
@@ -45,6 +47,9 @@ class SendConfirmScreen(
     private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
+    private val categoryService: CategoryService,
+    private val togglesProvider: TogglesProvider,
+
     @Value("\${wutsi.application.login-url}") private val loginUrl: String,
 ) : AbstractQuery() {
     @PostMapping
@@ -72,24 +77,23 @@ class SendConfirmScreen(
                 confirm(amount, xphoneNumber, recipient, tenant)
         } else {
             val recipient = findRecipient(recipientId!!)
-            val summary = AccountSummary(
-                id = recipient.id,
-                displayName = recipient.displayName,
-                pictureUrl = recipient.pictureUrl,
-                country = recipient.country,
-                language = recipient.language,
-            )
-            return confirm(amount, null, summary, tenant)
+            return confirm(amount, null, recipient, tenant)
         }
     }
 
-    private fun confirm(amount: Double, phoneNumber: String?, recipient: AccountSummary, tenant: Tenant): Widget {
+    private fun confirm(
+        amount: Double,
+        phoneNumber: String?,
+        recipient: Account,
+        tenant: Tenant
+    ): Widget {
         // Get fees
         val response = paymentApi.computeTransactionFees(
             request = ComputeTransactionFeesRequest(
                 amount = amount,
                 transactionType = "TRANSFER",
-                recipientId = recipient.id
+                recipientId = recipient.id,
+                senderId = securityContext.currentAccountId()
             )
         )
 
@@ -109,7 +113,7 @@ class SendConfirmScreen(
                     IconButton(
                         icon = Theme.ICON_CANCEL,
                         action = Action(
-                            type = Route,
+                            type = ActionType.Route,
                             url = "route:/~"
                         )
                     )
@@ -117,36 +121,8 @@ class SendConfirmScreen(
             ),
             child = Column(
                 children = listOf(
-                    Container(padding = 20.0),
-                    Container(
-                        padding = 10.0,
-                        alignment = Center,
-                        child = Avatar(
-                            radius = 48.0,
-                            textSize = 30.0,
-                            text = recipient.displayName,
-                            pictureUrl = recipient.pictureUrl,
-                        )
-                    ),
-                    Container(
-                        padding = 10.0,
-                        alignment = Center,
-                        child = Text(
-                            caption = recipient.displayName ?: "",
-                            alignment = TextAlignment.Center,
-                            size = Theme.TEXT_SIZE_X_LARGE,
-                            color = Theme.COLOR_PRIMARY,
-                            bold = true,
-                        )
-                    ),
-                    phoneNumber?.let {
-                        Text(
-                            caption = formattedPhoneNumber(it)!!,
-                            alignment = TextAlignment.Center,
-                            color = Theme.COLOR_BLACK,
-                            size = Theme.TEXT_SIZE_X_LARGE,
-                        )
-                    } ?: Container(),
+                    AccountProfileCard(recipient, phoneNumber, categoryService, togglesProvider),
+                    Divider(color = Theme.COLOR_DIVIDER),
                     Container(
                         padding = 10.0,
                         alignment = Alignment.Center,
@@ -154,6 +130,7 @@ class SendConfirmScreen(
                             value = amount,
                             currency = tenant.currencySymbol,
                             numberFormat = tenant.numberFormat,
+                            color = Theme.COLOR_PRIMARY,
                         )
                     ),
                     Container(
@@ -250,7 +227,7 @@ class SendConfirmScreen(
         ),
     ).toWidget()
 
-    private fun findRecipient(phoneNumber: String): AccountSummary? {
+    private fun findRecipient(phoneNumber: String): Account? {
         val accounts = accountApi.searchAccount(
             SearchAccountRequest(
                 phoneNumber = phoneNumber
@@ -259,13 +236,13 @@ class SendConfirmScreen(
         return if (accounts.isEmpty())
             null
         else
-            accounts[0]
+            accountApi.getAccount(accounts[0].id).account
     }
 
     private fun findRecipient(id: Long): Account =
         accountApi.getAccount(id).account
 
-    private fun getSubmitUrl(amount: Double, recipient: AccountSummary): String {
+    private fun getSubmitUrl(amount: Double, recipient: Account): String {
         val me = accountApi.getAccount(securityContext.currentAccountId()).account
         return "?phone=" + encodeURLParam(me.phone!!.number) +
             "&icon=" + Theme.ICON_LOCK +
