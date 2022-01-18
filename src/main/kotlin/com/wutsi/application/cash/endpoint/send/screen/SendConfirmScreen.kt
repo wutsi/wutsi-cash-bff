@@ -7,7 +7,7 @@ import com.wutsi.application.shared.service.CategoryService
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.TogglesProvider
 import com.wutsi.application.shared.service.URLBuilder
-import com.wutsi.application.shared.ui.AccountProfileCard
+import com.wutsi.application.shared.ui.ProfileCard
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
@@ -121,7 +121,13 @@ class SendConfirmScreen(
             ),
             child = Column(
                 children = listOf(
-                    AccountProfileCard(recipient, phoneNumber, categoryService, togglesProvider),
+                    ProfileCard(
+                        account = recipient,
+                        phoneNumber = phoneNumber,
+                        categoryService = categoryService,
+                        togglesProvider = togglesProvider,
+                        showWebsite = false
+                    ),
                     Divider(color = Theme.COLOR_DIVIDER),
                     Container(
                         padding = 10.0,

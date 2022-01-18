@@ -89,9 +89,11 @@
               },
               "children": [
                 {
-                  "type": "Row",
+                  "type": "Wrap",
                   "attributes": {
-                    "mainAxisAlignment": "spaceAround"
+                    "spacing": 20.0,
+                    "runSpacing": 10.0,
+                    "direction": "Horizontal"
                   },
                   "children": [
                     {
@@ -100,7 +102,9 @@
                       "children": [
                         {
                           "type": "Row",
-                          "attributes": {},
+                          "attributes": {
+                            "mainAxisSize": "min"
+                          },
                           "children": [
                             {
                               "type": "Icon",
