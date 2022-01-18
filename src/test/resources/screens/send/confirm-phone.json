@@ -89,11 +89,9 @@
               },
               "children": [
                 {
-                  "type": "Wrap",
+                  "type": "Row",
                   "attributes": {
-                    "spacing": 20.0,
-                    "runSpacing": 10.0,
-                    "direction": "Horizontal"
+                    "mainAxisAlignment": "spaceAround"
                   },
                   "children": [
                     {
