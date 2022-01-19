@@ -22,7 +22,6 @@ import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType
-import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.InputType.Submit
@@ -169,10 +168,7 @@ class SendConfirmScreen(
             actions = listOf(
                 IconButton(
                     icon = Theme.ICON_CANCEL,
-                    action = Action(
-                        type = Route,
-                        url = "route:/~"
-                    )
+                    action = gotoHome()
                 )
             )
         ),

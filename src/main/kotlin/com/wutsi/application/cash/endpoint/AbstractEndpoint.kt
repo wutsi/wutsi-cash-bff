@@ -95,6 +95,9 @@ abstract class AbstractEndpoint {
         url = "page:/$page"
     )
 
+    protected fun gotoHome() =
+        gotoRoute("/~")
+
     protected fun gotoRoute(path: String, replacement: Boolean? = null, parameters: Map<String, String>? = null) =
         Action(
             type = Route,

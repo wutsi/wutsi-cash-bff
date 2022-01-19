@@ -6,24 +6,23 @@ import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.CategoryService
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.TogglesProvider
+import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.application.shared.ui.ProfileCard
+import com.wutsi.application.shared.ui.ProfileCardType
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Divider
-import com.wutsi.flutter.sdui.Icon
 import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.MoneyText
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
-import com.wutsi.flutter.sdui.enums.ActionType.Route
+import com.wutsi.flutter.sdui.enums.ActionType.Command
 import com.wutsi.flutter.sdui.enums.Alignment
-import com.wutsi.flutter.sdui.enums.Alignment.Center
-import com.wutsi.flutter.sdui.enums.ButtonType.Elevated
-import com.wutsi.flutter.sdui.enums.TextAlignment
+import com.wutsi.flutter.sdui.enums.ButtonType
 import com.wutsi.platform.account.WutsiAccountApi
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -32,88 +31,92 @@ import org.springframework.web.bind.annotation.RestController
 import java.text.DecimalFormat
 
 @RestController
-@RequestMapping("/send/success")
-class SendSuccessScreen(
+@RequestMapping("/send/approval")
+class SendApprovalScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
     private val categoryService: CategoryService,
     private val togglesProvider: TogglesProvider,
+    private val urlBuilder: URLBuilder,
 ) : AbstractQuery() {
     @PostMapping
     fun index(
-        @RequestParam(name = "transaction-id") transactionId: String,
-        @RequestParam(name = "error", required = false) error: String? = null
+        @RequestParam(name = "transaction-id") transactionId: String
     ): Widget {
         val tenant = tenantProvider.get()
         val fmt = DecimalFormat(tenant.monetaryFormat)
         val tx = paymentApi.getTransaction(transactionId).transaction
-        val recipient = accountApi.getAccount(tx.recipientId!!).account
+        val sender = accountApi.getAccount(tx.accountId).account
         return Screen(
-            id = Page.SEND_SUCCESS,
+            id = Page.SEND_APPROVAL,
             appBar = AppBar(
                 elevation = 0.0,
                 backgroundColor = Theme.COLOR_WHITE,
-                foregroundColor = Theme.COLOR_BLACK,
                 automaticallyImplyLeading = false,
                 actions = listOf(
                     IconButton(
                         icon = Theme.ICON_CANCEL,
                         action = gotoHome()
                     )
-                )
+                ),
+                title = getText("page.send-approval.app-bar.title"),
             ),
             child = Column(
                 children = listOf(
-                    ProfileCard(
-                        account = recipient,
-                        phoneNumber = null,
-                        categoryService = categoryService,
-                        togglesProvider = togglesProvider,
-                        showWebsite = false,
+                    Container(
+                        padding = 10.0,
+                        alignment = Alignment.Center,
+                        child = Text(
+                            caption = getText("page.send-approval.message"),
+                            size = Theme.TEXT_SIZE_LARGE,
+                        )
                     ),
-                    Divider(color = Theme.COLOR_DIVIDER),
                     MoneyText(
                         value = tx.net,
                         currency = tenant.currencySymbol,
                         numberFormat = tenant.numberFormat,
-                        color = Theme.COLOR_PRIMARY,
+                        color = Theme.COLOR_PRIMARY
                     ),
                     Container(
                         alignment = Alignment.Center,
                         child = Text(
-                            getText("page.send-success.fees", arrayOf(fmt.format(tx.fees))),
+                            getText("page.send-approval.fees", arrayOf(fmt.format(tx.fees))),
                             bold = true,
                             size = Theme.TEXT_SIZE_LARGE
                         )
                     ),
-                    Container(padding = 10.0),
+                    Divider(color = Theme.COLOR_DIVIDER),
                     Container(
-                        alignment = Center,
-                        child = Icon(
-                            code = error?.let { Theme.ICON_ERROR } ?: Theme.ICON_CHECK,
-                            size = 48.0,
-                            color = error?.let { Theme.COLOR_DANGER } ?: Theme.COLOR_SUCCESS
+                        padding = 10.0,
+                        alignment = Alignment.Center,
+                        child = Text(
+                            caption = getText("page.send-approval.from"),
+                            size = Theme.TEXT_SIZE_LARGE,
                         )
                     ),
-                    Container(
-                        alignment = Center,
-                        child = Text(
-                            error?.let { getTransactionErrorMessage(it) } ?: "",
-                            color = Theme.COLOR_DANGER,
-                            alignment = TextAlignment.Center,
-                            bold = true
-                        ),
+                    ProfileCard(
+                        account = sender,
+                        phoneNumber = null,
+                        categoryService = categoryService,
+                        togglesProvider = togglesProvider,
+                        showWebsite = false,
+                        type = ProfileCardType.Summary
                     ),
+                    Divider(color = Theme.COLOR_DIVIDER),
                     Container(
                         padding = 10.0,
                         child = Button(
-                            type = Elevated,
-                            caption = getText("page.send-success.button.submit"),
+                            caption = getText("page.send-approval.button.submit", arrayOf(fmt.format(tx.amount))),
                             action = Action(
-                                type = Route,
-                                url = "route:/~"
+                                type = Command,
+                                url = urlBuilder.build("commands/send/approve?transaction-id=$transactionId")
                             )
                         )
+                    ),
+                    Button(
+                        type = ButtonType.Text,
+                        caption = getText("page.send-approval.button.cancel"),
+                        action = gotoHome()
                     )
                 )
             ),

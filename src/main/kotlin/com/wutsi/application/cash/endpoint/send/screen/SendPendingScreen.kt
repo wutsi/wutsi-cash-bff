@@ -6,7 +6,6 @@ import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.CategoryService
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.TogglesProvider
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.application.shared.ui.ProfileCard
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
@@ -44,7 +43,6 @@ import java.text.DecimalFormat
 class SendPendingScreen(
     private val qrApi: WutsiQrApi,
     private val tenantProvider: TenantProvider,
-    private val urlBuilder: URLBuilder,
     private val categoryService: CategoryService,
     private val togglesProvider: TogglesProvider,
     private val accountApi: WutsiAccountApi
@@ -59,10 +57,10 @@ class SendPendingScreen(
 
         return Screen(
             id = Page.SEND_PENDING,
-            safe = true,
             appBar = AppBar(
                 elevation = 0.0,
                 backgroundColor = Theme.COLOR_WHITE,
+                foregroundColor = Theme.COLOR_BLACK,
                 automaticallyImplyLeading = false,
                 actions = listOf(
                     IconButton(

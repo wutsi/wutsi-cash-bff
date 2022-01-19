@@ -11,6 +11,7 @@ object Page {
     const val CASHOUT_PENDING = "page.cashout.pending"
     const val CASHOUT_PIN = "page.cashout.pin"
     const val SEND = "page.send"
+    const val SEND_APPROVAL = "page.send.approval"
     const val SEND_RECIPIENT = "page.send.recipient"
     const val SEND_RECIPIENT_NOT_FOUND = "page.send.recipient.not-found"
     const val SEND_CONFIRM = "page.send.confirm"

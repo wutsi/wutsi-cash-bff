@@ -2,7 +2,7 @@
   "type": "Screen",
   "attributes": {
     "id": "page.send.pending",
-    "safe": true
+    "safe": false
   },
   "children": [
     {
@@ -78,6 +78,7 @@
     "attributes": {
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
+      "foregroundColor": "#000000",
       "automaticallyImplyLeading": false,
       "actions": [
         {

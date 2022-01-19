@@ -2,7 +2,7 @@
   "type": "Screen",
   "attributes": {
     "id": "page.send.success",
-    "safe": true
+    "safe": false
   },
   "children": [
     {
@@ -83,6 +83,7 @@
           "type": "MoneyText",
           "attributes": {
             "value": 1000.0,
+            "color": "#1D7EDF",
             "currency": "CFA",
             "numberFormat": "#,###,##0"
           },
@@ -132,8 +133,7 @@
         {
           "type": "Container",
           "attributes": {
-            "alignment": "Center",
-            "padding": 10.0
+            "alignment": "Center"
           },
           "children": [
             {
@@ -177,6 +177,7 @@
     "attributes": {
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
+      "foregroundColor": "#000000",
       "automaticallyImplyLeading": false,
       "actions": [
         {

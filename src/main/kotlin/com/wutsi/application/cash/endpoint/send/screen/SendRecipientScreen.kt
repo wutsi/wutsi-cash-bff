@@ -76,10 +76,7 @@ class SendRecipientScreen(
                     actions = listOf(
                         IconButton(
                             icon = Theme.ICON_CANCEL,
-                            action = Action(
-                                type = Route,
-                                url = "route:/~"
-                            )
+                            action = gotoHome()
                         )
                     ),
                     bottom = TabBar(
