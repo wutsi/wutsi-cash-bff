@@ -19,7 +19,7 @@
             {
               "type": "Text",
               "attributes": {
-                "caption": "Approve the transfer of",
+                "caption": "Accept",
                 "size": 16.0
               },
               "children": []
