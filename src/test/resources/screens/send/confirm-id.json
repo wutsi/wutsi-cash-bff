@@ -112,7 +112,7 @@
         {
           "type": "Container",
           "attributes": {
-            "padding": 20.0
+            "padding": 10.0
           },
           "children": [
             {

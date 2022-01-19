@@ -202,24 +202,34 @@ abstract class AbstractEndpointTest {
     protected fun getText(key: String, args: Array<Any?> = emptyArray()) =
         messages.getMessage(key, args, LocaleContextHolder.getLocale()) ?: key
 
-    protected fun createFeignException(errorCode: String, downstreamError: ErrorCode) = FeignException.Conflict(
-        "",
-        Request.create(
-            Request.HttpMethod.POST,
-            "https://www.google.ca",
-            emptyMap(),
-            "".toByteArray(),
-            Charset.defaultCharset(),
-            RequestTemplate()
-        ),
-        """
+    protected fun createFeignException(
+        errorCode: String,
+        downstreamError: ErrorCode,
+        transactionId: String? = null
+    ): FeignException {
+        val txId = transactionId?.let { "\"$it\"" }
+        return FeignException.Conflict(
+            "",
+            Request.create(
+                Request.HttpMethod.POST,
+                "https://www.google.ca",
+                emptyMap(),
+                "".toByteArray(),
+                Charset.defaultCharset(),
+                RequestTemplate()
+            ),
+            """
             {
                 "error":{
                     "code": "$errorCode",
-                    "downstreamCode": "$downstreamError"
+                    "downstreamCode": "$downstreamError",
+                    "data": {
+                        "transaction-id": $txId
+                    }
                 }
             }
-        """.trimIndent().toByteArray(),
-        emptyMap()
-    )
+            """.trimIndent().toByteArray(),
+            emptyMap()
+        )
+    }
 }

@@ -6,6 +6,7 @@ import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
+import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateTransferRequest
 import feign.FeignException
@@ -43,7 +44,7 @@ class SendCommand(
             return if (Status.SUCCESSFUL.name == response.status)
                 gotoUrl(
                     url = urlBuilder.build(
-                        "send/success?amount=$amount&recipient-id=$recipientId"
+                        "send/success?transaction-id=${response.id}"
                     )
                 )
             else
@@ -53,12 +54,20 @@ class SendCommand(
                     )
                 )
         } catch (ex: FeignException) {
-            val error = TransactionException.of(objectMapper, ex).error
-            return gotoUrl(
-                url = urlBuilder.build(
-                    "send/success?error=$error&amount=$amount&recipient-id=$recipientId"
+            val transactionEx = TransactionException.of(objectMapper, ex)
+            val error = transactionEx.error
+            val transactionId = transactionEx.transactionId
+            return if (transactionId != null)
+                gotoUrl(
+                    url = urlBuilder.build(
+                        "send/success?error=$error&transaction-id=$transactionId"
+                    )
                 )
-            )
+            else
+                showError(
+                    message = getTransactionErrorMessage(ErrorCode.UNEXPECTED_ERROR),
+                    e = ex
+                )
         }
     }
 }

@@ -144,7 +144,7 @@ class SendConfirmScreen(
                         )
                     ),
                     Container(
-                        padding = 20.0,
+                        padding = 10.0,
                         child = Input(
                             name = "command",
                             type = Submit,

@@ -56,5 +56,4 @@ internal class SendPendingScreenTest : AbstractEndpointTest() {
         val url = "http://localhost:$port/send/pending?transaction-id=xxx"
         assertEndpointEquals("/screens/send/pending-no-approval.json", url)
     }
-
 }

@@ -52,7 +52,7 @@ abstract class AbstractEndpoint {
     protected fun getTransactionErrorMessage(error: ErrorCode): String =
         getTransactionErrorMessage(error.name)
 
-    private fun getTransactionErrorMessage(error: String?): String =
+    protected fun getTransactionErrorMessage(error: String?): String =
         try {
             getText("prompt.error.transaction-failed.$error")
         } catch (ex: Exception) {

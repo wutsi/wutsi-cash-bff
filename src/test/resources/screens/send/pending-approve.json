@@ -44,7 +44,7 @@
             {
               "type": "Text",
               "attributes": {
-                "caption": "Present the QR Code to the recipient. He will scan it to approve the transaction",
+                "caption": "Show the QR Code to the recipient. He will scan it to approve the transaction",
                 "color": "#1D7EDF",
                 "size": 18.0,
                 "alignment": "Center"

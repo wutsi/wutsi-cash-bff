@@ -9,15 +9,18 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.application.cash.endpoint.send.dto.SendRequest
 import com.wutsi.flutter.sdui.Action
+import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.platform.payment.core.ErrorCode
-import com.wutsi.platform.payment.dto.ComputeTransactionFeesResponse
 import com.wutsi.platform.payment.dto.CreateTransferRequest
 import com.wutsi.platform.payment.dto.CreateTransferResponse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.context.MessageSource
+import org.springframework.context.i18n.LocaleContextHolder
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -28,17 +31,14 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
     private lateinit var url: String
 
+    @Autowired
+    private lateinit var messageSource: MessageSource
+
     @BeforeEach
     override fun setUp() {
         super.setUp()
 
         url = "http://localhost:$port/commands/send?amount=3000.0&recipient-id=111&recipient-name=YoMan"
-
-        val response = ComputeTransactionFeesResponse(
-            fees = 100.0,
-            applyToSender = true
-        )
-        doReturn(response).whenever(paymentApi).computeTransactionFees(any())
     }
 
     @Test
@@ -64,9 +64,8 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val action = response.body
         assertEquals(Route, action.type)
-        assertEquals("http://localhost:0/send/success?amount=3000.0&recipient-id=111", action.url)
+        assertEquals("http://localhost:0/send/success?transaction-id=xxx", action.url)
     }
-
 
     @Test
     fun pending() {
@@ -95,6 +94,36 @@ internal class SendCommandTest : AbstractEndpointTest() {
     }
 
     @Test
+    fun transactionError() {
+        // GIVEN
+        val ex = createFeignException("failed", ErrorCode.UNEXPECTED_ERROR, "xxx")
+        doThrow(ex).whenever(paymentApi).createTransfer(any())
+
+        // WHEN
+        val request = SendRequest(
+            pin = "123456"
+        )
+        val response = rest.postForEntity(url, request, Action::class.java)
+
+        // THEN
+        assertEquals(200, response.statusCodeValue)
+
+        val req = argumentCaptor<CreateTransferRequest>()
+        verify(paymentApi).createTransfer(req.capture())
+        assertEquals(3000.0, req.firstValue.amount)
+        assertEquals("XAF", req.firstValue.currency)
+        assertEquals(111L, req.firstValue.recipientId)
+        assertNull(req.firstValue.description)
+
+        val action = response.body
+        assertEquals(Route, action.type)
+        assertEquals(
+            "http://localhost:0/send/success?error=UNEXPECTED_ERROR&transaction-id=xxx",
+            action.url
+        )
+    }
+
+    @Test
     fun error() {
         // Given
         val ex = createFeignException("failed", ErrorCode.UNEXPECTED_ERROR)
@@ -117,10 +146,14 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertNull(req.firstValue.description)
 
         val action = response.body
-        assertEquals(Route, action.type)
+        assertEquals(ActionType.Prompt, action.type)
         assertEquals(
-            "http://localhost:0/send/success?error=UNEXPECTED_ERROR&amount=3000.0&recipient-id=111",
-            action.url
+            messageSource.getMessage(
+                "prompt.error.transaction-failed.UNEXPECTED_ERROR",
+                emptyArray(),
+                LocaleContextHolder.getLocale()
+            ),
+            action.prompt?.attributes?.get("message")
         )
     }
 }

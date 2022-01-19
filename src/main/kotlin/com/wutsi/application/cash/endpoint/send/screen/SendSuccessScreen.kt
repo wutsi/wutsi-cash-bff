@@ -20,15 +20,16 @@ import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType.Route
+import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.ButtonType.Elevated
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
-import com.wutsi.platform.payment.core.ErrorCode
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.text.DecimalFormat
 
 @RestController
 @RequestMapping("/send/success")
@@ -40,12 +41,13 @@ class SendSuccessScreen(
 ) : AbstractQuery() {
     @PostMapping
     fun index(
-        @RequestParam amount: Double,
-        @RequestParam("recipient-id") recipientId: Long,
-        @RequestParam(required = false) error: ErrorCode? = null,
+        @RequestParam(name = "transaction-id") transactionId: String,
+        @RequestParam(name = "error", required = false) error: String? = null
     ): Widget {
         val tenant = tenantProvider.get()
-        val recipient = accountApi.getAccount(recipientId).account
+        val fmt = DecimalFormat(tenant.monetaryFormat)
+        val tx = paymentApi.getTransaction(transactionId).transaction
+        val recipient = accountApi.getAccount(tx.recipientId!!).account
         return Screen(
             id = Page.SEND_SUCCESS,
             safe = true,
@@ -70,14 +72,23 @@ class SendSuccessScreen(
                         phoneNumber = null,
                         categoryService = categoryService,
                         togglesProvider = togglesProvider,
-                        showWebsite = false
+                        showWebsite = false,
                     ),
                     Divider(color = Theme.COLOR_DIVIDER),
                     MoneyText(
-                        value = amount,
+                        value = tx.net,
                         currency = tenant.currencySymbol,
                         numberFormat = tenant.numberFormat,
                     ),
+                    Container(
+                        alignment = Alignment.Center,
+                        child = Text(
+                            getText("page.send-sucess.fees", arrayOf(fmt.format(tx.fees))),
+                            bold = true,
+                            size = Theme.TEXT_SIZE_LARGE
+                        )
+                    ),
+                    Container(padding = 10.0),
                     Container(
                         alignment = Center,
                         child = Icon(
