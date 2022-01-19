@@ -1,0 +1,98 @@
+{
+  "type": "Screen",
+  "attributes": {
+    "id": "page.send.pending",
+    "safe": true
+  },
+  "children": [
+    {
+      "type": "Column",
+      "attributes": {},
+      "children": [
+        {
+          "type": "Container",
+          "attributes": {
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "MoneyText",
+              "attributes": {
+                "value": 1000.0,
+                "currency": "CFA",
+                "numberFormat": "#,###,##0"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "caption": "Transaction Fees: 100 XAF",
+            "bold": true,
+            "size": 16.0
+          },
+          "children": []
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "padding": 10.0
+          },
+          "children": [
+            {
+              "type": "Text",
+              "attributes": {
+                "caption": "Present the QR Code to the recipient. He will scan it to approve the transaction",
+                "color": "#1D7EDF",
+                "size": 18.0,
+                "alignment": "Center"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Center",
+          "attributes": {},
+          "children": [
+            {
+              "type": "QrImage",
+              "attributes": {
+                "data": "yyyy",
+                "size": 230.0,
+                "padding": 10.0,
+                "embeddedImageUrl": "http://www.goole.com/images/1.png",
+                "embeddedImageSize": 64.0
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "appBar": {
+    "type": "AppBar",
+    "attributes": {
+      "elevation": 0.0,
+      "backgroundColor": "#FFFFFF",
+      "automaticallyImplyLeading": false,
+      "actions": [
+        {
+          "type": "IconButton",
+          "attributes": {
+            "icon": "ef28"
+          },
+          "children": [],
+          "action": {
+            "type": "Route",
+            "url": "route:/~"
+          }
+        }
+      ]
+    },
+    "children": []
+  }
+}

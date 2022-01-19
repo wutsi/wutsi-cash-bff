@@ -15,8 +15,8 @@ import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.MoneyWithKeyboard
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Widget
+import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.ActionType.Command
-import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.InputType.Submit
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
@@ -48,10 +48,10 @@ class SendScreen(
                 title = getText("page.send.app-bar.title", arrayOf(balanceText)),
                 actions = listOf(
                     IconButton(
-                        icon = Theme.ICON_SETTINGS,
+                        icon = Theme.ICON_CANCEL,
                         action = Action(
-                            type = Route,
-                            url = urlBuilder.build(shellUrl, "settings")
+                            type = ActionType.Route,
+                            url = "route:/~"
                         )
                     )
                 )

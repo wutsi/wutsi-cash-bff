@@ -67,6 +67,33 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals("http://localhost:0/send/success?amount=3000.0&recipient-id=111", action.url)
     }
 
+
+    @Test
+    fun pending() {
+        // Given
+        doReturn(CreateTransferResponse("xxx", "PENDING")).whenever(paymentApi).createTransfer(any())
+
+        // WHEN
+        val request = SendRequest(
+            pin = "123456"
+        )
+        val response = rest.postForEntity(url, request, Action::class.java)
+
+        // THEN
+        assertEquals(200, response.statusCodeValue)
+
+        val req = argumentCaptor<CreateTransferRequest>()
+        verify(paymentApi).createTransfer(req.capture())
+        assertEquals(3000.0, req.firstValue.amount)
+        assertEquals("XAF", req.firstValue.currency)
+        assertEquals(111L, req.firstValue.recipientId)
+        assertNull(req.firstValue.description)
+
+        val action = response.body
+        assertEquals(Route, action.type)
+        assertEquals("http://localhost:0/send/pending?transaction-id=xxx", action.url)
+    }
+
     @Test
     fun error() {
         // Given

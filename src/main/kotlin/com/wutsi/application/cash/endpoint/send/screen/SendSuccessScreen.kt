@@ -3,13 +3,16 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
+import com.wutsi.application.shared.service.CategoryService
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.ui.Avatar
+import com.wutsi.application.shared.service.TogglesProvider
+import com.wutsi.application.shared.ui.ProfileCard
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
+import com.wutsi.flutter.sdui.Divider
 import com.wutsi.flutter.sdui.Icon
 import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.MoneyText
@@ -17,7 +20,6 @@ import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType.Route
-import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.ButtonType.Elevated
 import com.wutsi.flutter.sdui.enums.TextAlignment
@@ -33,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController
 class SendSuccessScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
+    private val categoryService: CategoryService,
+    private val togglesProvider: TogglesProvider,
 ) : AbstractQuery() {
     @PostMapping
     fun index(
@@ -61,42 +65,24 @@ class SendSuccessScreen(
             ),
             child = Column(
                 children = listOf(
-                    Container(padding = 20.0),
-                    Container(
-                        padding = 10.0,
-                        alignment = Center,
-                        child = Avatar(
-                            radius = 48.0,
-                            textSize = 30.0,
-                            text = recipient.displayName,
-                            pictureUrl = recipient.pictureUrl,
-                        )
+                    ProfileCard(
+                        account = recipient,
+                        phoneNumber = null,
+                        categoryService = categoryService,
+                        togglesProvider = togglesProvider,
+                        showWebsite = false
                     ),
-                    Container(
-                        padding = 10.0,
-                        alignment = Center,
-                        child = Text(
-                            caption = recipient.displayName ?: "",
-                            alignment = TextAlignment.Center,
-                            size = Theme.TEXT_SIZE_X_LARGE,
-                            color = Theme.COLOR_PRIMARY,
-                            bold = true,
-                        )
-                    ),
-                    Container(
-                        padding = 10.0,
-                        alignment = Alignment.Center,
-                        child = MoneyText(
-                            value = amount,
-                            currency = tenant.currencySymbol,
-                            numberFormat = tenant.numberFormat,
-                        )
+                    Divider(color = Theme.COLOR_DIVIDER),
+                    MoneyText(
+                        value = amount,
+                        currency = tenant.currencySymbol,
+                        numberFormat = tenant.numberFormat,
                     ),
                     Container(
                         alignment = Center,
                         child = Icon(
                             code = error?.let { Theme.ICON_ERROR } ?: Theme.ICON_CHECK,
-                            size = 80.0,
+                            size = 48.0,
                             color = error?.let { Theme.COLOR_DANGER } ?: Theme.COLOR_SUCCESS
                         )
                     ),

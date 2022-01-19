@@ -6,6 +6,7 @@ import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
+import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateTransferRequest
 import feign.FeignException
 import org.springframework.web.bind.annotation.PostMapping
@@ -39,11 +40,18 @@ class SendCommand(
             logger.add("transaction_id", response.id)
             logger.add("transaction_status", response.status)
 
-            return gotoUrl(
-                url = urlBuilder.build(
-                    "send/success?amount=$amount&recipient-id=$recipientId"
+            return if (Status.SUCCESSFUL.name == response.status)
+                gotoUrl(
+                    url = urlBuilder.build(
+                        "send/success?amount=$amount&recipient-id=$recipientId"
+                    )
                 )
-            )
+            else
+                gotoUrl(
+                    url = urlBuilder.build(
+                        "send/pending?transaction-id=${response.id}"
+                    )
+                )
         } catch (ex: FeignException) {
             val error = TransactionException.of(objectMapper, ex).error
             return gotoUrl(

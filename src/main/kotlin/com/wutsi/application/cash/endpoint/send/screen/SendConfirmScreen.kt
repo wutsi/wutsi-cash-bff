@@ -129,15 +129,11 @@ class SendConfirmScreen(
                         showWebsite = false
                     ),
                     Divider(color = Theme.COLOR_DIVIDER),
-                    Container(
-                        padding = 10.0,
-                        alignment = Alignment.Center,
-                        child = MoneyText(
-                            value = amount,
-                            currency = tenant.currencySymbol,
-                            numberFormat = tenant.numberFormat,
-                            color = Theme.COLOR_PRIMARY,
-                        )
+                    MoneyText(
+                        value = amount,
+                        currency = tenant.currencySymbol,
+                        numberFormat = tenant.numberFormat,
+                        color = Theme.COLOR_PRIMARY,
                     ),
                     Container(
                         alignment = Alignment.Center,

@@ -10,73 +10,83 @@
       "attributes": {},
       "children": [
         {
-          "type": "Container",
-          "attributes": {
-            "padding": 20.0
-          },
-          "children": []
-        },
-        {
-          "type": "Container",
-          "attributes": {
-            "alignment": "Center",
-            "padding": 10.0
-          },
+          "type": "Column",
+          "attributes": {},
           "children": [
             {
-              "type": "CircleAvatar",
+              "type": "Container",
               "attributes": {
-                "radius": 48.0
+                "alignment": "Center",
+                "padding": 10.0
               },
               "children": [
                 {
-                  "type": "Image",
+                  "type": "CircleAvatar",
                   "attributes": {
-                    "url": "https://www.goo.com/1.png"
+                    "radius": 48.0
                   },
-                  "children": []
+                  "children": [
+                    {
+                      "type": "Image",
+                      "attributes": {
+                        "url": "https://www.goo.com/1.png"
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "attributes": {
+                "alignment": "Center",
+                "padding": 10.0
+              },
+              "children": [
+                {
+                  "type": "Row",
+                  "attributes": {
+                    "mainAxisAlignment": "center"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "attributes": {
+                        "caption": "Roger Milla",
+                        "color": "#1D7EDF",
+                        "bold": true,
+                        "size": 18.0,
+                        "alignment": "Center"
+                      },
+                      "children": []
+                    },
+                    {
+                      "type": "Container",
+                      "attributes": {},
+                      "children": []
+                    }
+                  ]
                 }
               ]
             }
           ]
         },
         {
-          "type": "Container",
+          "type": "Divider",
           "attributes": {
-            "alignment": "Center",
-            "padding": 10.0
+            "color": "#8c8c8c"
           },
-          "children": [
-            {
-              "type": "Text",
-              "attributes": {
-                "caption": "Roger Milla",
-                "color": "#1D7EDF",
-                "bold": true,
-                "size": 18.0,
-                "alignment": "Center"
-              },
-              "children": []
-            }
-          ]
+          "children": []
         },
         {
-          "type": "Container",
+          "type": "MoneyText",
           "attributes": {
-            "alignment": "Center",
-            "padding": 10.0
+            "value": 3000.0,
+            "currency": "CFA",
+            "numberFormat": "#,###,##0"
           },
-          "children": [
-            {
-              "type": "MoneyText",
-              "attributes": {
-                "value": 3000.0,
-                "currency": "CFA",
-                "numberFormat": "#,###,##0"
-              },
-              "children": []
-            }
-          ]
+          "children": []
         },
         {
           "type": "Container",
@@ -88,7 +98,7 @@
               "type": "Icon",
               "attributes": {
                 "code": "e856",
-                "size": 80.0,
+                "size": 48.0,
                 "color": "#4CAF50"
               },
               "children": []

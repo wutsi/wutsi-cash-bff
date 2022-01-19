@@ -14,6 +14,7 @@ object Page {
     const val SEND_RECIPIENT = "page.send.recipient"
     const val SEND_RECIPIENT_NOT_FOUND = "page.send.recipient.not-found"
     const val SEND_CONFIRM = "page.send.confirm"
+    const val SEND_PENDING = "page.send.pending"
     const val SEND_PIN = "page.send.pin"
     const val SEND_SUCCESS = "page.send.success"
     const val HISTORY = "page.history"

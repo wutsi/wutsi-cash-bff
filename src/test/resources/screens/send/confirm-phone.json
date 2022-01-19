@@ -145,23 +145,14 @@
           "children": []
         },
         {
-          "type": "Container",
+          "type": "MoneyText",
           "attributes": {
-            "alignment": "Center",
-            "padding": 10.0
+            "value": 3000.0,
+            "color": "#1D7EDF",
+            "currency": "CFA",
+            "numberFormat": "#,###,##0"
           },
-          "children": [
-            {
-              "type": "MoneyText",
-              "attributes": {
-                "value": 3000.0,
-                "color": "#1D7EDF",
-                "currency": "CFA",
-                "numberFormat": "#,###,##0"
-              },
-              "children": []
-            }
-          ]
+          "children": []
         },
         {
           "type": "Container",

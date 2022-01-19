@@ -77,12 +77,12 @@
         {
           "type": "IconButton",
           "attributes": {
-            "icon": "e57f"
+            "icon": "ef28"
           },
           "children": [],
           "action": {
             "type": "Route",
-            "url": "https://wutsi-gateway-test.herokuapp.com/shell/settings"
+            "url": "route:/~"
           }
         }
       ]
