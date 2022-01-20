@@ -86,7 +86,6 @@ class SendSuccessScreen(
                             size = Theme.TEXT_SIZE_LARGE
                         )
                     ),
-                    Container(padding = 10.0),
                     Container(
                         alignment = Center,
                         child = Icon(

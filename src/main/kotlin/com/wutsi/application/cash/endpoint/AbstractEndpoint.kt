@@ -39,10 +39,6 @@ abstract class AbstractEndpoint {
     @Autowired
     protected lateinit var securityContext: SecurityContext
 
-    @ExceptionHandler(Throwable::class)
-    fun onThrowable(ex: Throwable): Action =
-        showError(getText("prompt.error.unexpected-error"), ex)
-
     @ExceptionHandler(TransactionException::class)
     fun onTransactionException(ex: TransactionException): Action {
         val message = getTransactionErrorMessage(ex.error)
