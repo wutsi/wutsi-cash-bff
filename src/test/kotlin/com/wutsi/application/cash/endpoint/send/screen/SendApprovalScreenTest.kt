@@ -6,16 +6,14 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.platform.payment.dto.GetTransactionResponse
 import com.wutsi.platform.payment.dto.Transaction
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+// @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class SendApprovalScreenTest : AbstractEndpointTest() {
     @LocalServerPort
     val port: Int = 0
 
-    @Test
+    //    @Test
     fun invoke() {
         val tx = Transaction(
             id = "1232",
