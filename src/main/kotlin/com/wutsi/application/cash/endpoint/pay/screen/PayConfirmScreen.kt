@@ -3,18 +3,19 @@ package com.wutsi.application.cash.endpoint.pay.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
+import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
-import com.wutsi.application.shared.ui.Avatar
+import com.wutsi.application.shared.ui.ProfileCard
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
+import com.wutsi.flutter.sdui.Divider
 import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.MoneyText
 import com.wutsi.flutter.sdui.Screen
-import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.Alignment
@@ -32,6 +33,7 @@ class PayConfirmScreen(
     private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
+    private val sharedUIMapper: SharedUIMapper,
 
     @Value("\${wutsi.application.login-url}") private val loginUrl: String,
 ) : AbstractQuery() {
@@ -60,35 +62,19 @@ class PayConfirmScreen(
             ),
             child = Column(
                 children = listOf(
-                    Container(padding = 20.0),
-                    Container(
-                        padding = 10.0,
-                        alignment = Alignment.Center,
-                        child = Avatar(
-                            radius = 48.0,
-                            textSize = 30.0,
-                            text = merchant.displayName,
-                            pictureUrl = merchant.pictureUrl,
-                        )
+                    ProfileCard(
+                        model = sharedUIMapper.toAccountModel(merchant),
+                        showWebsite = false,
+                        showPhoneNumber = false
                     ),
+                    Divider(color = Theme.COLOR_DIVIDER),
                     Container(
-                        padding = 10.0,
-                        alignment = Alignment.Center,
-                        child = Text(
-                            merchant.displayName ?: "",
-                            size = Theme.TEXT_SIZE_X_LARGE,
-                            bold = true,
-                            color = Theme.COLOR_PRIMARY,
-                        )
-                    ),
-                    Container(
-                        padding = 10.0,
                         alignment = Alignment.Center,
                         child = MoneyText(
                             value = paymentRequest.amount,
                             currency = tenant.currencySymbol,
                             numberFormat = tenant.numberFormat,
-                        )
+                        ),
                     ),
                     Container(
                         padding = 10.0,

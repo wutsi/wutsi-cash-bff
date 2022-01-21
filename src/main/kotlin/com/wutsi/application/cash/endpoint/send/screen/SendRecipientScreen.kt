@@ -3,6 +3,7 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
+import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.application.shared.ui.Avatar
@@ -51,6 +52,7 @@ class SendRecipientScreen(
     private val tenantProvider: TenantProvider,
     private val contactApi: WutsiContactApi,
     private val accountApi: WutsiAccountApi,
+    private val sharedUIMapper: SharedUIMapper,
 ) : AbstractQuery() {
     @PostMapping
     fun index(@RequestParam amount: Double): Widget {
@@ -221,9 +223,7 @@ class SendRecipientScreen(
         padding = 10.0,
         leading = Avatar(
             radius = 24.0,
-            text = account.displayName,
-            pictureUrl = account.pictureUrl,
-            textSize = 20.0,
+            model = sharedUIMapper.toAccountModel(account)
         ),
         action = Action(
             type = Route,

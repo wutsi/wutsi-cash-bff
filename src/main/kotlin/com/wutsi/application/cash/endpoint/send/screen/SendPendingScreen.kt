@@ -3,9 +3,8 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
-import com.wutsi.application.shared.service.CategoryService
+import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.TogglesProvider
 import com.wutsi.application.shared.ui.ProfileCard
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
@@ -14,6 +13,7 @@ import com.wutsi.flutter.sdui.Center
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Divider
+import com.wutsi.flutter.sdui.Flexible
 import com.wutsi.flutter.sdui.Icon
 import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.MoneyText
@@ -24,7 +24,9 @@ import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.WidgetAware
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.Alignment
+import com.wutsi.flutter.sdui.enums.ButtonType
 import com.wutsi.flutter.sdui.enums.ButtonType.Elevated
+import com.wutsi.flutter.sdui.enums.MainAxisAlignment
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.Account
@@ -43,9 +45,8 @@ import java.text.DecimalFormat
 class SendPendingScreen(
     private val qrApi: WutsiQrApi,
     private val tenantProvider: TenantProvider,
-    private val categoryService: CategoryService,
-    private val togglesProvider: TogglesProvider,
-    private val accountApi: WutsiAccountApi
+    private val accountApi: WutsiAccountApi,
+    private val sharedUIMapper: SharedUIMapper
 ) : AbstractQuery() {
     @PostMapping
     fun index(
@@ -82,10 +83,8 @@ class SendPendingScreen(
         val fmt = DecimalFormat(tenant.monetaryFormat)
         return listOf(
             ProfileCard(
-                account = recipient,
-                phoneNumber = null,
-                categoryService = categoryService,
-                togglesProvider = togglesProvider,
+                model = sharedUIMapper.toAccountModel(recipient),
+                showPhoneNumber = false,
                 showWebsite = false,
             ),
             Divider(color = Theme.COLOR_DIVIDER),
@@ -152,11 +151,12 @@ class SendPendingScreen(
             ),
             Container(
                 padding = 10.0,
-                child = Text(
-                    caption = getText("page.send-pending.requires-approval"),
-                    alignment = TextAlignment.Center,
-                    size = Theme.TEXT_SIZE_X_LARGE,
-                    color = Theme.COLOR_PRIMARY
+                child = Container(
+                    child = Text(
+                        caption = getText("page.send-pending.requires-approval"),
+                        alignment = TextAlignment.Center,
+                        size = Theme.TEXT_SIZE_X_LARGE,
+                    )
                 ),
             ),
             Center(
@@ -168,6 +168,21 @@ class SendPendingScreen(
                     embeddedImageUrl = tenantProvider.logo(tenant)
                 ),
             ),
+            Flexible(
+                child = Column(
+                    mainAxisAlignment = MainAxisAlignment.end,
+                    children = listOf(
+                        Container(
+                            alignment = Alignment.BottomCenter,
+                            child = Button(
+                                type = ButtonType.Text,
+                                caption = getText("page.send-pending.button.close"),
+                                action = gotoHome()
+                            )
+                        )
+                    )
+                )
+            )
         )
     }
 }

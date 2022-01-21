@@ -3,6 +3,7 @@ package com.wutsi.application.cash.endpoint.history.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
+import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.ui.Avatar
 import com.wutsi.flutter.sdui.AppBar
@@ -41,6 +42,7 @@ import java.time.format.DateTimeFormatter
 class HistoryScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
+    private val sharedUIMapper: SharedUIMapper,
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {
@@ -167,12 +169,13 @@ class HistoryScreen(
             return Image(width = 48.0, height = 48.0, url = carrier?.let { tenantProvider.logo(it) } ?: "")
         } else {
             val account = getAccount(tx, accounts)
-            return Avatar(
-                radius = 24.0,
-                textSize = 20.0,
-                text = account?.displayName,
-                pictureUrl = account?.pictureUrl,
-            )
+            return if (account == null)
+                Container()
+            else
+                Avatar(
+                    radius = 24.0,
+                    model = sharedUIMapper.toAccountModel(account)
+                )
         }
     }
 

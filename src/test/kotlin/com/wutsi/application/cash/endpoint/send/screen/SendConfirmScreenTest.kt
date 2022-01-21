@@ -54,6 +54,6 @@ internal class SendConfirmScreenTest : AbstractEndpointTest() {
         doReturn(GetAccountResponse(account)).whenever(accountApi).getAccount(any())
 
         val url = "http://localhost:$port/send/confirm?amount=3000&recipient-id=55"
-        assertEndpointEquals("/screens/send/confirm-id.json", url)
+        assertEndpointEquals("/screens/send/confirm-recipient-id.json", url)
     }
 }

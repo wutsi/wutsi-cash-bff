@@ -3,9 +3,8 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
-import com.wutsi.application.shared.service.CategoryService
+import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.TogglesProvider
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.application.shared.ui.ProfileCard
 import com.wutsi.application.shared.ui.ProfileCardType
@@ -15,6 +14,7 @@ import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Divider
+import com.wutsi.flutter.sdui.Flexible
 import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.MoneyText
 import com.wutsi.flutter.sdui.Screen
@@ -23,6 +23,7 @@ import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.ButtonType
+import com.wutsi.flutter.sdui.enums.MainAxisAlignment
 import com.wutsi.platform.account.WutsiAccountApi
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -35,9 +36,8 @@ import java.text.DecimalFormat
 class SendApprovalScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
-    private val categoryService: CategoryService,
-    private val togglesProvider: TogglesProvider,
     private val urlBuilder: URLBuilder,
+    private val sharedUIMapper: SharedUIMapper
 ) : AbstractQuery() {
     @PostMapping
     fun index(
@@ -52,6 +52,7 @@ class SendApprovalScreen(
             appBar = AppBar(
                 elevation = 0.0,
                 backgroundColor = Theme.COLOR_WHITE,
+                foregroundColor = Theme.COLOR_BLACK,
                 automaticallyImplyLeading = false,
                 actions = listOf(
                     IconButton(
@@ -95,10 +96,8 @@ class SendApprovalScreen(
                         )
                     ),
                     ProfileCard(
-                        account = sender,
-                        phoneNumber = null,
-                        categoryService = categoryService,
-                        togglesProvider = togglesProvider,
+                        model = sharedUIMapper.toAccountModel(sender),
+                        showPhoneNumber = false,
                         showWebsite = false,
                         type = ProfileCardType.Summary
                     ),
@@ -113,11 +112,21 @@ class SendApprovalScreen(
                             )
                         )
                     ),
-                    Button(
-                        type = ButtonType.Text,
-                        caption = getText("page.send-approval.button.cancel"),
-                        action = gotoHome()
-                    )
+                    Flexible(
+                        child = Column(
+                            mainAxisAlignment = MainAxisAlignment.end,
+                            children = listOf(
+                                Container(
+                                    alignment = Alignment.BottomCenter,
+                                    child = Button(
+                                        type = ButtonType.Text,
+                                        caption = getText("page.send-approval.button.cancel"),
+                                        action = gotoHome()
+                                    )
+                                )
+                            )
+                        )
+                    ),
                 )
             ),
         ).toWidget()

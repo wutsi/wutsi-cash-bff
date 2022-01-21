@@ -31,7 +31,7 @@
                       "attributes": {
                         "caption": "RS",
                         "bold": true,
-                        "size": 30.0
+                        "size": 40.0
                       },
                       "children": []
                     }
@@ -42,8 +42,7 @@
             {
               "type": "Container",
               "attributes": {
-                "alignment": "Center",
-                "padding": 10.0
+                "alignment": "Center"
               },
               "children": [
                 {
@@ -74,9 +73,7 @@
             },
             {
               "type": "Container",
-              "attributes": {
-                "padding": 10.0
-              },
+              "attributes": {},
               "children": [
                 {
                   "type": "Row",
@@ -86,7 +83,9 @@
                   "children": [
                     {
                       "type": "Container",
-                      "attributes": {},
+                      "attributes": {
+                        "padding": 10.0
+                      },
                       "children": [
                         {
                           "type": "Row",

@@ -32,7 +32,7 @@
                       "attributes": {
                         "caption": "RS",
                         "bold": true,
-                        "size": 30.0
+                        "size": 40.0
                       },
                       "children": []
                     }
@@ -43,8 +43,7 @@
             {
               "type": "Container",
               "attributes": {
-                "alignment": "Center",
-                "padding": 10.0
+                "alignment": "Center"
               },
               "children": [
                 {

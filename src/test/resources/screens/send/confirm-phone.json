@@ -32,7 +32,7 @@
                       "attributes": {
                         "caption": "RS",
                         "bold": true,
-                        "size": 30.0
+                        "size": 40.0
                       },
                       "children": []
                     }
@@ -43,8 +43,7 @@
             {
               "type": "Container",
               "attributes": {
-                "alignment": "Center",
-                "padding": 10.0
+                "alignment": "Center"
               },
               "children": [
                 {
@@ -74,13 +73,21 @@
               ]
             },
             {
-              "type": "Text",
+              "type": "Container",
               "attributes": {
-                "caption": "+237 999999999",
-                "color": "#95A5A6",
-                "alignment": "Center"
+                "padding": 10.0
               },
-              "children": []
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "+237 6 99 99 99 99",
+                    "color": "#95A5A6",
+                    "alignment": "Center"
+                  },
+                  "children": []
+                }
+              ]
             },
             {
               "type": "Container",

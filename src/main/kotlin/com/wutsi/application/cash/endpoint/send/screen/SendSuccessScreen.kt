@@ -3,9 +3,8 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
-import com.wutsi.application.shared.service.CategoryService
+import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.TogglesProvider
 import com.wutsi.application.shared.ui.ProfileCard
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
@@ -36,8 +35,7 @@ import java.text.DecimalFormat
 class SendSuccessScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
-    private val categoryService: CategoryService,
-    private val togglesProvider: TogglesProvider,
+    private val sharedUIMapper: SharedUIMapper,
 ) : AbstractQuery() {
     @PostMapping
     fun index(
@@ -65,10 +63,8 @@ class SendSuccessScreen(
             child = Column(
                 children = listOf(
                     ProfileCard(
-                        account = recipient,
-                        phoneNumber = null,
-                        categoryService = categoryService,
-                        togglesProvider = togglesProvider,
+                        model = sharedUIMapper.toAccountModel(recipient),
+                        showPhoneNumber = false,
                         showWebsite = false,
                     ),
                     Divider(color = Theme.COLOR_DIVIDER),
