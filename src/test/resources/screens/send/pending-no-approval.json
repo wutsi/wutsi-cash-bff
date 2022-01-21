@@ -73,7 +73,9 @@
             },
             {
               "type": "Container",
-              "attributes": {},
+              "attributes": {
+                "padding": 10.0
+              },
               "children": [
                 {
                   "type": "Row",
@@ -83,9 +85,7 @@
                   "children": [
                     {
                       "type": "Container",
-                      "attributes": {
-                        "padding": 10.0
-                      },
+                      "attributes": {},
                       "children": [
                         {
                           "type": "Row",
