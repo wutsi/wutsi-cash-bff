@@ -32,7 +32,7 @@
     <wutsi-contact.version>0.0.6</wutsi-contact.version>
     <wutsi-payment.version>0.0.35</wutsi-payment.version>
     <wutsi-qr.version>0.0.4</wutsi-qr.version>
-    <wutsi-shared-ui.version>0.0.35</wutsi-shared-ui.version>
+    <wutsi-shared-ui.version>0.0.39</wutsi-shared-ui.version>
   </properties>
 
   <dependencies>
