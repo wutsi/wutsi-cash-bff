@@ -115,7 +115,7 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Cashin"
+                                            "caption": "Add Cash"
                                           },
                                           "children": []
                                         },
@@ -256,7 +256,7 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Cashin"
+                                            "caption": "Add Cash"
                                           },
                                           "children": []
                                         },
@@ -814,7 +814,7 @@
                                         {
                                           "type": "Text",
                                           "attributes": {
-                                            "caption": "Cashout"
+                                            "caption": "Cash Out"
                                           },
                                           "children": []
                                         },

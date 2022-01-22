@@ -6,7 +6,7 @@ import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.service.URLBuilder
-import com.wutsi.application.shared.ui.Avatar
+import com.wutsi.application.shared.ui.ProfileListItem
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Column
@@ -17,7 +17,6 @@ import com.wutsi.flutter.sdui.Flexible
 import com.wutsi.flutter.sdui.Form
 import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.Input
-import com.wutsi.flutter.sdui.ListItem
 import com.wutsi.flutter.sdui.ListView
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Tab
@@ -217,14 +216,8 @@ class SendRecipientScreen(
         )
     }
 
-    fun toListItem(account: AccountSummary, amount: Double, tenant: Tenant) = ListItem(
-        caption = account.displayName ?: "",
-        iconRight = Theme.ICON_CHEVRON_RIGHT,
-        padding = 10.0,
-        leading = Avatar(
-            radius = 24.0,
-            model = sharedUIMapper.toAccountModel(account)
-        ),
+    fun toListItem(account: AccountSummary, amount: Double, tenant: Tenant) = ProfileListItem(
+        model = sharedUIMapper.toAccountModel(account),
         action = Action(
             type = Route,
             url = urlBuilder.build("send/confirm"),
