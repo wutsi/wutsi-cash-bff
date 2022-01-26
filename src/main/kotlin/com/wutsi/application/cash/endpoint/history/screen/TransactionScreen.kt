@@ -74,10 +74,13 @@ class TransactionScreen(
                         listItem("page.transaction.date", tx.created.format(dateFormat)),
                         listItem(
                             "page.transaction.type",
-                            if (tx.recipientId == securityContext.currentAccountId())
-                                getText("transaction.type.${tx.type}.receive")
+                            if (tx.type == "TRANSFER")
+                                if (tx.recipientId == securityContext.currentAccountId())
+                                    getText("transaction.type.${tx.type}.receive")
+                                else
+                                    getText("transaction.type.${tx.type}.send")
                             else
-                                getText("transaction.type.${tx.type}.send")
+                                getText("transaction.type.${tx.type}")
                         ),
                         listItem(
                             "page.transaction.status",
