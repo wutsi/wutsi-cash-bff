@@ -7,27 +7,36 @@
   "children": [
     {
       "type": "Column",
-      "attributes": {},
+      "attributes": {
+        "mainAxisAlignment": "center"
+      },
       "children": [
         {
-          "type": "Container",
+          "type": "Text",
           "attributes": {
-            "padding": 10.0
+            "caption": "Balance"
           },
-          "children": [
-            {
-              "type": "Text",
-              "attributes": {
-                "caption": "Your last 30 transactions."
-              },
-              "children": []
-            }
-          ]
+          "children": []
+        },
+        {
+          "type": "MoneyText",
+          "attributes": {
+            "value": 100000.0,
+            "currency": "XAF",
+            "numberFormat": "#,###,##0"
+          },
+          "children": []
+        },
+        {
+          "type": "Text",
+          "attributes": {
+            "caption": "Your last 30 transactions."
+          },
+          "children": []
         },
         {
           "type": "Divider",
           "attributes": {
-            "height": 1.0,
             "color": "#8c8c8c"
           },
           "children": []
@@ -66,7 +75,7 @@
   "appBar": {
     "type": "AppBar",
     "attributes": {
-      "title": "100,000 XAF",
+      "title": "My Transactions",
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
       "foregroundColor": "#000000"

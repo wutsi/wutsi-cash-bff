@@ -5,21 +5,22 @@ import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.ui.Avatar
+import com.wutsi.application.shared.service.URLBuilder
+import com.wutsi.application.shared.ui.TransactionListItem
+import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Divider
 import com.wutsi.flutter.sdui.Flexible
-import com.wutsi.flutter.sdui.Image
 import com.wutsi.flutter.sdui.ListView
-import com.wutsi.flutter.sdui.Row
+import com.wutsi.flutter.sdui.MoneyText
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.WidgetAware
+import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.Alignment
-import com.wutsi.flutter.sdui.enums.CrossAxisAlignment
 import com.wutsi.flutter.sdui.enums.MainAxisAlignment
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
@@ -28,14 +29,11 @@ import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountRequest
 import com.wutsi.platform.payment.dto.SearchTransactionRequest
 import com.wutsi.platform.payment.dto.TransactionSummary
-import com.wutsi.platform.tenant.dto.MobileCarrier
 import com.wutsi.platform.tenant.dto.Tenant
-import org.springframework.context.i18n.LocaleContextHolder
+import org.springframework.context.MessageSource
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.text.DecimalFormat
-import java.time.format.DateTimeFormatter
 
 @RestController
 @RequestMapping("/history")
@@ -43,13 +41,14 @@ class HistoryScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
     private val sharedUIMapper: SharedUIMapper,
+    private val urlBuilder: URLBuilder,
+    private val messageSource: MessageSource,
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {
         val limit = 30
         val tenant = tenantProvider.get()
         val balance = getBalance(tenant)
-        val balanceText = DecimalFormat(tenant.monetaryFormat).format(balance.value)
 
         return Screen(
             id = Page.HISTORY,
@@ -57,19 +56,23 @@ class HistoryScreen(
                 elevation = 0.0,
                 backgroundColor = Theme.COLOR_WHITE,
                 foregroundColor = Theme.COLOR_BLACK,
-                title = getText("page.history.app-bar.title", arrayOf(balanceText))
+                title = getText("page.history.app-bar.title")
             ),
             child = Column(
+                mainAxisAlignment = MainAxisAlignment.center,
                 children = listOf(
-                    Container(
-                        padding = 10.0,
-                        child = Text(getText("page.history.title", arrayOf(limit))),
+                    Text(getText("page.history.balance")),
+                    MoneyText(
+                        value = balance.value,
+                        currency = balance.currency,
+                        numberFormat = tenant.numberFormat
                     ),
-                    Divider(color = Theme.COLOR_DIVIDER, height = 1.0),
+                    Text(getText("page.history.title", arrayOf(limit))),
+                    Divider(color = Theme.COLOR_DIVIDER),
                     Flexible(
                         child = transactionsWidget(limit, tenant)
                     )
-                )
+                ),
             ),
         ).toWidget()
     }
@@ -93,7 +96,23 @@ class HistoryScreen(
         return Flexible(
             child = ListView(
                 separator = true,
-                children = txs.map { toListItem(it, accounts, paymentMethods, tenant) }
+                children = txs.map {
+                    TransactionListItem(
+                        action = Action(
+                            type = ActionType.Route,
+                            url = urlBuilder.build("transaction?id=${it.id}")
+                        ),
+                        model = sharedUIMapper.toTransactionModel(
+                            it,
+                            currentUserId = securityContext.currentAccountId(),
+                            accounts = accounts,
+                            paymentMethod = it.paymentMethodToken?.let { paymentMethods[it] },
+                            tenant = tenant,
+                            tenantProvider = tenantProvider,
+                            messageSource = messageSource
+                        )
+                    )
+                }
             )
         )
     }
@@ -123,192 +142,4 @@ class HistoryScreen(
             )
         ).accounts.map { it.id to it }.toMap()
     }
-
-    private fun toListItem(
-        tx: TransactionSummary,
-        accounts: Map<Long, AccountSummary>,
-        paymentMethods: Map<String, PaymentMethodSummary>,
-        tenant: Tenant
-    ): WidgetAware =
-        Container(
-            padding = 10.0,
-            child = Row(
-                crossAxisAlignment = CrossAxisAlignment.start,
-                mainAxisAlignment = MainAxisAlignment.start,
-                children = listOf(
-                    Flexible(
-                        flex = 2,
-                        child = Container(
-                            alignment = Alignment.TopLeft,
-                            child = icon(tx, accounts, tenant),
-                        ),
-                    ),
-                    Flexible(
-                        flex = 6,
-                        child = Container(
-                            alignment = Alignment.TopLeft,
-                            child = caption(tx, accounts, paymentMethods),
-                            padding = 5.0,
-                        ),
-                    ),
-                    Flexible(
-                        flex = 4,
-                        child = Container(
-                            alignment = Alignment.TopRight,
-                            child = amount(tx, tenant),
-                            padding = 5.0,
-                        ),
-                    ),
-                )
-            )
-        )
-
-    private fun icon(tx: TransactionSummary, accounts: Map<Long, AccountSummary>, tenant: Tenant): WidgetAware {
-        if (tx.type == "CASHIN" || tx.type == "CASHOUT") {
-            val carrier = getMobileCarrier(tx, tenant)
-            return Image(width = 48.0, height = 48.0, url = carrier?.let { tenantProvider.logo(it) } ?: "")
-        } else {
-            val account = getAccount(tx, accounts)
-            return if (account == null)
-                Container()
-            else
-                Avatar(
-                    radius = 24.0,
-                    model = sharedUIMapper.toAccountModel(account)
-                )
-        }
-    }
-
-    private fun caption(
-        tx: TransactionSummary,
-        accounts: Map<Long, AccountSummary>,
-        paymentMethods: Map<String, PaymentMethodSummary>
-    ): WidgetAware {
-        val children = mutableListOf<WidgetAware>(
-            Text(
-                caption = toCaption1(tx)
-            ),
-        )
-
-        val caption2 = toCaption2(tx, accounts, paymentMethods)
-        if (caption2 != null) {
-            children.add(
-                Text(caption = caption2, color = Theme.COLOR_GRAY)
-            )
-        }
-
-        if (tx.status != "SUCCESSFUL") {
-            children.add(
-                Text(
-                    caption = getText("transaction.status.${tx.status}"),
-                    bold = true,
-                    color = toColor(tx),
-                    size = Theme.TEXT_SIZE_SMALL
-                )
-            )
-        }
-        return Column(
-            mainAxisAlignment = MainAxisAlignment.spaceBetween,
-            crossAxisAlignment = CrossAxisAlignment.start,
-            children = children,
-        )
-    }
-
-    private fun amount(tx: TransactionSummary, tenant: Tenant): WidgetAware {
-        val moneyFormat = DecimalFormat(tenant.monetaryFormat)
-        val locale = LocaleContextHolder.getLocale()
-        val dateFormat = DateTimeFormatter.ofPattern(tenant.dateFormat, locale)
-        return Column(
-            mainAxisAlignment = MainAxisAlignment.spaceBetween,
-            crossAxisAlignment = CrossAxisAlignment.end,
-            children = listOf(
-                Text(
-                    caption = moneyFormat.format(toDisplayAmount(tx)),
-                    bold = true,
-                    color = toColor(tx),
-                    alignment = TextAlignment.Right
-                ),
-                Text(
-                    caption = tx.created.format(dateFormat),
-                    size = Theme.TEXT_SIZE_SMALL,
-                    alignment = TextAlignment.Right
-                )
-            ),
-        )
-    }
-
-    private fun toDisplayAmount(tx: TransactionSummary): Double {
-        val amount = if (tx.recipientId == securityContext.currentAccountId())
-            tx.net
-        else
-            tx.amount
-
-        return when (tx.type.uppercase()) {
-            "CASHOUT" -> -amount
-            "CASHIN" -> amount
-            else -> if (tx.recipientId == securityContext.currentAccountId())
-                amount
-            else
-                -amount
-        }
-    }
-
-    private fun toColor(tx: TransactionSummary): String =
-        when (tx.status.uppercase()) {
-            "FAILED" -> Theme.COLOR_DANGER
-            "PENDING" -> Theme.COLOR_WARNING
-            else -> when (tx.type.uppercase()) {
-                "CASHIN" -> Theme.COLOR_SUCCESS
-                "CASHOUT" -> Theme.COLOR_DANGER
-                else -> if (tx.recipientId == securityContext.currentAccountId())
-                    Theme.COLOR_SUCCESS
-                else
-                    Theme.COLOR_DANGER
-            }
-        }
-
-    private fun toCaption1(
-        tx: TransactionSummary
-    ): String {
-        if (tx.type == "CASHIN") {
-            return getText("page.history.cashin.caption")
-        } else if (tx.type == "CASHOUT") {
-            return getText("page.history.cashout.caption")
-        } else if (tx.type == "PAYMENT") {
-            return getText("page.history.payment.caption")
-        } else {
-            return if (tx.accountId == securityContext.currentAccountId())
-                getText("page.history.transfer.to.caption")
-            else
-                getText("page.history.transfer.from.caption")
-        }
-    }
-
-    private fun toCaption2(
-        tx: TransactionSummary,
-        accounts: Map<Long, AccountSummary>,
-        paymentMethods: Map<String, PaymentMethodSummary>
-    ): String? {
-        if (tx.type == "CASHIN" || tx.type == "CASHOUT") {
-            val paymentMethod = paymentMethods[tx.paymentMethodToken]
-            return getPhoneNumber(paymentMethod)
-        } else {
-            val account = getAccount(tx, accounts)
-            return account?.displayName
-        }
-    }
-
-    private fun getPhoneNumber(paymentMethod: PaymentMethodSummary?): String =
-        formattedPhoneNumber(paymentMethod?.phone?.number, paymentMethod?.phone?.country)
-            ?: paymentMethod?.maskedNumber
-            ?: ""
-
-    private fun getAccount(tx: TransactionSummary, accounts: Map<Long, AccountSummary>): AccountSummary? =
-        if (tx.accountId == securityContext.currentAccountId())
-            accounts[tx.recipientId]
-        else
-            accounts[tx.accountId]
-
-    private fun getMobileCarrier(tx: TransactionSummary, tenant: Tenant): MobileCarrier? =
-        tenant.mobileCarriers.find { it.code.equals(tx.paymentMethodProvider, true) }
 }
