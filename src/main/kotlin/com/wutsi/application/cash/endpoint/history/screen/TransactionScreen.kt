@@ -3,6 +3,7 @@ package com.wutsi.application.cash.endpoint.history.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
+import com.wutsi.application.shared.service.DateTimeUtil
 import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.StringUtil
 import com.wutsi.application.shared.service.TenantProvider
@@ -50,14 +51,17 @@ class TransactionScreen(
 ) : AbstractQuery() {
     @PostMapping
     fun index(@RequestParam id: String): Widget {
+        val account = securityContext.currentAccount()
+
         val tenant = tenantProvider.get()
         val moneyFormat = DecimalFormat(tenant.monetaryFormat)
-        val locale = LocaleContextHolder.getLocale()
-        val dateFormat = DateTimeFormatter.ofPattern(tenant.dateTimeFormat, locale)
+        val dateFormat = DateTimeFormatter.ofPattern(tenant.dateTimeFormat, LocaleContextHolder.getLocale())
+
         val tx = paymentApi.getTransaction(id).transaction
         val accounts = findAccounts(tx)
         val paymentMethods = findPaymentMethods()
         val color = toColor(tx)
+
         return Screen(
             id = Page.TRANSACTION,
             appBar = AppBar(
@@ -71,7 +75,10 @@ class TransactionScreen(
                     separator = true,
                     separatorColor = Theme.COLOR_DIVIDER,
                     children = listOf(
-                        listItem("page.transaction.date", tx.created.format(dateFormat)),
+                        listItem(
+                            "page.transaction.date",
+                            DateTimeUtil.convert(tx.created, account.timezoneId).format(dateFormat)
+                        ),
                         listItem(
                             "page.transaction.type",
                             if (tx.type == "TRANSFER")

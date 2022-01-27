@@ -93,6 +93,7 @@ class HistoryScreen(
 
         val accounts = findAccounts(txs)
         val paymentMethods = findPaymentMethods()
+        val currentUser = securityContext.currentAccount()
         return Flexible(
             child = ListView(
                 separator = true,
@@ -104,7 +105,7 @@ class HistoryScreen(
                         ),
                         model = sharedUIMapper.toTransactionModel(
                             it,
-                            currentUserId = securityContext.currentAccountId(),
+                            currentUser = currentUser,
                             accounts = accounts,
                             paymentMethod = it.paymentMethodToken?.let { paymentMethods[it] },
                             tenant = tenant,
