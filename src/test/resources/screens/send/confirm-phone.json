@@ -24,7 +24,7 @@
                 {
                   "type": "CircleAvatar",
                   "attributes": {
-                    "radius": 48.0
+                    "radius": 32.0
                   },
                   "children": [
                     {
@@ -32,7 +32,7 @@
                       "attributes": {
                         "caption": "RS",
                         "bold": true,
-                        "size": 40.0
+                        "size": 24.0
                       },
                       "children": []
                     }
@@ -58,7 +58,7 @@
                         "caption": "Ray Sponsible",
                         "color": "#1D7EDF",
                         "bold": true,
-                        "size": 18.0,
+                        "size": 16.0,
                         "alignment": "Center"
                       },
                       "children": []
@@ -97,7 +97,8 @@
                   "type": "Wrap",
                   "attributes": {
                     "spacing": 10.0,
-                    "runSpacing": 10.0
+                    "runSpacing": 10.0,
+                    "direction": "Horizontal"
                   },
                   "children": [
                     {

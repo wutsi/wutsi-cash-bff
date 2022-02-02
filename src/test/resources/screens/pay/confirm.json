@@ -23,7 +23,7 @@
                 {
                   "type": "CircleAvatar",
                   "attributes": {
-                    "radius": 48.0
+                    "radius": 32.0
                   },
                   "children": [
                     {
@@ -55,7 +55,7 @@
                         "caption": "Maison H",
                         "color": "#1D7EDF",
                         "bold": true,
-                        "size": 18.0,
+                        "size": 16.0,
                         "alignment": "Center"
                       },
                       "children": []
