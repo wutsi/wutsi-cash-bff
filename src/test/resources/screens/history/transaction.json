@@ -386,14 +386,19 @@
                           "children": []
                         },
                         {
-                          "type": "Button",
-                          "attributes": {
-                            "caption": "Name 1",
-                            "padding": 15.0,
-                            "type": "Text",
-                            "stretched": false
-                          },
-                          "children": [],
+                          "type": "Container",
+                          "attributes": {},
+                          "children": [
+                            {
+                              "type": "Text",
+                              "attributes": {
+                                "caption": "Name 1",
+                                "color": "#1D7EDF",
+                                "decoration": "Underline"
+                              },
+                              "children": []
+                            }
+                          ],
                           "action": {
                             "type": "Route",
                             "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=1"
@@ -476,14 +481,19 @@
                           "children": []
                         },
                         {
-                          "type": "Button",
-                          "attributes": {
-                            "caption": "Name 100",
-                            "padding": 15.0,
-                            "type": "Text",
-                            "stretched": false
-                          },
-                          "children": [],
+                          "type": "Container",
+                          "attributes": {},
+                          "children": [
+                            {
+                              "type": "Text",
+                              "attributes": {
+                                "caption": "Name 100",
+                                "color": "#1D7EDF",
+                                "decoration": "Underline"
+                              },
+                              "children": []
+                            }
+                          ],
                           "action": {
                             "type": "Route",
                             "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=100"

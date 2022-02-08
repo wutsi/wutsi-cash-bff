@@ -11,7 +11,6 @@ import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.application.shared.ui.Avatar
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
-import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Flexible
 import com.wutsi.flutter.sdui.Image
@@ -22,8 +21,8 @@ import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.WidgetAware
 import com.wutsi.flutter.sdui.enums.ActionType
-import com.wutsi.flutter.sdui.enums.ButtonType
 import com.wutsi.flutter.sdui.enums.TextAlignment
+import com.wutsi.flutter.sdui.enums.TextDecoration
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.PaymentMethodSummary
@@ -208,10 +207,12 @@ class TransactionScreen(
                 Container(
                     padding = 5.0
                 ),
-                Button(
-                    type = ButtonType.Text,
-                    caption = StringUtil.capitalizeFirstLetter(account.displayName),
-                    stretched = false,
+                Container(
+                    child = Text(
+                        caption = StringUtil.capitalizeFirstLetter(account.displayName),
+                        color = Theme.COLOR_PRIMARY,
+                        decoration = TextDecoration.Underline,
+                    ),
                     action = Action(
                         type = ActionType.Route,
                         url = urlBuilder.build(shellUrl, "profile?id=${account.id}")
