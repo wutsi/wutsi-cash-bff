@@ -5,6 +5,7 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.application.cash.endpoint.send.dto.SendAmountRequest
+import com.wutsi.application.shared.service.TogglesProvider
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.ActionType.Route
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.context.MessageSource
 import java.util.Locale
@@ -29,6 +31,9 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
     val port: Int = 0
 
     private lateinit var url: String
+
+    @MockBean
+    private lateinit var togglesProvider: TogglesProvider
 
     @Autowired
     private lateinit var messages: MessageSource
@@ -124,6 +129,7 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
     @Test
     fun noAccountLinked() {
         // GIVEN
+        doReturn(true).whenever(togglesProvider).isAccountEnabled()
         doReturn(ListPaymentMethodResponse()).whenever(accountApi).listPaymentMethods(any())
 
         // WHEN

@@ -2,6 +2,7 @@ package com.wutsi.application.cash.endpoint.send.command
 
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.send.dto.SendAmountRequest
+import com.wutsi.application.shared.service.TogglesProvider
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Button
@@ -26,6 +27,7 @@ import javax.validation.Valid
 class SendAmountCommand(
     private val urlBuilder: URLBuilder,
     private val accountApi: WutsiAccountApi,
+    private val togglesProvider: TogglesProvider,
 
     @Value("\${wutsi.application.shell-url}") private val shellUrl: String
 ) : AbstractCommand() {
@@ -60,56 +62,58 @@ class SendAmountCommand(
 
         val balance = getBalance()
         if (request.amount > balance.value) {
-            val paymentMethods = accountApi.listPaymentMethods(securityContext.currentAccountId()).paymentMethods
-            if (paymentMethods.isEmpty()) {
-                return Action(
-                    type = Prompt,
-                    prompt = Dialog(
-                        type = DialogType.Error,
-                        message = getText("prompt.error.transaction-failed.NO_ACCOUNT_LINKED"),
-                        title = getText("prompt.error.title"),
-                        actions = listOf(
-                            Button(
-                                caption = getText("page.send.button.link-account"),
-                                action = Action(
-                                    type = Route,
-                                    url = urlBuilder.build(shellUrl, "settings/accounts/link/mobile")
+            if (togglesProvider.isAccountEnabled()) {
+                val paymentMethods = accountApi.listPaymentMethods(securityContext.currentAccountId()).paymentMethods
+                if (paymentMethods.isEmpty()) {
+                    return Action(
+                        type = Prompt,
+                        prompt = Dialog(
+                            type = DialogType.Error,
+                            message = getText("prompt.error.transaction-failed.NO_ACCOUNT_LINKED"),
+                            title = getText("prompt.error.title"),
+                            actions = listOf(
+                                Button(
+                                    caption = getText("page.send.button.link-account"),
+                                    action = Action(
+                                        type = Route,
+                                        url = urlBuilder.build(shellUrl, "settings/accounts/link/mobile")
+                                    ),
+                                    stretched = false
                                 ),
-                                stretched = false
-                            ),
-                            Button(
-                                caption = getText("page.send.button.ok"),
-                                type = ButtonType.Text,
-                                stretched = false
+                                Button(
+                                    caption = getText("page.send.button.ok"),
+                                    type = ButtonType.Text,
+                                    stretched = false
+                                )
                             )
-                        )
-                    ).toWidget()
-                )
-            } else {
-                return Action(
-                    type = Prompt,
-                    prompt = Dialog(
-                        type = DialogType.Error,
-                        message = getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS"),
-                        title = getText("prompt.error.title"),
-                        actions = listOf(
-                            Button(
-                                caption = getText("page.send.button.cashin"),
-                                action = Action(
-                                    type = Route,
-                                    url = urlBuilder.build("cashin")
-                                ),
-                                stretched = false
-                            ),
-                            Button(
-                                caption = getText("page.send.button.ok"),
-                                type = ButtonType.Text,
-                                stretched = false
-                            )
-                        )
-                    ).toWidget()
-                )
+                        ).toWidget()
+                    )
+                }
             }
+
+            return Action(
+                type = Prompt,
+                prompt = Dialog(
+                    type = DialogType.Error,
+                    message = getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS"),
+                    title = getText("prompt.error.title"),
+                    actions = listOf(
+                        Button(
+                            caption = getText("page.send.button.cashin"),
+                            action = Action(
+                                type = Route,
+                                url = urlBuilder.build("cashin")
+                            ),
+                            stretched = false
+                        ),
+                        Button(
+                            caption = getText("page.send.button.ok"),
+                            type = ButtonType.Text,
+                            stretched = false
+                        )
+                    )
+                ).toWidget()
+            )
         }
 
         return null
