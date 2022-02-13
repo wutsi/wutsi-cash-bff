@@ -60,10 +60,12 @@ class PaySuccessScreen(
             ),
             child = Column(
                 children = listOf(
-                    ProfileCard(
-                        model = sharedUIMapper.toAccountModel(merchant),
-                        showWebsite = false,
-                        showPhoneNumber = false
+                    com.wutsi.flutter.sdui.Center(
+                        child = ProfileCard(
+                            model = sharedUIMapper.toAccountModel(merchant),
+                            showWebsite = false,
+                            showPhoneNumber = false
+                        )
                     ),
                     Divider(color = Theme.COLOR_DIVIDER),
                     Container(

@@ -10,6 +10,7 @@ import com.wutsi.application.shared.ui.ProfileCard
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Button
+import com.wutsi.flutter.sdui.Center
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Divider
@@ -62,10 +63,12 @@ class PayConfirmScreen(
             ),
             child = Column(
                 children = listOf(
-                    ProfileCard(
-                        model = sharedUIMapper.toAccountModel(merchant),
-                        showWebsite = false,
-                        showPhoneNumber = false
+                    Center(
+                        child = ProfileCard(
+                            model = sharedUIMapper.toAccountModel(merchant),
+                            showWebsite = false,
+                            showPhoneNumber = false
+                        )
                     ),
                     Divider(color = Theme.COLOR_DIVIDER),
                     Container(

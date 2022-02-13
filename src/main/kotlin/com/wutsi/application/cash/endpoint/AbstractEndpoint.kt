@@ -25,7 +25,7 @@ import java.net.URLEncoder
 
 abstract class AbstractEndpoint {
     @Autowired
-    private lateinit var messages: MessageSource
+    protected lateinit var messages: MessageSource
 
     @Autowired
     protected lateinit var logger: KVLogger

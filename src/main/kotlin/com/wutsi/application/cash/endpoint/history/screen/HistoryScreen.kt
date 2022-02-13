@@ -30,7 +30,6 @@ import com.wutsi.platform.account.dto.SearchAccountRequest
 import com.wutsi.platform.payment.dto.SearchTransactionRequest
 import com.wutsi.platform.payment.dto.TransactionSummary
 import com.wutsi.platform.tenant.dto.Tenant
-import org.springframework.context.MessageSource
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -42,7 +41,6 @@ class HistoryScreen(
     private val accountApi: WutsiAccountApi,
     private val sharedUIMapper: SharedUIMapper,
     private val urlBuilder: URLBuilder,
-    private val messageSource: MessageSource,
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {
@@ -110,7 +108,6 @@ class HistoryScreen(
                             paymentMethod = it.paymentMethodToken?.let { paymentMethods[it] },
                             tenant = tenant,
                             tenantProvider = tenantProvider,
-                            messageSource = messageSource
                         )
                     )
                 }

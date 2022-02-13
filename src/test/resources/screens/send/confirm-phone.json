@@ -11,45 +11,46 @@
       "attributes": {},
       "children": [
         {
-          "type": "Column",
+          "type": "Center",
           "attributes": {},
           "children": [
             {
-              "type": "Container",
+              "type": "Column",
               "attributes": {
-                "alignment": "Center",
-                "padding": 10.0
+                "mainAxisAlignment": "center",
+                "crossAxisAlignment": "center"
               },
               "children": [
                 {
-                  "type": "CircleAvatar",
+                  "type": "Container",
                   "attributes": {
-                    "radius": 32.0
+                    "alignment": "Center",
+                    "padding": 10.0
                   },
                   "children": [
                     {
-                      "type": "Text",
+                      "type": "CircleAvatar",
                       "attributes": {
-                        "caption": "RS",
-                        "bold": true,
-                        "size": 24.0
+                        "radius": 32.0
                       },
-                      "children": []
+                      "children": [
+                        {
+                          "type": "Text",
+                          "attributes": {
+                            "caption": "RS",
+                            "bold": true,
+                            "size": 24.0
+                          },
+                          "children": []
+                        }
+                      ]
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "type": "Container",
-              "attributes": {
-                "alignment": "Center"
-              },
-              "children": [
+                },
                 {
-                  "type": "Row",
+                  "type": "Container",
                   "attributes": {
-                    "mainAxisAlignment": "center"
+                    "alignment": "Center"
                   },
                   "children": [
                     {
@@ -62,77 +63,73 @@
                         "alignment": "Center"
                       },
                       "children": []
-                    },
-                    {
-                      "type": "Container",
-                      "attributes": {},
-                      "children": []
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "type": "Container",
-              "attributes": {
-                "padding": 10.0
-              },
-              "children": [
+                },
                 {
-                  "type": "Text",
+                  "type": "Container",
                   "attributes": {
-                    "caption": "+237 6 99 99 99 99",
-                    "color": "#95A5A6",
-                    "alignment": "Center"
-                  },
-                  "children": []
-                }
-              ]
-            },
-            {
-              "type": "Container",
-              "attributes": {},
-              "children": [
-                {
-                  "type": "Wrap",
-                  "attributes": {
-                    "spacing": 10.0,
-                    "runSpacing": 10.0,
-                    "direction": "Horizontal"
+                    "alignment": "Center",
+                    "padding": 10.0
                   },
                   "children": [
                     {
-                      "type": "Container",
-                      "attributes": {},
+                      "type": "Text",
+                      "attributes": {
+                        "caption": "+237 6 99 99 99 99",
+                        "color": "#95A5A6",
+                        "alignment": "Center"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "type": "Wrap",
+                      "attributes": {
+                        "spacing": 10.0,
+                        "runSpacing": 10.0,
+                        "direction": "Horizontal"
+                      },
                       "children": [
                         {
-                          "type": "Row",
-                          "attributes": {
-                            "mainAxisSize": "min"
-                          },
+                          "type": "Container",
+                          "attributes": {},
                           "children": [
                             {
-                              "type": "Icon",
+                              "type": "Row",
                               "attributes": {
-                                "code": "e4c9",
-                                "size": 16.0
+                                "mainAxisSize": "min"
                               },
-                              "children": []
-                            },
-                            {
-                              "type": "Container",
-                              "attributes": {
-                                "padding": 2.0
-                              },
-                              "children": []
-                            },
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "Cameroon",
-                                "color": "#95A5A6"
-                              },
-                              "children": []
+                              "children": [
+                                {
+                                  "type": "Icon",
+                                  "attributes": {
+                                    "code": "e4c9",
+                                    "size": 16.0
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "padding": 2.0
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "type": "Text",
+                                  "attributes": {
+                                    "caption": "Cameroon",
+                                    "color": "#95A5A6"
+                                  },
+                                  "children": []
+                                }
+                              ]
                             }
                           ]
                         }

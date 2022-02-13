@@ -82,15 +82,15 @@ class TransactionScreen(
                             "page.transaction.type",
                             if (tx.type == "TRANSFER")
                                 if (tx.recipientId == securityContext.currentAccountId())
-                                    getText("transaction.type.${tx.type}.receive")
+                                    getText("shared-ui.transaction.type.${tx.type}.receive")
                                 else
-                                    getText("transaction.type.${tx.type}.send")
+                                    getText("shared-ui.transaction.type.${tx.type}.send")
                             else
-                                getText("transaction.type.${tx.type}")
+                                getText("shared-ui.transaction.type.${tx.type}")
                         ),
                         listItem(
                             "page.transaction.status",
-                            getText("transaction.status.${tx.status}"),
+                            getText("shared-ui.transaction.status.${tx.status}"),
                             bold = true, color = color
                         ),
                         listItem("page.transaction.amount", moneyFormat.format(amount(tx)), color = color),

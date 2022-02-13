@@ -10,60 +10,62 @@
       "attributes": {},
       "children": [
         {
-          "type": "Column",
+          "type": "Center",
           "attributes": {},
           "children": [
             {
-              "type": "Container",
-              "attributes": {
-                "alignment": "Center",
-                "padding": 10.0
-              },
+              "type": "Center",
+              "attributes": {},
               "children": [
                 {
-                  "type": "CircleAvatar",
+                  "type": "Column",
                   "attributes": {
-                    "radius": 32.0
+                    "mainAxisAlignment": "center",
+                    "crossAxisAlignment": "center"
                   },
                   "children": [
                     {
-                      "type": "Image",
+                      "type": "Container",
                       "attributes": {
-                        "url": "https://pic.com/1.png"
+                        "alignment": "Center",
+                        "padding": 10.0
                       },
-                      "children": []
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "Container",
-              "attributes": {
-                "alignment": "Center"
-              },
-              "children": [
-                {
-                  "type": "Row",
-                  "attributes": {
-                    "mainAxisAlignment": "center"
-                  },
-                  "children": [
-                    {
-                      "type": "Text",
-                      "attributes": {
-                        "caption": "Maison H",
-                        "color": "#1D7EDF",
-                        "bold": true,
-                        "size": 16.0,
-                        "alignment": "Center"
-                      },
-                      "children": []
+                      "children": [
+                        {
+                          "type": "CircleAvatar",
+                          "attributes": {
+                            "radius": 32.0
+                          },
+                          "children": [
+                            {
+                              "type": "Image",
+                              "attributes": {
+                                "url": "https://pic.com/1.png"
+                              },
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "Container",
-                      "attributes": {},
-                      "children": []
+                      "attributes": {
+                        "alignment": "Center"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "attributes": {
+                            "caption": "Maison H",
+                            "color": "#1D7EDF",
+                            "bold": true,
+                            "size": 16.0,
+                            "alignment": "Center"
+                          },
+                          "children": []
+                        }
+                      ]
                     }
                   ]
                 }

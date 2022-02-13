@@ -11,45 +11,46 @@
       "attributes": {},
       "children": [
         {
-          "type": "Column",
+          "type": "Center",
           "attributes": {},
           "children": [
             {
-              "type": "Container",
+              "type": "Column",
               "attributes": {
-                "alignment": "Center",
-                "padding": 10.0
+                "mainAxisAlignment": "center",
+                "crossAxisAlignment": "center"
               },
               "children": [
                 {
-                  "type": "CircleAvatar",
+                  "type": "Container",
                   "attributes": {
-                    "radius": 32.0
+                    "alignment": "Center",
+                    "padding": 10.0
                   },
                   "children": [
                     {
-                      "type": "Text",
+                      "type": "CircleAvatar",
                       "attributes": {
-                        "caption": "RS",
-                        "bold": true,
-                        "size": 24.0
+                        "radius": 32.0
                       },
-                      "children": []
+                      "children": [
+                        {
+                          "type": "Text",
+                          "attributes": {
+                            "caption": "RS",
+                            "bold": true,
+                            "size": 24.0
+                          },
+                          "children": []
+                        }
+                      ]
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "type": "Container",
-              "attributes": {
-                "alignment": "Center"
-              },
-              "children": [
+                },
                 {
-                  "type": "Row",
+                  "type": "Container",
                   "attributes": {
-                    "mainAxisAlignment": "center"
+                    "alignment": "Center"
                   },
                   "children": [
                     {
@@ -61,11 +62,6 @@
                         "size": 16.0,
                         "alignment": "Center"
                       },
-                      "children": []
-                    },
-                    {
-                      "type": "Container",
-                      "attributes": {},
                       "children": []
                     }
                   ]
