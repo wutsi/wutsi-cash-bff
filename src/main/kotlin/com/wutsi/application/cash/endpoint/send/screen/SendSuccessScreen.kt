@@ -85,7 +85,7 @@ class SendSuccessScreen(
                     Container(
                         alignment = Center,
                         child = Icon(
-                            code = error?.let { Theme.ICON_ERROR } ?: Theme.ICON_CHECK,
+                            code = error?.let { Theme.ICON_ERROR } ?: Theme.ICON_CHECK_CIRCLE,
                             size = 48.0,
                             color = error?.let { Theme.COLOR_DANGER } ?: Theme.COLOR_SUCCESS
                         )

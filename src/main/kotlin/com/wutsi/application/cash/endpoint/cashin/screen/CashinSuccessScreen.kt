@@ -46,7 +46,7 @@ class CashinSuccessScreen(private val tenantProvider: TenantProvider) : Abstract
                         alignment = Center,
                         padding = 20.0,
                         child = Icon(
-                            code = Theme.ICON_CHECK,
+                            code = Theme.ICON_CHECK_CIRCLE,
                             size = 80.0,
                             color = Theme.COLOR_SUCCESS
                         )
