@@ -4,7 +4,6 @@ import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Center
@@ -21,7 +20,6 @@ import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.CrossAxisAlignment
 import com.wutsi.platform.qr.WutsiQrApi
 import com.wutsi.platform.qr.dto.EncodeQRCodeRequest
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -30,11 +28,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/pay/qr-code")
 class PayQrCodeScreen(
-    private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
     private val qrApi: WutsiQrApi,
-
-    @Value("\${wutsi.application.shell-url}") private val shellUrl: String
 ) : AbstractQuery() {
     @PostMapping
     fun index(

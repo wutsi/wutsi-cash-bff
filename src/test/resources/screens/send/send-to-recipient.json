@@ -16,9 +16,7 @@
           "children": [
             {
               "type": "Container",
-              "attributes": {
-                "padding": 10.0
-              },
+              "attributes": {},
               "children": [
                 {
                   "type": "MoneyWithKeyboard",
@@ -29,6 +27,7 @@
                     "maxLength": 7,
                     "value": 0,
                     "currency": "CFA",
+                    "keyboardButtonSize": 70.0,
                     "numberFormat": "#,###,##0"
                   },
                   "children": []
@@ -75,21 +74,66 @@
       "title": "50,000 XAF",
       "elevation": 0.0,
       "backgroundColor": "#1D7EDF",
-      "foregroundColor": "#FFFFFF",
-      "actions": [
-        {
-          "type": "IconButton",
-          "attributes": {
-            "icon": "ef28"
-          },
-          "children": [],
-          "action": {
-            "type": "Route",
-            "url": "route:/~"
-          }
-        }
-      ]
+      "foregroundColor": "#FFFFFF"
     },
     "children": []
+  },
+  "bottomNavigationBar": {
+    "type": "BottomNavigationBar",
+    "attributes": {
+      "background": "#1D7EDF",
+      "selectedItemColor": "#FFFFFF",
+      "unselectedItemColor": "#FFFFFF"
+    },
+    "children": [
+      {
+        "type": "BottomNavigationBarItem",
+        "attributes": {
+          "icon": "e319",
+          "caption": "Home"
+        },
+        "children": [],
+        "action": {
+          "type": "Route",
+          "url": "route:/~"
+        }
+      },
+      {
+        "type": "BottomNavigationBarItem",
+        "attributes": {
+          "icon": "e491",
+          "caption": "Me"
+        },
+        "children": [],
+        "action": {
+          "type": "Route",
+          "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=1"
+        }
+      },
+      {
+        "type": "BottomNavigationBarItem",
+        "attributes": {
+          "icon": "e314",
+          "caption": "Transactions"
+        },
+        "children": [],
+        "action": {
+          "type": "Route",
+          "url": "http://localhost:0/history"
+        }
+      },
+      {
+        "type": "BottomNavigationBarItem",
+        "attributes": {
+          "icon": "e57f",
+          "caption": "Settings"
+        },
+        "children": [],
+        "action": {
+          "type": "Route",
+          "url": "http://localhost:0/settings"
+        }
+      }
+    ]
   }
 }

@@ -2,7 +2,6 @@ package com.wutsi.application.cash.endpoint.send.command
 
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.send.dto.SendRecipientRequest
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.SearchAccountRequest
@@ -16,7 +15,6 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/commands/send/recipient")
 class SendRecipientCommand(
-    private val urlBuilder: URLBuilder,
     private val accountApi: WutsiAccountApi,
 ) : AbstractCommand() {
     @PostMapping

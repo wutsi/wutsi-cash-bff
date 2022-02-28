@@ -3,7 +3,6 @@ package com.wutsi.application.cash.endpoint.cashout.command
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.cashout.dto.CashoutRequest
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,7 +16,6 @@ import javax.validation.Valid
 @RequestMapping("/commands/cashout/amount")
 class CashoutAmountCommand(
     private val tenantProvider: TenantProvider,
-    private val urlBuilder: URLBuilder
 ) : AbstractCommand() {
     @PostMapping
     fun index(@RequestBody @Valid request: CashoutRequest): Action {

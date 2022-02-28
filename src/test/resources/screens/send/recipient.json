@@ -88,6 +88,13 @@
                                 "caption": "Omam Mbiyick",
                                 "iconRight": "e15f",
                                 "padding": 10.0,
+                                "trailing": {
+                                  "type": "Icon",
+                                  "attributes": {
+                                    "code": "e15f"
+                                  },
+                                  "children": []
+                                },
                                 "leading": {
                                   "type": "CircleAvatar",
                                   "attributes": {
@@ -122,6 +129,13 @@
                                 "caption": "Roger Milla",
                                 "iconRight": "e15f",
                                 "padding": 10.0,
+                                "trailing": {
+                                  "type": "Icon",
+                                  "attributes": {
+                                    "code": "e15f"
+                                  },
+                                  "children": []
+                                },
                                 "leading": {
                                   "type": "CircleAvatar",
                                   "attributes": {
@@ -300,7 +314,7 @@
               {
                 "type": "Tab",
                 "attributes": {
-                  "icon": "eb93",
+                  "icon": "e2eb",
                   "caption": "Contacts"
                 },
                 "children": []

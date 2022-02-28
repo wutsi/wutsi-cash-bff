@@ -4,21 +4,17 @@ import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Form
-import com.wutsi.flutter.sdui.IconButton
 import com.wutsi.flutter.sdui.Input
 import com.wutsi.flutter.sdui.MoneyWithKeyboard
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType.Command
-import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.InputType.Submit
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -26,10 +22,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/pay")
 class PayScreen(
-    private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
-
-    @Value("\${wutsi.application.shell-url}") private val shellUrl: String
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {
@@ -42,22 +35,12 @@ class PayScreen(
                 backgroundColor = Theme.COLOR_PRIMARY,
                 foregroundColor = Theme.COLOR_WHITE,
                 title = getText("page.pay.app-bar.title"),
-                actions = listOf(
-                    IconButton(
-                        icon = Theme.ICON_SETTINGS,
-                        action = Action(
-                            type = Route,
-                            url = urlBuilder.build(shellUrl, "settings")
-                        )
-                    )
-                )
             ),
             child = Column(
                 children = listOf(
                     Form(
                         children = listOf(
                             Container(
-                                padding = 10.0,
                                 child = MoneyWithKeyboard(
                                     name = "amount",
                                     maxLength = 7,
@@ -65,7 +48,8 @@ class PayScreen(
                                     moneyColor = Theme.COLOR_WHITE,
                                     keyboardColor = Theme.COLOR_WHITE,
                                     numberFormat = tenant.numberFormat,
-                                    value = 0
+                                    value = 0,
+                                    keyboardButtonSize = 70.0
                                 ),
                             ),
                             Container(
@@ -84,6 +68,7 @@ class PayScreen(
                     )
                 )
             ),
+            bottomNavigationBar = bottomNavigationBar()
         ).toWidget()
     }
 }

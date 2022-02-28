@@ -5,7 +5,6 @@ import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.application.shared.ui.TransactionListItem
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
@@ -40,7 +39,6 @@ class HistoryScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
     private val sharedUIMapper: SharedUIMapper,
-    private val urlBuilder: URLBuilder,
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {
@@ -72,6 +70,7 @@ class HistoryScreen(
                     )
                 ),
             ),
+            bottomNavigationBar = bottomNavigationBar()
         ).toWidget()
     }
 

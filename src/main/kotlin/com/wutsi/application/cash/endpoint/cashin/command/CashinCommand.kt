@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashinRequest
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/commands/cashin")
 class CashinCommand(
     private val tenantProvider: TenantProvider,
-    private val urlBuilder: URLBuilder,
     private val objectMapper: ObjectMapper,
 ) : AbstractCommand() {
     @PostMapping

@@ -7,7 +7,6 @@ import com.wutsi.application.shared.service.DateTimeUtil
 import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.StringUtil
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.application.shared.ui.Avatar
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
@@ -29,7 +28,6 @@ import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountRequest
 import com.wutsi.platform.payment.dto.Transaction
 import com.wutsi.platform.tenant.dto.Tenant
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -44,9 +42,6 @@ class TransactionScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
     private val sharedUIMapper: SharedUIMapper,
-    private val urlBuilder: URLBuilder,
-
-    @Value("\${wutsi.application.shell-url}") private val shellUrl: String
 ) : AbstractQuery() {
     @PostMapping
     fun index(@RequestParam id: String): Widget {
@@ -100,6 +95,7 @@ class TransactionScreen(
                     ),
                 )
             ),
+            bottomNavigationBar = bottomNavigationBar()
         ).toWidget()
     }
 

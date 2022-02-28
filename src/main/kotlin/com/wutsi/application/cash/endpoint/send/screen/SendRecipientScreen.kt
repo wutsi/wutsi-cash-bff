@@ -5,7 +5,6 @@ import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.application.shared.ui.ProfileListItem
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
@@ -47,7 +46,6 @@ import java.text.DecimalFormat
 @RestController
 @RequestMapping("/send/recipient")
 class SendRecipientScreen(
-    private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
     private val contactApi: WutsiContactApi,
     private val accountApi: WutsiAccountApi,
@@ -87,7 +85,7 @@ class SendRecipientScreen(
                             )
                         else
                             listOf(
-                                Tab(icon = Theme.ICON_CONTACT, caption = getText("page.send-recipient.tab.contact")),
+                                Tab(icon = Theme.ICON_GROUP, caption = getText("page.send-recipient.tab.contact")),
                                 Tab(icon = Theme.ICON_PHONE, caption = getText("page.send-recipient.tab.phone"))
                             )
                     )

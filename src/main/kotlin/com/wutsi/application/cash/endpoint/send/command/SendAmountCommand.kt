@@ -3,7 +3,6 @@ package com.wutsi.application.cash.endpoint.send.command
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.send.dto.SendAmountRequest
 import com.wutsi.application.shared.service.TogglesProvider
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.Dialog
@@ -14,7 +13,6 @@ import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.payment.core.Money
 import feign.FeignException
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -25,11 +23,8 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/commands/send/amount")
 class SendAmountCommand(
-    private val urlBuilder: URLBuilder,
     private val accountApi: WutsiAccountApi,
     private val togglesProvider: TogglesProvider,
-
-    @Value("\${wutsi.application.shell-url}") private val shellUrl: String
 ) : AbstractCommand() {
     @PostMapping
     fun index(

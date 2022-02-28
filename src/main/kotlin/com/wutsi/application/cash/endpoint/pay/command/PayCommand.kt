@@ -3,7 +3,6 @@ package com.wutsi.application.cash.endpoint.pay.command
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.exception.TransactionException
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.platform.payment.dto.CreatePaymentRequest
 import feign.FeignException
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/commands/pay")
 class PayCommand(
-    private val urlBuilder: URLBuilder,
     private val mapper: ObjectMapper
 ) : AbstractCommand() {
     @PostMapping

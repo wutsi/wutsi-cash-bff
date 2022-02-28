@@ -3,8 +3,12 @@ package com.wutsi.application.cash.endpoint
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.wutsi.application.cash.exception.PasswordInvalidException
 import com.wutsi.application.cash.exception.TransactionException
+import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.SecurityContext
+import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
+import com.wutsi.flutter.sdui.BottomNavigationBar
+import com.wutsi.flutter.sdui.BottomNavigationBarItem
 import com.wutsi.flutter.sdui.Dialog
 import com.wutsi.flutter.sdui.enums.ActionType.Page
 import com.wutsi.flutter.sdui.enums.ActionType.Prompt
@@ -18,6 +22,7 @@ import com.wutsi.platform.payment.core.Money
 import com.wutsi.platform.tenant.dto.MobileCarrier
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -38,6 +43,12 @@ abstract class AbstractEndpoint {
 
     @Autowired
     protected lateinit var securityContext: SecurityContext
+
+    @Autowired
+    protected lateinit var urlBuilder: URLBuilder
+
+    @Value("\${wutsi.application.shell-url}")
+    protected lateinit var shellUrl: String
 
     @ExceptionHandler(TransactionException::class)
     fun onTransactionException(ex: TransactionException): Action {
@@ -143,4 +154,44 @@ abstract class AbstractEndpoint {
             return Money(currency = tenant.currency)
         }
     }
+
+    protected fun bottomNavigationBar() = BottomNavigationBar(
+        background = Theme.COLOR_PRIMARY,
+        selectedItemColor = Theme.COLOR_WHITE,
+        unselectedItemColor = Theme.COLOR_WHITE,
+        items = listOf(
+            BottomNavigationBarItem(
+                icon = Theme.ICON_HOME,
+                caption = getText("page.home.bottom-nav-bar.home"),
+                action = Action(
+                    type = Route,
+                    url = "route:/~"
+                )
+            ),
+            BottomNavigationBarItem(
+                icon = Theme.ICON_PERSON,
+                caption = getText("page.home.bottom-nav-bar.me"),
+                action = Action(
+                    type = Route,
+                    url = urlBuilder.build(shellUrl, "profile?id=${securityContext.currentAccountId()}"),
+                )
+            ),
+            BottomNavigationBarItem(
+                icon = Theme.ICON_HISTORY,
+                caption = getText("page.home.bottom-nav-bar.transactions"),
+                action = Action(
+                    type = Route,
+                    url = urlBuilder.build("history")
+                )
+            ),
+            BottomNavigationBarItem(
+                icon = Theme.ICON_SETTINGS,
+                caption = getText("page.home.bottom-nav-bar.settings"),
+                action = Action(
+                    type = Route,
+                    url = urlBuilder.build("settings")
+                )
+            ),
+        )
+    )
 }

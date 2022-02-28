@@ -3,7 +3,6 @@ package com.wutsi.application.cash.endpoint.pay.command
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.pay.dto.PayAmountRequest
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.platform.payment.dto.CreatePaymentRequestRequest
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,7 +14,6 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/commands/pay/amount")
 class PayAmountCommand(
-    private val urlBuilder: URLBuilder,
     private val tenantProvider: TenantProvider,
 ) : AbstractCommand() {
     @PostMapping
