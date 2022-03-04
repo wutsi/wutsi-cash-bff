@@ -63,13 +63,11 @@
           "attributes": {},
           "children": [
             {
-              "type": "QrImage",
+              "type": "Image",
               "attributes": {
-                "data": "yyyy",
-                "size": 230.0,
-                "padding": 10.0,
-                "embeddedImageUrl": "http://www.goole.com/images/1.png",
-                "embeddedImageSize": 64.0
+                "url": "https://wutsi-qr-server-test.herokuapp.com/image/yyyy.png",
+                "width": 230.0,
+                "height": 230.0
               },
               "children": []
             }

@@ -40,13 +40,11 @@
               },
               "children": [
                 {
-                  "type": "QrImage",
+                  "type": "Image",
                   "attributes": {
-                    "data": "xxxx",
-                    "size": 230.0,
-                    "padding": 10.0,
-                    "embeddedImageUrl": "http://www.goole.com/images/1.png",
-                    "embeddedImageSize": 32.0
+                    "url": "https://wutsi-qr-server-test.herokuapp.com/image/xxxx.png",
+                    "width": 230.0,
+                    "height": 230.0
                   },
                   "children": []
                 }

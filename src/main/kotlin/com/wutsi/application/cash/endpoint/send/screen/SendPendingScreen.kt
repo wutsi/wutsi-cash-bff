@@ -3,6 +3,7 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
+import com.wutsi.application.shared.service.QrService
 import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.ui.ProfileCard
@@ -16,8 +17,8 @@ import com.wutsi.flutter.sdui.Divider
 import com.wutsi.flutter.sdui.Flexible
 import com.wutsi.flutter.sdui.Icon
 import com.wutsi.flutter.sdui.IconButton
+import com.wutsi.flutter.sdui.Image
 import com.wutsi.flutter.sdui.MoneyText
-import com.wutsi.flutter.sdui.QrImage
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
@@ -33,6 +34,7 @@ import com.wutsi.platform.account.dto.Account
 import com.wutsi.platform.payment.dto.Transaction
 import com.wutsi.platform.qr.WutsiQrApi
 import com.wutsi.platform.qr.dto.EncodeQRCodeRequest
+import com.wutsi.platform.qr.entity.EntityType
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -44,6 +46,7 @@ import java.text.DecimalFormat
 @RequestMapping("/send/pending")
 class SendPendingScreen(
     private val qrApi: WutsiQrApi,
+    private val qrService: QrService,
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
     private val sharedUIMapper: SharedUIMapper
@@ -127,11 +130,10 @@ class SendPendingScreen(
 
     private fun approve(tx: Transaction, tenant: Tenant): List<WidgetAware> {
         val fmt = DecimalFormat(tenant.monetaryFormat)
-        val code = qrApi.encode(
+        val token = qrApi.encode(
             EncodeQRCodeRequest(
-                type = "transaction-approval",
+                type = EntityType.TRANSACTION_APPROVAL.name,
                 id = tx.id,
-                timeToLive = 120
             )
         ).token
 
@@ -160,12 +162,10 @@ class SendPendingScreen(
                 ),
             ),
             Center(
-                QrImage(
-                    data = code,
-                    size = 230.0,
-                    padding = 10.0,
-                    embeddedImageSize = 64.0,
-                    embeddedImageUrl = tenantProvider.logo(tenant)
+                Image(
+                    width = 230.0,
+                    height = 230.0,
+                    url = qrService.imageUrl(token)
                 ),
             ),
             Flexible(

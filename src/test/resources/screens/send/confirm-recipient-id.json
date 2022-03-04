@@ -125,7 +125,7 @@
               "children": [],
               "action": {
                 "type": "Route",
-                "url": "https://wutsi-gateway-test.herokuapp.com/login/?phone=%2B237999999999&icon=e3ae&screen-id=page.send.pin&title=Authorization&sub-title=Enter+your+PIN+to+authorize+the+transaction&auth=false&return-to-route=false&return-url=http%3A%2F%2Flocalhost%3A0%2Fcommands%2Fsend%3Famount%3D3000.0%26recipient-id%3D111%26recipient-name%3DRay%2BSponsible"
+                "url": "https://wutsi-gateway-test.herokuapp.com/login/?phone=%2B237999999999&icon=f197&screen-id=page.send.pin&title=Authorization&sub-title=Enter+your+PIN+to+authorize+the+transaction&auth=false&return-to-route=false&return-url=http%3A%2F%2Flocalhost%3A0%2Fcommands%2Fsend%3Famount%3D3000.0%26recipient-id%3D111%26recipient-name%3DRay%2BSponsible"
               }
             }
           ]

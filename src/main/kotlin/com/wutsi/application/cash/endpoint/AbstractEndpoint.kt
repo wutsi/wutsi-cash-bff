@@ -189,7 +189,7 @@ abstract class AbstractEndpoint {
                 caption = getText("page.home.bottom-nav-bar.settings"),
                 action = Action(
                     type = Route,
-                    url = urlBuilder.build("settings")
+                    url = urlBuilder.build(shellUrl, "settings")
                 )
             ),
         )
