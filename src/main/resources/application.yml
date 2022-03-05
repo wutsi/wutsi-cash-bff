@@ -41,6 +41,7 @@ wutsi:
     gateway-url: https://wutsi-gateway-test.herokuapp.com
     login-url: ${wutsi.application.gateway-url}/login
     shell-url: ${wutsi.application.gateway-url}/shell
+    store-url: ${wutsi.application.gateway-url}/store
   platform:
     security:
       type: jwt

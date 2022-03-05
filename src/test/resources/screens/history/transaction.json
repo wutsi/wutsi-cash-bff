@@ -354,13 +354,22 @@
                   },
                   "children": [
                     {
-                      "type": "Row",
-                      "attributes": {},
-                      "children": [
-                        {
+                      "type": "ListItem",
+                      "attributes": {
+                        "caption": "Name 1",
+                        "iconRight": "e15f",
+                        "padding": 10.0,
+                        "trailing": {
+                          "type": "Icon",
+                          "attributes": {
+                            "code": "e15f"
+                          },
+                          "children": []
+                        },
+                        "leading": {
                           "type": "CircleAvatar",
                           "attributes": {
-                            "radius": 12.0
+                            "radius": 24.0
                           },
                           "children": [
                             {
@@ -368,43 +377,18 @@
                               "attributes": {
                                 "caption": "N1",
                                 "bold": true,
-                                "size": 14.0
+                                "size": 16.0
                               },
                               "children": []
                             }
-                          ],
-                          "action": {
-                            "type": "Route",
-                            "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=1"
-                          }
-                        },
-                        {
-                          "type": "Container",
-                          "attributes": {
-                            "padding": 5.0
-                          },
-                          "children": []
-                        },
-                        {
-                          "type": "Container",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "Name 1",
-                                "color": "#1D7EDF",
-                                "decoration": "Underline"
-                              },
-                              "children": []
-                            }
-                          ],
-                          "action": {
-                            "type": "Route",
-                            "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=1"
-                          }
+                          ]
                         }
-                      ]
+                      },
+                      "children": [],
+                      "action": {
+                        "type": "Route",
+                        "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=1"
+                      }
                     }
                   ]
                 }
@@ -449,13 +433,22 @@
                   },
                   "children": [
                     {
-                      "type": "Row",
-                      "attributes": {},
-                      "children": [
-                        {
+                      "type": "ListItem",
+                      "attributes": {
+                        "caption": "Name 100",
+                        "iconRight": "e15f",
+                        "padding": 10.0,
+                        "trailing": {
+                          "type": "Icon",
+                          "attributes": {
+                            "code": "e15f"
+                          },
+                          "children": []
+                        },
+                        "leading": {
                           "type": "CircleAvatar",
                           "attributes": {
-                            "radius": 12.0
+                            "radius": 24.0
                           },
                           "children": [
                             {
@@ -463,43 +456,79 @@
                               "attributes": {
                                 "caption": "N1",
                                 "bold": true,
-                                "size": 14.0
+                                "size": 16.0
                               },
                               "children": []
                             }
-                          ],
-                          "action": {
-                            "type": "Route",
-                            "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=100"
-                          }
-                        },
+                          ]
+                        }
+                      },
+                      "children": [],
+                      "action": {
+                        "type": "Route",
+                        "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=100"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Row",
+              "attributes": {},
+              "children": [
+                {
+                  "type": "Flexible",
+                  "attributes": {
+                    "flex": 1,
+                    "fit": "Tight"
+                  },
+                  "children": [
+                    {
+                      "type": "Container",
+                      "attributes": {
+                        "padding": 10.0
+                      },
+                      "children": [
                         {
-                          "type": "Container",
+                          "type": "Text",
                           "attributes": {
-                            "padding": 5.0
+                            "caption": "Order",
+                            "bold": true,
+                            "size": 10.0,
+                            "alignment": "Right"
                           },
                           "children": []
-                        },
-                        {
-                          "type": "Container",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "type": "Text",
-                              "attributes": {
-                                "caption": "Name 100",
-                                "color": "#1D7EDF",
-                                "decoration": "Underline"
-                              },
-                              "children": []
-                            }
-                          ],
-                          "action": {
-                            "type": "Route",
-                            "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=100"
-                          }
                         }
                       ]
+                    }
+                  ]
+                },
+                {
+                  "type": "Flexible",
+                  "attributes": {
+                    "flex": 3,
+                    "fit": "Tight"
+                  },
+                  "children": [
+                    {
+                      "type": "ListItem",
+                      "attributes": {
+                        "caption": "111",
+                        "subCaption": "Status: Processing",
+                        "trailing": {
+                          "type": "Icon",
+                          "attributes": {
+                            "code": "e15f"
+                          },
+                          "children": []
+                        }
+                      },
+                      "children": [],
+                      "action": {
+                        "type": "Route",
+                        "url": "https://wutsi-gateway-test.herokuapp.com/store/order?id=111"
+                      }
                     }
                   ]
                 }

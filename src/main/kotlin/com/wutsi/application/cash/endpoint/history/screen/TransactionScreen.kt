@@ -5,14 +5,17 @@ import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.DateTimeUtil
 import com.wutsi.application.shared.service.SharedUIMapper
-import com.wutsi.application.shared.service.StringUtil
 import com.wutsi.application.shared.service.TenantProvider
-import com.wutsi.application.shared.ui.Avatar
+import com.wutsi.application.shared.ui.ProfileListItem
+import com.wutsi.ecommerce.order.WutsiOrderApi
+import com.wutsi.ecommerce.order.dto.Order
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Flexible
+import com.wutsi.flutter.sdui.Icon
 import com.wutsi.flutter.sdui.Image
+import com.wutsi.flutter.sdui.ListItem
 import com.wutsi.flutter.sdui.ListView
 import com.wutsi.flutter.sdui.Row
 import com.wutsi.flutter.sdui.Screen
@@ -21,13 +24,13 @@ import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.WidgetAware
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.TextAlignment
-import com.wutsi.flutter.sdui.enums.TextDecoration
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountRequest
 import com.wutsi.platform.payment.dto.Transaction
 import com.wutsi.platform.tenant.dto.Tenant
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -41,7 +44,10 @@ import java.time.format.DateTimeFormatter
 class TransactionScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
+    private val orderApi: WutsiOrderApi,
     private val sharedUIMapper: SharedUIMapper,
+
+    @Value("\${wutsi.application.store-url}") private val storeUrl: String
 ) : AbstractQuery() {
     @PostMapping
     fun index(@RequestParam id: String): Widget {
@@ -55,6 +61,7 @@ class TransactionScreen(
         val accounts = findAccounts(tx)
         val paymentMethods = findPaymentMethods()
         val color = toColor(tx)
+        val order = findOrder(tx)
 
         return Screen(
             id = Page.TRANSACTION,
@@ -68,7 +75,7 @@ class TransactionScreen(
                 child = ListView(
                     separator = true,
                     separatorColor = Theme.COLOR_DIVIDER,
-                    children = listOf(
+                    children = listOfNotNull(
                         listItem(
                             "page.transaction.date",
                             DateTimeUtil.convert(tx.created, account.timezoneId).format(dateFormat)
@@ -92,6 +99,7 @@ class TransactionScreen(
                         listItem("page.transaction.fees", moneyFormat.format(fees(tx)), color = color),
                         listItem("page.transaction.from", from(tx, accounts, paymentMethods, tenant)),
                         listItem("page.transaction.to", to(tx, accounts, paymentMethods, tenant)),
+                        order?.let { listItem("page.transaction.order", order(it)) },
                     ),
                 )
             ),
@@ -166,54 +174,39 @@ class TransactionScreen(
         else
             accounts[tx.recipientId]?.let { account(it) } ?: Container()
 
+    private fun order(order: Order) = ListItem(
+        caption = order.id,
+        subCaption = getText("page.transaction.status") + ": " + getText("order.status.${order.status}"),
+        trailing = Icon(Theme.ICON_CHEVRON_RIGHT),
+        action = gotoUrl(
+            urlBuilder.build(storeUrl, "order?id=${order.id}")
+        )
+    )
+
     private fun paymentProvider(
         tx: Transaction,
         paymentMethods: Map<String, PaymentMethodSummary>,
         tenant: Tenant
     ): WidgetAware {
         val carrier = tenant.mobileCarriers.find { it.code.equals(tx.paymentMethodProvider, true) }
-        return Row(
-            children = listOf(
+        return ListItem(
+            caption = paymentMethods[tx.paymentMethodToken]?.maskedNumber ?: "",
+            leading = carrier?.let { tenantProvider.logo(it) }?.let {
                 Image(
-                    width = 24.0,
-                    height = 24.0,
-                    url = carrier?.let { tenantProvider.logo(it) } ?: ""
-                ),
-                Container(
-                    padding = 5.0
-                ),
-                Text(
-                    caption = paymentMethods.get(tx.paymentMethodToken)?.maskedNumber ?: ""
+                    width = 48.0,
+                    height = 48.0,
+                    url = it
                 )
-            )
+            }
         )
     }
 
     private fun account(account: AccountSummary): WidgetAware =
-        Row(
-            children = listOf(
-                Avatar(
-                    radius = 12.0,
-                    model = sharedUIMapper.toAccountModel(account),
-                    action = Action(
-                        type = ActionType.Route,
-                        url = urlBuilder.build(shellUrl, "profile?id=${account.id}")
-                    )
-                ),
-                Container(
-                    padding = 5.0
-                ),
-                Container(
-                    child = Text(
-                        caption = StringUtil.capitalizeFirstLetter(account.displayName),
-                        color = Theme.COLOR_PRIMARY,
-                        decoration = TextDecoration.Underline,
-                    ),
-                    action = Action(
-                        type = ActionType.Route,
-                        url = urlBuilder.build(shellUrl, "profile?id=${account.id}")
-                    )
-                )
+        ProfileListItem(
+            model = sharedUIMapper.toAccountModel(account),
+            action = Action(
+                type = ActionType.Route,
+                url = urlBuilder.build(shellUrl, "profile?id=${account.id}")
             )
         )
 
@@ -263,4 +256,13 @@ class TransactionScreen(
                 ids = listOf(tx.accountId, tx.recipientId).filterNotNull(),
             )
         ).accounts.map { it.id to it }.toMap()
+
+    private fun findOrder(tx: Transaction): Order? =
+        try {
+            tx.orderId?.let {
+                orderApi.getOrder(it).order
+            }
+        } catch (ex: Exception) {
+            null
+        }
 }

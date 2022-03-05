@@ -4,16 +4,20 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
+import com.wutsi.ecommerce.order.WutsiOrderApi
+import com.wutsi.ecommerce.order.dto.GetOrderResponse
+import com.wutsi.ecommerce.order.dto.Order
+import com.wutsi.ecommerce.order.entity.OrderStatus
 import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.ListPaymentMethodResponse
 import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountResponse
 import com.wutsi.platform.payment.dto.GetTransactionResponse
 import com.wutsi.platform.payment.dto.Transaction
-import com.wutsi.platform.payment.dto.TransactionSummary
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.web.server.LocalServerPort
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -24,6 +28,9 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
     val port: Int = 0
 
     private lateinit var url: String
+
+    @MockBean
+    private lateinit var orderApi: WutsiOrderApi
 
     @BeforeEach
     override fun setUp() {
@@ -51,8 +58,17 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         )
         doReturn(SearchAccountResponse(accounts)).whenever(accountApi).searchAccount(any())
 
+        val order = createOrder()
+        doReturn(GetOrderResponse(order)).whenever(orderApi).getOrder(any())
+
         assertEndpointEquals("/screens/history/transaction.json", url)
     }
+
+    private fun createOrder() = Order(
+        id = "111",
+        status = OrderStatus.PROCESSING.name,
+        created = OffsetDateTime.now()
+    )
 
     private fun createTransferTransaction(accountId: Long, recipientId: Long, status: String = "SUCCESSFUL") =
         Transaction(
@@ -64,22 +80,7 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
             amount = 10000.0,
             fees = 1000.0,
             description = "Sample description",
-            created = OffsetDateTime.of(2021, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC)
-        )
-
-    private fun createCashInOutTransactionSummary(
-        cashin: Boolean,
-        paymentMethodToken: String,
-        status: String = "SUCCESSFUL"
-    ) =
-        TransactionSummary(
-            accountId = USER_ID,
-            type = if (cashin) "CASHIN" else "CASHOUT",
-            status = status,
-            net = 10000.0,
-            amount = 10000.0,
-            paymentMethodToken = paymentMethodToken,
-            description = "Sample description",
+            orderId = "1111",
             created = OffsetDateTime.of(2021, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC)
         )
 
