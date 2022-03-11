@@ -122,10 +122,7 @@ class TransactionScreen(
         }
 
     private fun amount(tx: Transaction): Double =
-        if ((tx.feesToSender && isSender(tx)) || (!tx.feesToSender && isRecipient(tx)))
-            tx.amount
-        else
-            tx.net
+        tx.amount
 
     private fun fees(tx: Transaction): Double =
         if ((tx.feesToSender && isSender(tx)) || (!tx.feesToSender && isRecipient(tx)))

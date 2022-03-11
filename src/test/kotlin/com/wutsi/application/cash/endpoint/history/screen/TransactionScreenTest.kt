@@ -81,7 +81,8 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
             fees = 1000.0,
             description = "Sample description",
             orderId = "1111",
-            created = OffsetDateTime.of(2021, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC)
+            created = OffsetDateTime.of(2021, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC),
+            feesToSender = true,
         )
 
     private fun createPaymentMethodSummary(token: String, maskedNumber: String) = PaymentMethodSummary(
