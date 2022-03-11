@@ -46,6 +46,10 @@ class SendSuccessScreen(
         val fmt = DecimalFormat(tenant.monetaryFormat)
         val tx = paymentApi.getTransaction(transactionId).transaction
         val recipient = accountApi.getAccount(tx.recipientId!!).account
+
+        val fees = if (tx.feesToSender) tx.fees else 0.0
+        val amount = if (tx.feesToSender) tx.net else tx.amount
+
         return Screen(
             id = Page.SEND_SUCCESS,
             appBar = AppBar(
@@ -69,7 +73,7 @@ class SendSuccessScreen(
                     ),
                     Divider(color = Theme.COLOR_DIVIDER),
                     MoneyText(
-                        value = tx.net,
+                        value = amount,
                         currency = tenant.currencySymbol,
                         numberFormat = tenant.numberFormat,
                         color = Theme.COLOR_PRIMARY,
@@ -77,7 +81,7 @@ class SendSuccessScreen(
                     Container(
                         alignment = Alignment.Center,
                         child = Text(
-                            getText("page.send-success.fees", arrayOf(fmt.format(tx.fees))),
+                            getText("page.send-success.fees", arrayOf(fmt.format(fees))),
                             bold = true,
                             size = Theme.TEXT_SIZE_LARGE
                         )

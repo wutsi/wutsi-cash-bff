@@ -242,8 +242,7 @@
                         {
                           "type": "Text",
                           "attributes": {
-                            "caption": "10,000 XAF",
-                            "color": "#FFC107",
+                            "caption": "9,000 XAF",
                             "size": 10.0,
                             "alignment": "Left"
                           },
@@ -303,7 +302,6 @@
                           "type": "Text",
                           "attributes": {
                             "caption": "0 XAF",
-                            "color": "#FFC107",
                             "size": 10.0,
                             "alignment": "Left"
                           },
@@ -514,8 +512,8 @@
                     {
                       "type": "ListItem",
                       "attributes": {
-                        "caption": "111",
-                        "subCaption": "Status: Processing",
+                        "caption": "Status: Processing",
+                        "subCaption": "111",
                         "trailing": {
                           "type": "Icon",
                           "attributes": {

@@ -95,8 +95,8 @@ class TransactionScreen(
                             getText("shared-ui.transaction.status.${tx.status}"),
                             bold = true, color = color
                         ),
-                        listItem("page.transaction.amount", moneyFormat.format(amount(tx)), color = color),
-                        listItem("page.transaction.fees", moneyFormat.format(fees(tx)), color = color),
+                        listItem("page.transaction.amount", moneyFormat.format(amount(tx))),
+                        listItem("page.transaction.fees", moneyFormat.format(fees(tx))),
                         listItem("page.transaction.from", from(tx, accounts, paymentMethods, tenant)),
                         listItem("page.transaction.to", to(tx, accounts, paymentMethods, tenant)),
                         order?.let { listItem("page.transaction.order", order(it)) },
@@ -122,18 +122,13 @@ class TransactionScreen(
         }
 
     private fun amount(tx: Transaction): Double =
-        if (isRecipient(tx))
-            tx.net
-        else
+        if ((tx.feesToSender && isSender(tx)) || (!tx.feesToSender && isRecipient(tx)))
             tx.amount
+        else
+            tx.net
 
     private fun fees(tx: Transaction): Double =
-        if (tx.feesToSender)
-            if (isSender(tx))
-                tx.fees
-            else
-                0.0
-        else if (isRecipient(tx))
+        if ((tx.feesToSender && isSender(tx)) || (!tx.feesToSender && isRecipient(tx)))
             tx.fees
         else
             0.0
@@ -175,8 +170,8 @@ class TransactionScreen(
             accounts[tx.recipientId]?.let { account(it) } ?: Container()
 
     private fun order(order: Order) = ListItem(
-        caption = order.id,
-        subCaption = getText("page.transaction.status") + ": " + getText("order.status.${order.status}"),
+        caption = getText("page.transaction.status") + ": " + getText("order.status.${order.status}"),
+        subCaption = order.id,
         trailing = Icon(Theme.ICON_CHEVRON_RIGHT),
         action = gotoUrl(
             urlBuilder.build(storeUrl, "order?id=${order.id}")

@@ -182,7 +182,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "10,000 XAF",
+                                "caption": "9,000 XAF",
                                 "color": "#8B0000",
                                 "bold": true,
                                 "alignment": "Right"
@@ -227,7 +227,7 @@
                     {
                       "type": "ListItem",
                       "attributes": {
-                        "caption": "Reception",
+                        "caption": "Transfer",
                         "subCaption": "Name 101",
                         "trailing": {
                           "type": "Column",
@@ -239,7 +239,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "9,000 XAF",
+                                "caption": "10,000 XAF",
                                 "color": "#FFC107",
                                 "bold": true,
                                 "alignment": "Right"
@@ -294,7 +294,7 @@
                     {
                       "type": "ListItem",
                       "attributes": {
-                        "caption": "Reception",
+                        "caption": "Transfer",
                         "subCaption": "Name 101",
                         "trailing": {
                           "type": "Column",
@@ -306,7 +306,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "9,000 XAF",
+                                "caption": "10,000 XAF",
                                 "color": "#4CAF50",
                                 "bold": true,
                                 "alignment": "Right"

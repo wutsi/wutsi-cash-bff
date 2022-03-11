@@ -40,7 +40,8 @@ internal class SendSuccessScreenTest : AbstractEndpointTest() {
             amount = 1100.0,
             fees = 100.0,
             net = 1000.0,
-            recipientId = recipientId
+            recipientId = recipientId,
+            feesToSender = true
         )
         doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
     }
