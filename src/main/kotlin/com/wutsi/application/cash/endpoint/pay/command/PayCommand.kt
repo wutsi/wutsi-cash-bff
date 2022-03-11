@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.flutter.sdui.Action
-import com.wutsi.platform.payment.dto.CreatePaymentRequest
+import com.wutsi.platform.payment.dto.CreateTransferRequest
 import feign.FeignException
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -18,17 +18,19 @@ class PayCommand(
 ) : AbstractCommand() {
     @PostMapping
     fun index(
-        @RequestParam(name = "payment-request-id") paymentRequestId: String
+        @RequestParam(name = "payment-request-id") paymentRequestId: String,
     ): Action {
-        logger.add("payment_request_id", paymentRequestId)
-
+        val payment = paymentApi.getPaymentRequest(paymentRequestId).paymentRequest
         try {
-            val response = paymentApi.createPayment(
-                CreatePaymentRequest(
-                    requestId = paymentRequestId
+            val response = paymentApi.createTransfer(
+                CreateTransferRequest(
+                    paymentRequestId = payment.id,
+                    recipientId = payment.accountId,
+                    amount = payment.amount,
+                    currency = payment.currency,
+                    orderId = payment.orderId,
                 )
             )
-
             logger.add("transaction_id", response.id)
             logger.add("transaction_status", response.status)
             return gotoUrl(

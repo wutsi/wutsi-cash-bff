@@ -58,7 +58,7 @@ internal class PayAmountCommandTest : AbstractEndpointTest() {
         assertEquals("XAF", req.firstValue.currency)
         assertEquals(request.amount, req.firstValue.amount)
         assertEquals(300, req.firstValue.timeToLive)
-        assertNull(req.firstValue.invoiceId)
+        assertNull(req.firstValue.orderId)
         assertNull(req.firstValue.description)
 
         val action = response.body

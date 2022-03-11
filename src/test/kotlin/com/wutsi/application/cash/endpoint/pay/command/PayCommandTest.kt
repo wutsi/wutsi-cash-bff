@@ -13,8 +13,8 @@ import com.wutsi.platform.account.dto.Account
 import com.wutsi.platform.account.dto.GetAccountResponse
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
-import com.wutsi.platform.payment.dto.CreatePaymentRequest
-import com.wutsi.platform.payment.dto.CreatePaymentResponse
+import com.wutsi.platform.payment.dto.CreateTransferRequest
+import com.wutsi.platform.payment.dto.CreateTransferResponse
 import com.wutsi.platform.payment.dto.GetPaymentRequestResponse
 import com.wutsi.platform.payment.dto.PaymentRequest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -38,13 +38,15 @@ internal class PayCommandTest : AbstractEndpointTest() {
     override fun setUp() {
         super.setUp()
 
-        url = "http://localhost:$port/commands/pay?payment-request-id=1111&amount=1000"
+        url =
+            "http://localhost:$port/commands/pay?payment-request-id=1111&amount=1000"
 
         paymentRequest = PaymentRequest(
             id = "1111",
-            accountId = 1111,
+            accountId = 2222,
             amount = 50000.0,
             currency = "XAF",
+            orderId = "ORDER-XXX"
         )
         doReturn(GetPaymentRequestResponse(paymentRequest)).whenever(paymentApi).getPaymentRequest(any())
 
@@ -58,8 +60,8 @@ internal class PayCommandTest : AbstractEndpointTest() {
     @Test
     fun success() {
         // GIVEN
-        doReturn(CreatePaymentResponse(id = "xxx", status = Status.SUCCESSFUL.name)).whenever(paymentApi)
-            .createPayment(any())
+        doReturn(CreateTransferResponse(id = "xxx", status = Status.SUCCESSFUL.name)).whenever(paymentApi)
+            .createTransfer(any())
 
         // WHEN
         val response = rest.postForEntity(url, null, Action::class.java)
@@ -67,9 +69,13 @@ internal class PayCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val req = argumentCaptor<CreatePaymentRequest>()
-        verify(paymentApi).createPayment(req.capture())
-        assertEquals(paymentRequest.id, req.firstValue.requestId)
+        val req = argumentCaptor<CreateTransferRequest>()
+        verify(paymentApi).createTransfer(req.capture())
+        assertEquals(paymentRequest.id, req.firstValue.paymentRequestId)
+        assertEquals(paymentRequest.orderId, req.firstValue.orderId)
+        assertEquals(paymentRequest.accountId, req.firstValue.recipientId)
+        assertEquals(paymentRequest.id, req.firstValue.paymentRequestId)
+        assertEquals(paymentRequest.currency, req.firstValue.currency)
 
         val action = response.body
         assertEquals(ActionType.Route, action.type)
@@ -80,7 +86,7 @@ internal class PayCommandTest : AbstractEndpointTest() {
     fun error() {
         // GIVEN
         val ex = createFeignException("transaction-failed", ErrorCode.EXPIRED)
-        doThrow(ex).whenever(paymentApi).createPayment(any())
+        doThrow(ex).whenever(paymentApi).createTransfer(any())
 
         // WHEN
         val response = rest.postForEntity(url, null, Action::class.java)
@@ -88,9 +94,13 @@ internal class PayCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val req = argumentCaptor<CreatePaymentRequest>()
-        verify(paymentApi).createPayment(req.capture())
-        assertEquals(paymentRequest.id, req.firstValue.requestId)
+        val req = argumentCaptor<CreateTransferRequest>()
+        verify(paymentApi).createTransfer(req.capture())
+        assertEquals(paymentRequest.id, req.firstValue.paymentRequestId)
+        assertEquals(paymentRequest.orderId, req.firstValue.orderId)
+        assertEquals(paymentRequest.accountId, req.firstValue.recipientId)
+        assertEquals(paymentRequest.id, req.firstValue.paymentRequestId)
+        assertEquals(paymentRequest.currency, req.firstValue.currency)
 
         val action = response.body
         assertEquals(ActionType.Route, action.type)
