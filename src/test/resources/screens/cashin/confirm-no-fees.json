@@ -102,7 +102,7 @@
                 {
                   "type": "Text",
                   "attributes": {
-                    "caption": "Transaction Fees: 0 XAF",
+                    "caption": "Transaction fees: 0 XAF",
                     "bold": true,
                     "size": 16.0
                   },
@@ -129,7 +129,7 @@
                     "name": "command",
                     "hideText": false,
                     "required": false,
-                    "caption": "Cashin 5,000 XAF",
+                    "caption": "Cash In 5,000 XAF",
                     "enabled": true,
                     "readOnly": false,
                     "type": "Submit",
@@ -138,7 +138,7 @@
                   "children": [],
                   "action": {
                     "type": "Route",
-                    "url": "https://wutsi-gateway-test.herokuapp.com/login/?phone=%2B237699999999&icon=f197&screen-id=page.cashin.pin&title=Authorization&sub-title=Enter+your+PIN+to+authorize+the+transaction&auth=false&return-to-route=false&return-url=http%3A%2F%2Flocalhost%3A0%2Fcommands%2Fcashin%3Famount%3D5000.0%26payment-token%3D4304309409"
+                    "url": "https://wutsi-gateway-test.herokuapp.com/login/?phone=%2B237699999999&icon=f197&screen-id=page.cashin.pin&title=Authorization&sub-title=Enter+your+PIN+to+authorize+the+transaction.&auth=false&return-to-route=false&return-url=http%3A%2F%2Flocalhost%3A0%2Fcommands%2Fcashin%3Famount%3D5000.0%26payment-token%3D4304309409"
                   }
                 }
               ]

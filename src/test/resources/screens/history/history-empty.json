@@ -30,7 +30,7 @@
         {
           "type": "Text",
           "attributes": {
-            "caption": "Your last 30 transactions."
+            "caption": "Your last 30 transactions"
           },
           "children": []
         },
@@ -58,7 +58,7 @@
                 {
                   "type": "Text",
                   "attributes": {
-                    "caption": "No Transaction.",
+                    "caption": "No transaction",
                     "bold": true,
                     "size": 16.0,
                     "alignment": "Center"

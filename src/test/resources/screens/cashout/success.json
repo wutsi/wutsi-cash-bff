@@ -44,7 +44,7 @@
             {
               "type": "Text",
               "attributes": {
-                "caption": "10,000 XAF transferred to your account",
+                "caption": "10,000 XAF transferred to your account.",
                 "size": 18.0,
                 "alignment": "Center"
               },

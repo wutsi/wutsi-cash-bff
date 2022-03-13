@@ -40,7 +40,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "Send to Phone",
+                                "caption": "Send via phone.",
                                 "color": "#1D7EDF",
                                 "bold": true,
                                 "size": 16.0,
@@ -60,7 +60,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "Enter the phone number of the recipient",
+                                "caption": "Enter the phone number of the recipient.",
                                 "color": "#000000",
                                 "alignment": "Center"
                               },
@@ -134,7 +134,7 @@
       "appBar": {
         "type": "AppBar",
         "attributes": {
-          "title": "Send To",
+          "title": "Send to",
           "elevation": 0.0,
           "backgroundColor": "#1D7EDF",
           "foregroundColor": "#FFFFFF",

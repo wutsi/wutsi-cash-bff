@@ -30,7 +30,7 @@
         {
           "type": "Text",
           "attributes": {
-            "caption": "Your last 30 transactions."
+            "caption": "Your last 30 transactions"
           },
           "children": []
         },

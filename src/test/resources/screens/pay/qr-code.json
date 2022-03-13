@@ -70,7 +70,7 @@
                 {
                   "type": "Text",
                   "attributes": {
-                    "caption": "Present the QR code to the customer to perform the payment. You'll receive a notification once the payment completed"
+                    "caption": "Present the QR code to the customer to perform the payment. You'll receive a notification once the payment is completed."
                   },
                   "children": []
                 }
@@ -84,7 +84,7 @@
   "appBar": {
     "type": "AppBar",
     "attributes": {
-      "title": "Scan Payment",
+      "title": "Scan payment",
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
       "foregroundColor": "#000000",

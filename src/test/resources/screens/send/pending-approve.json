@@ -48,7 +48,7 @@
                 {
                   "type": "Text",
                   "attributes": {
-                    "caption": "Show the QR Code to the recipient for approve",
+                    "caption": "Show the QR code to the recipient for approval.",
                     "size": 18.0,
                     "alignment": "Center"
                   },
