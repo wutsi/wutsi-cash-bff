@@ -96,7 +96,8 @@ class TransactionScreen(
                             bold = true, color = color
                         ),
                         listItem("page.transaction.amount", moneyFormat.format(amount(tx))),
-                        listItem("page.transaction.fees", moneyFormat.format(fees(tx))),
+                        listItem("page.transaction.transaction-fees", moneyFormat.format(fees(tx))),
+                        listItem("page.transaction.gateway-fees", moneyFormat.format(gatewayFees(tx))),
                         listItem("page.transaction.from", from(tx, accounts, paymentMethods, tenant)),
                         listItem("page.transaction.to", to(tx, accounts, paymentMethods, tenant)),
                         order?.let { listItem("page.transaction.order", order(it)) },
@@ -127,6 +128,12 @@ class TransactionScreen(
     private fun fees(tx: Transaction): Double =
         if ((tx.feesToSender && isSender(tx)) || (!tx.feesToSender && isRecipient(tx)))
             tx.fees
+        else
+            0.0
+
+    private fun gatewayFees(tx: Transaction): Double =
+        if ((tx.feesToSender && isSender(tx)) || (!tx.feesToSender && isRecipient(tx)))
+            tx.gatewayFees
         else
             0.0
 

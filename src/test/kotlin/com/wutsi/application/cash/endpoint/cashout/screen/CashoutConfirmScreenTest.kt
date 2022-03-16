@@ -30,7 +30,8 @@ internal class CashoutConfirmScreenTest : AbstractEndpointTest() {
     @Test
     fun confirmWithFeesToSender() {
         val resp = ComputeTransactionFeesResponse(
-            fees = 100.0,
+            fees = 90.0,
+            gatewayFees = 10.0,
             applyToSender = true
         )
         doReturn(resp).whenever(paymentApi).computeTransactionFees(any())
@@ -53,7 +54,8 @@ internal class CashoutConfirmScreenTest : AbstractEndpointTest() {
     @Test
     fun confirmWithFeesToRecipient() {
         val resp = ComputeTransactionFeesResponse(
-            fees = 100.0,
+            fees = 90.0,
+            gatewayFees = 10.0,
             applyToSender = false
         )
         doReturn(resp).whenever(paymentApi).computeTransactionFees(any())
@@ -77,6 +79,7 @@ internal class CashoutConfirmScreenTest : AbstractEndpointTest() {
     fun confirmWithNoFees() {
         val resp = ComputeTransactionFeesResponse(
             fees = 0.0,
+            gatewayFees = 0.0,
             applyToSender = false
         )
         doReturn(resp).whenever(paymentApi).computeTransactionFees(any())

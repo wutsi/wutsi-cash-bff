@@ -59,7 +59,7 @@ class CashinConfirmScreen(
                 senderId = accountId
             )
         )
-        val fees: Double = if (response.applyToSender) response.fees else 0.0
+        val fees: Double = if (response.applyToSender) response.fees + response.gatewayFees else 0.0
 
         return Screen(
             id = Page.CASHIN_CONFIRM,
