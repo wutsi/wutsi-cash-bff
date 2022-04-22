@@ -97,7 +97,7 @@ class SendApprovalScreen(
                         model = sharedUIMapper.toAccountModel(sender),
                         showPhoneNumber = false,
                         showWebsite = false,
-                        type = ProfileCardType.Summary
+                        type = ProfileCardType.SUMMARY
                     ),
                     Divider(color = Theme.COLOR_DIVIDER),
                     Container(
