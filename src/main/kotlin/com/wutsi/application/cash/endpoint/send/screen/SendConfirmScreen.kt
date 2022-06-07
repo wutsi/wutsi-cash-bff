@@ -3,7 +3,6 @@ package com.wutsi.application.cash.endpoint.send.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
-import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.ui.ProfileCard
 import com.wutsi.flutter.sdui.Action
@@ -20,7 +19,6 @@ import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType
-import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.InputType.Submit
 import com.wutsi.flutter.sdui.enums.TextAlignment
@@ -29,7 +27,6 @@ import com.wutsi.platform.account.dto.Account
 import com.wutsi.platform.account.dto.SearchAccountRequest
 import com.wutsi.platform.core.error.Error
 import com.wutsi.platform.core.error.exception.BadRequestException
-import com.wutsi.platform.payment.dto.ComputeTransactionFeesRequest
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
@@ -43,7 +40,6 @@ import java.text.DecimalFormat
 class SendConfirmScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
-    private val sharedUIMapper: SharedUIMapper,
 
     @Value("\${wutsi.application.login-url}") private val loginUrl: String,
 ) : AbstractQuery() {
@@ -82,19 +78,8 @@ class SendConfirmScreen(
         recipient: Account,
         tenant: Tenant
     ): Widget {
-        // Get fees
-        val response = paymentApi.computeTransactionFees(
-            request = ComputeTransactionFeesRequest(
-                amount = amount,
-                transactionType = "TRANSFER",
-                recipientId = recipient.id,
-                senderId = securityContext.currentAccountId()
-            )
-        )
-
         // Adjust amount
         val fmt = DecimalFormat(tenant.monetaryFormat)
-        val fees: Double = if (response.applyToSender) response.fees else 0.0
 
         return Screen(
             id = Page.SEND_CONFIRM,
@@ -127,14 +112,6 @@ class SendConfirmScreen(
                         currency = tenant.currencySymbol,
                         numberFormat = tenant.numberFormat,
                         color = Theme.COLOR_PRIMARY,
-                    ),
-                    Container(
-                        alignment = Alignment.Center,
-                        child = Text(
-                            getText("page.send-confirm.fees", arrayOf(fmt.format(fees))),
-                            bold = true,
-                            size = Theme.TEXT_SIZE_LARGE
-                        )
                     ),
                     Container(
                         padding = 10.0,

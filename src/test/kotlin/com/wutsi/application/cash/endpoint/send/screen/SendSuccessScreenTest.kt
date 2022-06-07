@@ -36,12 +36,10 @@ internal class SendSuccessScreenTest : AbstractEndpointTest() {
         val tx = Transaction(
             id = "123",
             status = "PENDING",
-            requiresApproval = true,
             amount = 1100.0,
             fees = 100.0,
             net = 1000.0,
             recipientId = recipientId,
-            feesToSender = true
         )
         doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
     }
@@ -56,6 +54,6 @@ internal class SendSuccessScreenTest : AbstractEndpointTest() {
     fun error() {
         val url =
             "http://localhost:$port/send/success?transaction-id=xxx&error=${ErrorCode.NOT_ENOUGH_FUNDS}"
-        assertEndpointEquals("/screens/send/success-fail.json", url)
+        assertEndpointEquals("/screens/send/error.json", url)
     }
 }

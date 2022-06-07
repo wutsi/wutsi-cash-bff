@@ -52,7 +52,7 @@ internal class SendRecipientCommandTest : AbstractEndpointTest() {
         // THEN
         kotlin.test.assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(Route, action.type)
         assertEquals("http://localhost:0/send/confirm", action.url)
     }
@@ -71,7 +71,7 @@ internal class SendRecipientCommandTest : AbstractEndpointTest() {
         // THEN
         kotlin.test.assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(Route, action.type)
         assertEquals("http://localhost:0/send/confirm", action.url)
     }
@@ -91,7 +91,7 @@ internal class SendRecipientCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(

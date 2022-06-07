@@ -12,8 +12,10 @@ import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.ListPaymentMethodResponse
 import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountResponse
+import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.GetTransactionResponse
 import com.wutsi.platform.payment.dto.Transaction
+import com.wutsi.platform.payment.entity.TransactionType
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -37,12 +39,6 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         super.setUp()
 
         url = "http://localhost:$port/transaction?id=111"
-    }
-
-    @Test
-    fun index() {
-        val tx = createTransferTransaction(USER_ID, 100, status = "PENDING")
-        doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
 
         val paymentMethods = listOf(
             createPaymentMethodSummary("A", "11111"),
@@ -60,30 +56,64 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
 
         val order = createOrder()
         doReturn(GetOrderResponse(order)).whenever(orderApi).getOrder(any())
+    }
 
-        assertEndpointEquals("/screens/history/transaction.json", url)
+    @Test
+    fun transfer() {
+        val tx = createTransferTransaction(USER_ID, 100, type = TransactionType.TRANSFER, status = Status.SUCCESSFUL)
+        doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
+
+        assertEndpointEquals("/screens/history/transaction-transfer.json", url)
+    }
+
+    @Test
+    fun cashin() {
+        val tx = createTransferTransaction(USER_ID, 100, type = TransactionType.CASHIN, status = Status.FAILED)
+        doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
+
+        assertEndpointEquals("/screens/history/transaction-cashin.json", url)
+    }
+
+    @Test
+    fun cashout() {
+        val tx = createTransferTransaction(USER_ID, 100, type = TransactionType.CASHOUT, status = Status.PENDING)
+        doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
+
+        assertEndpointEquals("/screens/history/transaction-cashout.json", url)
+    }
+
+    @Test
+    fun charge() {
+        val tx = createTransferTransaction(USER_ID, 100, type = TransactionType.CASHOUT, status = Status.PENDING)
+        doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
+
+        assertEndpointEquals("/screens/history/transaction-charge.json", url)
     }
 
     private fun createOrder() = Order(
         id = "111",
-        status = OrderStatus.PROCESSING.name,
+        status = OrderStatus.CANCELLED.name,
         created = OffsetDateTime.now()
     )
 
-    private fun createTransferTransaction(accountId: Long, recipientId: Long, status: String = "SUCCESSFUL") =
+    private fun createTransferTransaction(
+        accountId: Long,
+        recipientId: Long,
+        status: Status = Status.SUCCESSFUL,
+        type: TransactionType = TransactionType.TRANSFER
+    ) =
         Transaction(
             accountId = accountId,
             recipientId = recipientId,
-            type = "TRANSFER",
-            status = status,
+            type = type.name,
+            status = status.name,
             net = 9000.0,
             amount = 10100.0,
             fees = 1000.0,
             gatewayFees = 100.0,
             description = "Sample description",
-            orderId = "1111",
+            orderId = "203920-3209-3209-3209ref",
             created = OffsetDateTime.of(2021, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC),
-            feesToSender = true,
         )
 
     private fun createPaymentMethodSummary(token: String, maskedNumber: String) = PaymentMethodSummary(

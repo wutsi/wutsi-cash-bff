@@ -2,7 +2,6 @@ package com.wutsi.application.cash.endpoint.send.command
 
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.send.dto.SendAmountRequest
-import com.wutsi.application.shared.service.TogglesProvider
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.Button
 import com.wutsi.flutter.sdui.Dialog
@@ -24,7 +23,6 @@ import javax.validation.Valid
 @RequestMapping("/commands/send/amount")
 class SendAmountCommand(
     private val accountApi: WutsiAccountApi,
-    private val togglesProvider: TogglesProvider,
 ) : AbstractCommand() {
     @PostMapping
     fun index(

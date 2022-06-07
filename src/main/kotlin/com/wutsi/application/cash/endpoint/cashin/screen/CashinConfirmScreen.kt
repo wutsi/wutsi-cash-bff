@@ -17,13 +17,11 @@ import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.enums.ActionType
-import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.CrossAxisAlignment
 import com.wutsi.flutter.sdui.enums.InputType.Submit
 import com.wutsi.flutter.sdui.enums.MainAxisAlignment
 import com.wutsi.platform.account.WutsiAccountApi
-import com.wutsi.platform.payment.dto.ComputeTransactionFeesRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -50,16 +48,6 @@ class CashinConfirmScreen(
         val fmt = DecimalFormat(tenant.monetaryFormat)
         val paymentMethod = accountApi.getPaymentMethod(accountId, paymentToken).paymentMethod
         val carrier = tenantProvider.mobileCarriers(tenant).find { it.code.equals(paymentMethod.provider, true) }
-
-        // Get fees
-        val response = paymentApi.computeTransactionFees(
-            request = ComputeTransactionFeesRequest(
-                amount = amount,
-                transactionType = "CASHIN",
-                senderId = accountId
-            )
-        )
-        val fees: Double = if (response.applyToSender) response.fees + response.gatewayFees else 0.0
 
         return Screen(
             id = Page.CASHIN_CONFIRM,
@@ -102,14 +90,6 @@ class CashinConfirmScreen(
                                 numberFormat = tenant.numberFormat,
                                 color = Theme.COLOR_PRIMARY
                             ),
-                        ),
-                        Container(
-                            alignment = Alignment.Center,
-                            child = Text(
-                                getText("page.cashin-confirm.fees", arrayOf(fmt.format(fees))),
-                                bold = true,
-                                size = Theme.TEXT_SIZE_LARGE
-                            )
                         ),
                         Container(padding = 20.0),
                         Container(

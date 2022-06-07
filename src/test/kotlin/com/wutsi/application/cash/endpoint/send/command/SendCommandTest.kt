@@ -62,7 +62,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(111L, req.firstValue.recipientId)
         assertNull(req.firstValue.description)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(Route, action.type)
         assertEquals("http://localhost:0/send/success?transaction-id=xxx", action.url)
     }
@@ -88,7 +88,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(111L, req.firstValue.recipientId)
         assertNull(req.firstValue.description)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(Route, action.type)
         assertEquals("http://localhost:0/send/pending?transaction-id=xxx", action.url)
     }
@@ -115,7 +115,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(111L, req.firstValue.recipientId)
         assertNull(req.firstValue.description)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(Route, action.type)
         assertEquals(
             "http://localhost:0/send/success?error=UNEXPECTED_ERROR&transaction-id=xxx",
@@ -145,7 +145,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(111L, req.firstValue.recipientId)
         assertNull(req.firstValue.description)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(
             messageSource.getMessage(

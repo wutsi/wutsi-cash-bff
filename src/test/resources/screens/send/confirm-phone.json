@@ -77,7 +77,7 @@
                       "type": "Text",
                       "attributes": {
                         "caption": "+237 6 99 99 99 99",
-                        "color": "#95A5A6",
+                        "bold": true,
                         "alignment": "Center"
                       },
                       "children": []
@@ -157,23 +157,6 @@
             "numberFormat": "#,###,##0"
           },
           "children": []
-        },
-        {
-          "type": "Container",
-          "attributes": {
-            "alignment": "Center"
-          },
-          "children": [
-            {
-              "type": "Text",
-              "attributes": {
-                "caption": "Transaction Fees: 100 XAF",
-                "bold": true,
-                "size": 16.0
-              },
-              "children": []
-            }
-          ]
         },
         {
           "type": "Container",

@@ -107,19 +107,7 @@
         "children": [],
         "action": {
           "type": "Route",
-          "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=1"
-        }
-      },
-      {
-        "type": "BottomNavigationBarItem",
-        "attributes": {
-          "icon": "e314",
-          "caption": "Transactions"
-        },
-        "children": [],
-        "action": {
-          "type": "Route",
-          "url": "http://localhost:0/history"
+          "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile"
         }
       },
       {

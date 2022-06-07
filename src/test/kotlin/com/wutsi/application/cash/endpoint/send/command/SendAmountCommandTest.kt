@@ -58,7 +58,7 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(Route, action.type)
         assertEquals("http://localhost:0/send/recipient?amount=1000.0", action.url)
         assertNull(action.parameters)
@@ -76,7 +76,7 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(Route, action.type)
         assertEquals("http://localhost:0/send/confirm?amount=1000.0&recipient-id=555", action.url)
         assertNull(action.parameters)
@@ -93,7 +93,7 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(
@@ -117,7 +117,7 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(
@@ -141,7 +141,7 @@ internal class SendAmountCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(

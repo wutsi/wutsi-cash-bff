@@ -90,23 +90,6 @@
         {
           "type": "Container",
           "attributes": {
-            "alignment": "Center"
-          },
-          "children": [
-            {
-              "type": "Text",
-              "attributes": {
-                "caption": "Transaction Fees: 100 XAF",
-                "bold": true,
-                "size": 16.0
-              },
-              "children": []
-            }
-          ]
-        },
-        {
-          "type": "Container",
-          "attributes": {
             "padding": 10.0
           },
           "children": [

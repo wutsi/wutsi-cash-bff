@@ -77,29 +77,12 @@
         {
           "type": "MoneyText",
           "attributes": {
-            "value": 1000.0,
+            "value": 1100.0,
             "color": "#1D7EDF",
             "currency": "CFA",
             "numberFormat": "#,###,##0"
           },
           "children": []
-        },
-        {
-          "type": "Container",
-          "attributes": {
-            "alignment": "Center"
-          },
-          "children": [
-            {
-              "type": "Text",
-              "attributes": {
-                "caption": "Transaction Fees: 100 XAF",
-                "bold": true,
-                "size": 16.0
-              },
-              "children": []
-            }
-          ]
         },
         {
           "type": "Container",

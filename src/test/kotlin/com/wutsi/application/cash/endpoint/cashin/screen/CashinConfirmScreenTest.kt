@@ -7,7 +7,6 @@ import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.platform.account.dto.GetPaymentMethodResponse
 import com.wutsi.platform.account.dto.PaymentMethod
 import com.wutsi.platform.account.dto.Phone
-import com.wutsi.platform.payment.dto.ComputeTransactionFeesResponse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -28,14 +27,7 @@ internal class CashinConfirmScreenTest : AbstractEndpointTest() {
     }
 
     @Test
-    fun confirmWithFeesToSender() {
-        val resp = ComputeTransactionFeesResponse(
-            fees = 90.0,
-            gatewayFees = 10.0,
-            applyToSender = true
-        )
-        doReturn(resp).whenever(paymentApi).computeTransactionFees(any())
-
+    fun confirm() {
         val response = GetPaymentMethodResponse(
             paymentMethod = PaymentMethod(
                 token = "xxxxxx",
@@ -48,54 +40,6 @@ internal class CashinConfirmScreenTest : AbstractEndpointTest() {
         )
         doReturn(response).whenever(accountApi).getPaymentMethod(any(), any())
 
-        assertEndpointEquals("/screens/cashin/confirm-fees-to-sender.json", url)
-    }
-
-    @Test
-    fun confirmWithFeesToRecipient() {
-        val resp = ComputeTransactionFeesResponse(
-            fees = 90.0,
-            gatewayFees = 10.0,
-            applyToSender = false
-        )
-        doReturn(resp).whenever(paymentApi).computeTransactionFees(any())
-
-        val response = GetPaymentMethodResponse(
-            paymentMethod = PaymentMethod(
-                token = "xxxxxx",
-                provider = "MTN",
-                maskedNumber = "xxxx9999",
-                phone = Phone(
-                    number = "+237670000001"
-                )
-            )
-        )
-        doReturn(response).whenever(accountApi).getPaymentMethod(any(), any())
-
-        assertEndpointEquals("/screens/cashin/confirm-fees-to-recipient.json", url)
-    }
-
-    @Test
-    fun confirmWithNoFees() {
-        val resp = ComputeTransactionFeesResponse(
-            fees = 0.0,
-            gatewayFees = 0.0,
-            applyToSender = false
-        )
-        doReturn(resp).whenever(paymentApi).computeTransactionFees(any())
-
-        val response = GetPaymentMethodResponse(
-            paymentMethod = PaymentMethod(
-                token = "xxxxxx",
-                provider = "MTN",
-                maskedNumber = "xxxx9999",
-                phone = Phone(
-                    number = "+237670000001"
-                )
-            )
-        )
-        doReturn(response).whenever(accountApi).getPaymentMethod(any(), any())
-
-        assertEndpointEquals("/screens/cashin/confirm-no-fees.json", url)
+        assertEndpointEquals("/screens/cashin/confirm.json", url)
     }
 }

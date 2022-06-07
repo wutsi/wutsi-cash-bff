@@ -3,7 +3,6 @@ package com.wutsi.application.cash.endpoint.history.screen
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
-import com.wutsi.application.shared.service.SharedUIMapper
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.ui.TransactionListItem
 import com.wutsi.flutter.sdui.Action
@@ -39,7 +38,6 @@ import org.springframework.web.bind.annotation.RestController
 class HistoryScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
-    private val sharedUIMapper: SharedUIMapper,
 ) : AbstractQuery() {
     @PostMapping
     fun index(): Widget {

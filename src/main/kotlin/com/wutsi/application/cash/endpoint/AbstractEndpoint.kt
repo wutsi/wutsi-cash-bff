@@ -5,11 +5,14 @@ import com.wutsi.application.cash.exception.PasswordInvalidException
 import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.SecurityContext
+import com.wutsi.application.shared.service.SharedUIMapper
+import com.wutsi.application.shared.service.TogglesProvider
 import com.wutsi.application.shared.service.URLBuilder
+import com.wutsi.application.shared.ui.BottomNavigationBarWidget
 import com.wutsi.flutter.sdui.Action
-import com.wutsi.flutter.sdui.BottomNavigationBar
-import com.wutsi.flutter.sdui.BottomNavigationBarItem
+import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Dialog
+import com.wutsi.flutter.sdui.WidgetAware
 import com.wutsi.flutter.sdui.enums.ActionType.Page
 import com.wutsi.flutter.sdui.enums.ActionType.Prompt
 import com.wutsi.flutter.sdui.enums.ActionType.Route
@@ -46,6 +49,12 @@ abstract class AbstractEndpoint {
 
     @Autowired
     protected lateinit var urlBuilder: URLBuilder
+
+    @Autowired
+    protected lateinit var sharedUIMapper: SharedUIMapper
+
+    @Autowired
+    protected lateinit var togglesProvider: TogglesProvider
 
     @Value("\${wutsi.application.shell-url}")
     protected lateinit var shellUrl: String
@@ -155,43 +164,26 @@ abstract class AbstractEndpoint {
         }
     }
 
-    protected fun bottomNavigationBar() = BottomNavigationBar(
-        background = Theme.COLOR_PRIMARY,
-        selectedItemColor = Theme.COLOR_WHITE,
-        unselectedItemColor = Theme.COLOR_WHITE,
-        items = listOf(
-            BottomNavigationBarItem(
-                icon = Theme.ICON_HOME,
-                caption = getText("page.home.bottom-nav-bar.home"),
-                action = Action(
-                    type = Route,
-                    url = "route:/~"
-                )
-            ),
-            BottomNavigationBarItem(
-                icon = Theme.ICON_PERSON,
-                caption = getText("page.home.bottom-nav-bar.me"),
-                action = Action(
-                    type = Route,
-                    url = urlBuilder.build(shellUrl, "profile?id=${securityContext.currentAccountId()}"),
-                )
-            ),
-            BottomNavigationBarItem(
-                icon = Theme.ICON_HISTORY,
-                caption = getText("page.home.bottom-nav-bar.transactions"),
-                action = Action(
-                    type = Route,
-                    url = urlBuilder.build("history")
-                )
-            ),
-            BottomNavigationBarItem(
-                icon = Theme.ICON_SETTINGS,
-                caption = getText("page.home.bottom-nav-bar.settings"),
-                action = Action(
-                    type = Route,
-                    url = urlBuilder.build(shellUrl, "settings")
-                )
-            ),
+    protected fun bottomNavigationBar() = BottomNavigationBarWidget(
+        model = sharedUIMapper.toBottomNavigationBarModel(
+            shellUrl = shellUrl,
+            cashUrl = "",
+            togglesProvider = togglesProvider,
+            urlBuilder = urlBuilder
         )
+    ).toBottomNavigationBar()
+
+    protected fun toSectionWidget(
+        child: WidgetAware,
+        padding: Double? = 10.0,
+        background: String? = Theme.COLOR_WHITE
+    ) = Container(
+        padding = padding,
+        margin = 5.0,
+        border = 1.0,
+        borderColor = Theme.COLOR_GRAY_LIGHT,
+        background = background,
+        width = Double.MAX_VALUE,
+        child = child,
     )
 }

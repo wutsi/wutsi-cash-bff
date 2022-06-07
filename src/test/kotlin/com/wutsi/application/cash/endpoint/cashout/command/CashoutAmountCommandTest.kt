@@ -44,7 +44,7 @@ internal class CashoutAmountCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Route, action.type)
         assertEquals("http://localhost:0/cashout/confirm?amount=10000.0&payment-token=xxx", action.url)
     }
@@ -58,7 +58,7 @@ internal class CashoutAmountCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(
@@ -76,7 +76,7 @@ internal class CashoutAmountCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(getText("prompt.error.amount-required"), action.prompt?.attributes?.get("message"))

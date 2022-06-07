@@ -9,7 +9,6 @@ import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.GetAccountResponse
 import com.wutsi.platform.account.dto.Phone
 import com.wutsi.platform.account.dto.SearchAccountResponse
-import com.wutsi.platform.payment.dto.ComputeTransactionFeesResponse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -23,12 +22,6 @@ internal class SendConfirmScreenTest : AbstractEndpointTest() {
     @BeforeEach
     override fun setUp() {
         super.setUp()
-
-        val response = ComputeTransactionFeesResponse(
-            fees = 100.0,
-            applyToSender = true
-        )
-        doReturn(response).whenever(paymentApi).computeTransactionFees(any())
     }
 
     @Test

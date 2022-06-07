@@ -43,7 +43,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Route, action.type)
         assertEquals("http://localhost:0/cashin/success?amount=10000.0", action.url)
     }
@@ -60,7 +60,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Route, action.type)
         assertEquals("http://localhost:0/cashin/pending", action.url)
     }
@@ -77,7 +77,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(getText("prompt.error.transaction-failed"), action.prompt?.attributes?.get("message"))
@@ -95,7 +95,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         // THEN
         assertEquals(200, response.statusCodeValue)
 
-        val action = response.body
+        val action = response.body!!
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(

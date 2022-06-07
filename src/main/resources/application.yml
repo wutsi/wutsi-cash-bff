@@ -45,6 +45,7 @@ wutsi:
   platform:
     security:
       type: jwt
+      api-key: "ddb049b8-e3f7-11ec-b030-127037cd15a7"
     tracing:
       client-id: ${wutsi.application.name}
 
