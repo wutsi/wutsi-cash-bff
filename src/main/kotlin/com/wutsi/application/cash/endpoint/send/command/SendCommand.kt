@@ -39,7 +39,7 @@ class SendCommand(
             return if (Status.SUCCESSFUL.name == response.status)
                 gotoUrl(
                     url = urlBuilder.build(
-                        "send/success?transaction-id=${response.id}"
+                        "send/success?amount=$amount&recipient-id=$recipientId"
                     )
                 )
             else

@@ -17,10 +17,8 @@ import com.wutsi.platform.payment.dto.CreateTransferResponse
 import com.wutsi.platform.payment.error.ErrorURN
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
-import org.springframework.context.MessageSource
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -30,9 +28,6 @@ internal class SendCommandTest : AbstractEndpointTest() {
     val port: Int = 0
 
     private lateinit var url: String
-
-    @Autowired
-    private lateinit var messageSource: MessageSource
 
     @BeforeEach
     override fun setUp() {
@@ -66,7 +61,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val action = response.body!!
         assertEquals(Route, action.type)
-        assertEquals("http://localhost:0/send/success?transaction-id=xxx", action.url)
+        assertEquals("http://localhost:0/send/success?amount=3000.0&recipient-id=111", action.url)
     }
 
     @Test
