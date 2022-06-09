@@ -26,9 +26,9 @@
             {
               "type": "Icon",
               "attributes": {
-                "code": "ef48",
+                "code": "e238",
                 "size": 80.0,
-                "color": "#4CAF50"
+                "color": "#8B0000"
               },
               "children": []
             }
@@ -44,8 +44,8 @@
             {
               "type": "Text",
               "attributes": {
-                "caption": "{0} Added to your Wallet.",
-                "color": "#4CAF50",
+                "caption": "Unexpected error",
+                "color": "#8B0000",
                 "bold": true,
                 "alignment": "Center"
               },

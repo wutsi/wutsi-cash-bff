@@ -1,5 +1,6 @@
 package com.wutsi.application.cash.endpoint
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.wutsi.application.cash.exception.PasswordInvalidException
 import com.wutsi.application.cash.exception.TransactionException
@@ -18,12 +19,14 @@ import com.wutsi.flutter.sdui.enums.ActionType.Prompt
 import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.DialogType.Error
 import com.wutsi.platform.account.dto.PaymentMethodSummary
+import com.wutsi.platform.core.error.ErrorResponse
 import com.wutsi.platform.core.logging.KVLogger
 import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Money
 import com.wutsi.platform.tenant.dto.MobileCarrier
 import com.wutsi.platform.tenant.dto.Tenant
+import feign.FeignException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.MessageSource
@@ -59,6 +62,9 @@ abstract class AbstractEndpoint {
     @Value("\${wutsi.application.shell-url}")
     protected lateinit var shellUrl: String
 
+    @Autowired
+    private lateinit var mapper: ObjectMapper
+
     @ExceptionHandler(TransactionException::class)
     fun onTransactionException(ex: TransactionException): Action {
         val message = getTransactionErrorMessage(ex.error)
@@ -67,6 +73,20 @@ abstract class AbstractEndpoint {
 
     protected fun getTransactionErrorMessage(error: ErrorCode): String =
         getTransactionErrorMessage(error.name)
+
+    protected fun getErrorText(ex: FeignException): String {
+        try {
+            val response = mapper.readValue(ex.contentUTF8(), ErrorResponse::class.java)
+            val code = response.error.code
+            if (code == com.wutsi.platform.payment.error.ErrorURN.TRANSACTION_FAILED.urn) {
+                val downstreamCode = response.error.downstreamCode
+                return getTransactionErrorMessage(downstreamCode)
+            }
+        } catch (ex: Exception) {
+        }
+
+        return getText("prompt.error.unexpected-error")
+    }
 
     protected fun getTransactionErrorMessage(error: String?): String =
         try {

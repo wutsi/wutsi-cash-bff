@@ -9,13 +9,13 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType
-import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashinRequest
 import com.wutsi.platform.payment.dto.CreateCashinResponse
 import com.wutsi.platform.payment.dto.GetTransactionResponse
 import com.wutsi.platform.payment.dto.Transaction
+import com.wutsi.platform.payment.error.ErrorURN
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -107,15 +107,17 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         assertEquals("123", request.firstValue.idempotencyKey)
 
         val action = response.body!!
-        assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
-        assertEquals(getText("prompt.error.transaction-failed"), action.prompt?.attributes?.get("message"))
+        assertEquals(ActionType.Route, action.type)
+        assertEquals(
+            "http://localhost:0/checkout/success?amount=10000.0&error=Oops%21+An+unexpected+error+has+occurred.+Please%2C+try+again.",
+            action.url
+        )
     }
 
     @Test
     fun failureNotEnoughFunds() {
         // GIVEN
-        val ex = createFeignException("transaction-failed", ErrorCode.NOT_ENOUGH_FUNDS)
+        val ex = createFeignException(ErrorURN.TRANSACTION_FAILED.urn, ErrorCode.NOT_ENOUGH_FUNDS)
         doThrow(ex).whenever(paymentApi).createCashin(any())
 
         // WHEN
@@ -125,11 +127,10 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         assertEquals(200, response.statusCodeValue)
 
         val action = response.body!!
-        assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
+        assertEquals(ActionType.Route, action.type)
         assertEquals(
-            getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS"),
-            action.prompt?.attributes?.get("message")
+            "http://localhost:0/checkout/success?amount=10000.0&error=Sorry%21+You+do+not+have+enough+in+your+Wallet.",
+            action.url
         )
     }
 }

@@ -1,7 +1,6 @@
 package com.wutsi.application.cash.endpoint.cashin.screen
 
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
@@ -9,18 +8,17 @@ import org.springframework.boot.test.web.server.LocalServerPort
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class CashinSuccessScreenTest : AbstractEndpointTest() {
     @LocalServerPort
-    public val port: Int = 0
+    val port: Int = 0
 
-    private lateinit var url: String
-
-    @BeforeEach
-    override fun setUp() {
-        super.setUp()
-        url = "http://localhost:$port/cashin/success?amount=10000"
+    @Test
+    fun success() {
+        val url = "http://localhost:$port/cashin/success?amount=10000"
+        assertEndpointEquals("/screens/cashin/success.json", url)
     }
 
     @Test
-    fun index() {
-        assertEndpointEquals("/screens/cashin/success.json", url)
+    fun error() {
+        val url = "http://localhost:$port/cashin/success?amount=10000&error=Unexpected+error"
+        assertEndpointEquals("/screens/cashin/error.json", url)
     }
 }
