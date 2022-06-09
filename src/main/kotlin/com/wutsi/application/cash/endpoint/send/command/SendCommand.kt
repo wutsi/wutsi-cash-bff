@@ -25,6 +25,7 @@ class SendCommand(
         @RequestParam amount: Double,
         @RequestParam(name = "recipient-id") recipientId: Long,
         @RequestParam(name = "recipient-name") recipientName: String,
+        @RequestParam(name = "idempotency-key") idempotencyKey: String
     ): Action {
         val tenant = tenantProvider.get()
         try {
@@ -33,7 +34,8 @@ class SendCommand(
                 CreateTransferRequest(
                     recipientId = recipientId,
                     amount = amount,
-                    currency = tenant.currency
+                    currency = tenant.currency,
+                    idempotencyKey = idempotencyKey
                 )
             )
             logger.add("transaction_id", response.id)

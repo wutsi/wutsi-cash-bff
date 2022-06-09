@@ -18,7 +18,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import kotlin.test.assertEquals
@@ -38,7 +38,8 @@ internal class SendCommandTest : AbstractEndpointTest() {
     override fun setUp() {
         super.setUp()
 
-        url = "http://localhost:$port/commands/send?amount=3000.0&recipient-id=111&recipient-name=YoMan"
+        url =
+            "http://localhost:$port/commands/send?amount=3000.0&recipient-id=111&recipient-name=YoMan&idempotency-key=123"
     }
 
     @Test
@@ -60,6 +61,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(3000.0, req.firstValue.amount)
         assertEquals("XAF", req.firstValue.currency)
         assertEquals(111L, req.firstValue.recipientId)
+        assertEquals("123", req.firstValue.idempotencyKey)
         assertNull(req.firstValue.description)
 
         val action = response.body!!
@@ -86,6 +88,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(3000.0, req.firstValue.amount)
         assertEquals("XAF", req.firstValue.currency)
         assertEquals(111L, req.firstValue.recipientId)
+        assertEquals("123", req.firstValue.idempotencyKey)
         assertNull(req.firstValue.description)
 
         val action = response.body!!
@@ -113,6 +116,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(3000.0, req.firstValue.amount)
         assertEquals("XAF", req.firstValue.currency)
         assertEquals(111L, req.firstValue.recipientId)
+        assertEquals("123", req.firstValue.idempotencyKey)
         assertNull(req.firstValue.description)
 
         val action = response.body!!
@@ -143,6 +147,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertEquals(3000.0, req.firstValue.amount)
         assertEquals("XAF", req.firstValue.currency)
         assertEquals(111L, req.firstValue.recipientId)
+        assertEquals("123", req.firstValue.idempotencyKey)
         assertNull(req.firstValue.description)
 
         val action = response.body!!

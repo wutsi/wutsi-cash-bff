@@ -4,18 +4,23 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
+import com.wutsi.application.cash.service.IdempotencyKeyGenerator
 import com.wutsi.platform.account.dto.GetPaymentMethodResponse
 import com.wutsi.platform.account.dto.PaymentMethod
 import com.wutsi.platform.account.dto.Phone
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.boot.test.web.server.LocalServerPort
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class CashinConfirmScreenTest : AbstractEndpointTest() {
     @LocalServerPort
     val port: Int = 0
+
+    @MockBean
+    private lateinit var idempotencyKeyGenerator: IdempotencyKeyGenerator
 
     private lateinit var url: String
 
@@ -24,6 +29,8 @@ internal class CashinConfirmScreenTest : AbstractEndpointTest() {
         super.setUp()
 
         url = "http://localhost:$port/cashin/confirm?amount=5000&payment-token=4304309409"
+
+        doReturn("123").whenever(idempotencyKeyGenerator).generate()
     }
 
     @Test

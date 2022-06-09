@@ -2,6 +2,7 @@ package com.wutsi.application.cash.endpoint.send.screen
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
+import com.wutsi.application.cash.service.IdempotencyKeyGenerator
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.ui.ProfileCard
@@ -40,6 +41,7 @@ import java.text.DecimalFormat
 class SendConfirmScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
+    private val idempotencyKeyGenerator: IdempotencyKeyGenerator,
 
     @Value("\${wutsi.application.login-url}") private val loginUrl: String,
 ) : AbstractQuery() {
@@ -222,7 +224,9 @@ class SendConfirmScreen(
             "&return-to-route=false" +
             "&return-url=" + encodeURLParam(
             urlBuilder.build(
-                "commands/send?amount=$amount&recipient-id=${recipient.id}&recipient-name=" + encodeURLParam(recipient.displayName)
+                "commands/send?amount=$amount&recipient-id=${recipient.id}" +
+                    "&recipient-name=" + encodeURLParam(recipient.displayName) +
+                    "&idempotency-key=" + idempotencyKeyGenerator.generate()
             )
         )
     }

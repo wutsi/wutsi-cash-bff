@@ -11,10 +11,12 @@ import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashoutResponse
+import com.wutsi.platform.payment.dto.GetTransactionResponse
+import com.wutsi.platform.payment.dto.Transaction
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.boot.test.web.server.LocalServerPort
 import kotlin.test.assertEquals
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -28,7 +30,7 @@ internal class CashoutCommandTest : AbstractEndpointTest() {
     override fun setUp() {
         super.setUp()
 
-        url = "http://localhost:$port/commands/cashout?amount=10000&payment-token=xxx"
+        url = "http://localhost:$port/commands/cashout?amount=10000&payment-token=xxx&idempotency-key=123"
     }
 
     @Test
@@ -53,6 +55,9 @@ internal class CashoutCommandTest : AbstractEndpointTest() {
         // GIVEN
         val resp = CreateCashoutResponse(id = "111", status = Status.PENDING.name)
         doReturn(resp).whenever(paymentApi).createCashout(any())
+
+        val tx = Transaction(status = Status.PENDING.name)
+        doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
 
         // WHEN
         val response = rest.postForEntity(url, null, Action::class.java)
