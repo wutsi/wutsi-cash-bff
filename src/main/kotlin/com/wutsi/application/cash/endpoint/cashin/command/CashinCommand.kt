@@ -56,7 +56,7 @@ class CashinCommand(
             logger.setException(ex)
             val error = getErrorText(ex)
             return gotoUrl(
-                url = urlBuilder.build("/checkout/success?amount=$amount&error=" + encodeURLParam(error))
+                url = urlBuilder.build("cashin/success?amount=$amount&error=" + encodeURLParam(error))
             )
         }
     }

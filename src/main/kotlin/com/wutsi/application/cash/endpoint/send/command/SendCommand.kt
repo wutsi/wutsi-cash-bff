@@ -1,11 +1,8 @@
 package com.wutsi.application.cash.endpoint.send.command
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.wutsi.application.cash.endpoint.AbstractCommand
-import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.flutter.sdui.Action
-import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateTransferRequest
 import feign.FeignException
@@ -18,13 +15,11 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/commands/send")
 class SendCommand(
     private val tenantProvider: TenantProvider,
-    private val objectMapper: ObjectMapper,
 ) : AbstractCommand() {
     @PostMapping
     fun index(
         @RequestParam amount: Double,
         @RequestParam(name = "recipient-id") recipientId: Long,
-        @RequestParam(name = "recipient-name") recipientName: String,
         @RequestParam(name = "idempotency-key") idempotencyKey: String
     ): Action {
         val tenant = tenantProvider.get()
@@ -54,20 +49,13 @@ class SendCommand(
                     )
                 )
         } catch (ex: FeignException) {
-            val transactionEx = TransactionException.of(objectMapper, ex)
-            val error = transactionEx.error
-            val transactionId = transactionEx.transactionId
-            return if (transactionId != null)
-                gotoUrl(
-                    url = urlBuilder.build(
-                        "send/success?error=$error&transaction-id=$transactionId"
-                    )
+            logger.setException(ex)
+            val error = getErrorText(ex)
+            return gotoUrl(
+                url = urlBuilder.build(
+                    "send/success?amount=$amount&recipient-id=$recipientId&error=" + encodeURLParam(error)
                 )
-            else
-                showError(
-                    message = getTransactionErrorMessage(ErrorCode.UNEXPECTED_ERROR),
-                    e = ex
-                )
+            )
         }
     }
 }

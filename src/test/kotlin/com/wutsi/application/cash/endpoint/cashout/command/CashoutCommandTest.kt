@@ -7,7 +7,6 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.wutsi.application.cash.endpoint.AbstractEndpointTest
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.enums.ActionType
-import com.wutsi.flutter.sdui.enums.DialogType
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashoutResponse
@@ -83,8 +82,10 @@ internal class CashoutCommandTest : AbstractEndpointTest() {
         assertEquals(200, response.statusCodeValue)
 
         val action = response.body!!
-        assertEquals(ActionType.Prompt, action.type)
-        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
-        assertEquals(getText("prompt.error.transaction-failed"), action.prompt?.attributes?.get("message"))
+        assertEquals(ActionType.Route, action.type)
+        assertEquals(
+            "http://localhost:0/cashout/success?amount=10000.0&error=Oops%21+An+unexpected+error+has+occurred.+Please%2C+try+again.",
+            action.url
+        )
     }
 }

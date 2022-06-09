@@ -109,7 +109,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         val action = response.body!!
         assertEquals(ActionType.Route, action.type)
         assertEquals(
-            "http://localhost:0/checkout/success?amount=10000.0&error=Oops%21+An+unexpected+error+has+occurred.+Please%2C+try+again.",
+            "http://localhost:0/cashin/success?amount=10000.0&error=Oops%21+An+unexpected+error+has+occurred.+Please%2C+try+again.",
             action.url
         )
     }
@@ -129,7 +129,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         val action = response.body!!
         assertEquals(ActionType.Route, action.type)
         assertEquals(
-            "http://localhost:0/checkout/success?amount=10000.0&error=Sorry%21+You+do+not+have+enough+in+your+Wallet.",
+            "http://localhost:0/cashin/success?amount=10000.0&error=Sorry%21+You+do+not+have+enough+in+your+Wallet.",
             action.url
         )
     }

@@ -225,7 +225,6 @@ class SendConfirmScreen(
             "&return-url=" + encodeURLParam(
             urlBuilder.build(
                 "commands/send?amount=$amount&recipient-id=${recipient.id}" +
-                    "&recipient-name=" + encodeURLParam(recipient.displayName) +
                     "&idempotency-key=" + idempotencyKeyGenerator.generate()
             )
         )

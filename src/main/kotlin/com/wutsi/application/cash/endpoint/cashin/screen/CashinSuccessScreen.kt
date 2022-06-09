@@ -17,6 +17,7 @@ import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.ButtonType.Elevated
 import com.wutsi.flutter.sdui.enums.TextAlignment
+import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -36,10 +37,8 @@ class CashinSuccessScreen(private val tenantProvider: TenantProvider) : Abstract
         @RequestParam(name = "error", required = false) error: String? = null
     ): Widget {
         val tenant = tenantProvider.get()
-        val numberFormat = DecimalFormat(tenant.monetaryFormat)
-        val formattedAmount = numberFormat.format(amount)
         return Screen(
-            id = Page.CASHIN_SUCCESS,
+            id = error?.let { Page.CASHIN_ERROR } ?: Page.CASHIN_SUCCESS,
             safe = true,
             appBar = AppBar(
                 elevation = 0.0,
@@ -57,7 +56,7 @@ class CashinSuccessScreen(private val tenantProvider: TenantProvider) : Abstract
                     Container(
                         alignment = Center,
                         padding = 10.0,
-                        child = getMessage(error)
+                        child = getMessage(amount, error, tenant)
                     ),
                     Container(
                         padding = 10.0,
@@ -89,8 +88,7 @@ class CashinSuccessScreen(private val tenantProvider: TenantProvider) : Abstract
                 color = Theme.COLOR_SUCCESS
             )
 
-
-    private fun getMessage(error: String?): Text =
+    private fun getMessage(amount: Double, error: String?, tenant: Tenant): Text =
         if (error != null)
             Text(
                 caption = error,
@@ -100,10 +98,12 @@ class CashinSuccessScreen(private val tenantProvider: TenantProvider) : Abstract
             )
         else
             Text(
-                caption = getText("page.cashin-success.message"),
+                caption = getText(
+                    "page.cashin-success.message",
+                    arrayOf(DecimalFormat(tenant.monetaryFormat).format(amount))
+                ),
                 color = Theme.COLOR_SUCCESS,
                 bold = true,
                 alignment = TextAlignment.Center,
             )
-
 }

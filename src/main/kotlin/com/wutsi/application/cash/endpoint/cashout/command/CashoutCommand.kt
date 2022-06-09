@@ -1,9 +1,7 @@
 package com.wutsi.application.cash.endpoint.cashout.command
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.cashin.command.CashinCommand
-import com.wutsi.application.cash.exception.TransactionException
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.platform.payment.core.Status
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/commands/cashout")
 class CashoutCommand(
     private val tenantProvider: TenantProvider,
-    private val objectMapper: ObjectMapper,
 ) : AbstractCommand() {
     companion object {
         const val DELAY_SECONDS = 9L
@@ -57,7 +54,11 @@ class CashoutCommand(
                     urlBuilder.build("cashout/pending")
             )
         } catch (ex: FeignException) {
-            throw TransactionException.of(objectMapper, ex)
+            logger.setException(ex)
+            val error = getErrorText(ex)
+            return gotoUrl(
+                url = urlBuilder.build("/cashout/success?amount=$amount&error=" + encodeURLParam(error))
+            )
         }
     }
 

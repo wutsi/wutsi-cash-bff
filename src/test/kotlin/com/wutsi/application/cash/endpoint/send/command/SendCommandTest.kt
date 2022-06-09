@@ -14,13 +14,13 @@ import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.dto.CreateTransferRequest
 import com.wutsi.platform.payment.dto.CreateTransferResponse
+import com.wutsi.platform.payment.error.ErrorURN
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.context.MessageSource
-import org.springframework.context.i18n.LocaleContextHolder
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -39,7 +39,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         super.setUp()
 
         url =
-            "http://localhost:$port/commands/send?amount=3000.0&recipient-id=111&recipient-name=YoMan&idempotency-key=123"
+            "http://localhost:$port/commands/send?amount=3000.0&recipient-id=111&idempotency-key=123"
     }
 
     @Test
@@ -99,7 +99,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
     @Test
     fun transactionError() {
         // GIVEN
-        val ex = createFeignException("failed", ErrorCode.UNEXPECTED_ERROR, "xxx")
+        val ex = createFeignException(ErrorURN.TRANSACTION_FAILED.urn, ErrorCode.UNEXPECTED_ERROR, "xxx")
         doThrow(ex).whenever(paymentApi).createTransfer(any())
 
         // WHEN
@@ -122,7 +122,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         val action = response.body!!
         assertEquals(Route, action.type)
         assertEquals(
-            "http://localhost:0/send/success?error=UNEXPECTED_ERROR&transaction-id=xxx",
+            "http://localhost:0/send/success?amount=3000.0&recipient-id=111&error=Sorry%21+An+unexpected+error+has+occurred.+Please%2C+try+again.",
             action.url
         )
     }
@@ -151,14 +151,10 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertNull(req.firstValue.description)
 
         val action = response.body!!
-        assertEquals(ActionType.Prompt, action.type)
+        assertEquals(ActionType.Route, action.type)
         assertEquals(
-            messageSource.getMessage(
-                "prompt.error.transaction-failed.UNEXPECTED_ERROR",
-                emptyArray(),
-                LocaleContextHolder.getLocale()
-            ),
-            action.prompt?.attributes?.get("message")
+            "http://localhost:0/send/success?amount=3000.0&recipient-id=111&error=Oops%21+An+unexpected+error+has+occurred.+Please%2C+try+again.",
+            action.url
         )
     }
 }

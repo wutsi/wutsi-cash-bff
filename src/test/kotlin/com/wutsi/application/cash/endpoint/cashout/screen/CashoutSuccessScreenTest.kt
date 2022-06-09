@@ -9,7 +9,7 @@ import org.springframework.boot.test.web.server.LocalServerPort
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 internal class CashoutSuccessScreenTest : AbstractEndpointTest() {
     @LocalServerPort
-    public val port: Int = 0
+    val port: Int = 0
 
     private lateinit var url: String
 
@@ -20,7 +20,12 @@ internal class CashoutSuccessScreenTest : AbstractEndpointTest() {
     }
 
     @Test
-    fun index() {
+    fun success() {
         assertEndpointEquals("/screens/cashout/success.json", url)
+    }
+
+    @Test
+    fun error() {
+        assertEndpointEquals("/screens/cashout/error.json", url)
     }
 }

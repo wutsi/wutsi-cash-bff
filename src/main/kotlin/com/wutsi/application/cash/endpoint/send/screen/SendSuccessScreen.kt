@@ -2,6 +2,7 @@ package com.wutsi.application.cash.endpoint.send.screen
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
+import com.wutsi.application.cash.endpoint.cashin.screen.CashinSuccessScreen
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.ui.ProfileCard
@@ -22,10 +23,13 @@ import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.ButtonType.Elevated
 import com.wutsi.flutter.sdui.enums.TextAlignment
 import com.wutsi.platform.account.WutsiAccountApi
+import com.wutsi.platform.account.dto.Account
+import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.text.DecimalFormat
 
 @RestController
 @RequestMapping("/send/success")
@@ -33,17 +37,18 @@ class SendSuccessScreen(
     private val tenantProvider: TenantProvider,
     private val accountApi: WutsiAccountApi,
 ) : AbstractQuery() {
+    companion object {
+        const val ICON_SIZE = 80.0
+    }
+
     @PostMapping
     fun index(
-        @RequestParam(name = "transaction-id") transactionId: String,
+        @RequestParam amount: Double,
+        @RequestParam(name = "recipient-id") recipientId: Long,
         @RequestParam(name = "error", required = false) error: String? = null
     ): Widget {
         val tenant = tenantProvider.get()
-//        val fmt = DecimalFormat(tenant.monetaryFormat)
-        val tx = paymentApi.getTransaction(transactionId).transaction
-        val recipient = accountApi.getAccount(tx.recipientId!!).account
-
-        val amount = tx.amount
+        val recipient = accountApi.getAccount(recipientId).account
 
         return Screen(
             id = Page.SEND_SUCCESS,
@@ -83,20 +88,11 @@ class SendSuccessScreen(
 //                    ),
                     Container(
                         alignment = Center,
-                        child = Icon(
-                            code = error?.let { Theme.ICON_ERROR } ?: Theme.ICON_CHECK_CIRCLE,
-                            size = 48.0,
-                            color = error?.let { Theme.COLOR_DANGER } ?: Theme.COLOR_SUCCESS
-                        )
+                        child = getIcon(error)
                     ),
                     Container(
                         alignment = Center,
-                        child = Text(
-                            error?.let { getTransactionErrorMessage(it) } ?: "",
-                            color = Theme.COLOR_DANGER,
-                            alignment = TextAlignment.Center,
-                            bold = true
-                        ),
+                        child = getMessage(amount, recipient, error, tenant),
                     ),
                     Container(
                         padding = 10.0,
@@ -113,4 +109,37 @@ class SendSuccessScreen(
             ),
         ).toWidget()
     }
+
+    private fun getIcon(error: String?): Icon =
+        if (error != null)
+            Icon(
+                code = Theme.ICON_ERROR,
+                size = CashinSuccessScreen.ICON_SIZE,
+                color = Theme.COLOR_DANGER
+            )
+        else
+            Icon(
+                code = Theme.ICON_CHECK_CIRCLE,
+                size = CashinSuccessScreen.ICON_SIZE,
+                color = Theme.COLOR_SUCCESS
+            )
+
+    private fun getMessage(amount: Double, recipient: Account, error: String?, tenant: Tenant): Text =
+        if (error != null)
+            Text(
+                caption = error,
+                color = Theme.COLOR_DANGER,
+                bold = true,
+                alignment = TextAlignment.Center,
+            )
+        else
+            Text(
+                caption = getText(
+                    "page.send.success-message",
+                    arrayOf(DecimalFormat(tenant.monetaryFormat).format(amount), recipient.displayName)
+                ),
+                color = Theme.COLOR_SUCCESS,
+                bold = true,
+                alignment = TextAlignment.Center,
+            )
 }

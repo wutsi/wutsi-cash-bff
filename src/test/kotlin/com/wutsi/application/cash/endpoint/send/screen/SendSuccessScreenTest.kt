@@ -46,14 +46,14 @@ internal class SendSuccessScreenTest : AbstractEndpointTest() {
 
     @Test
     fun success() {
-        val url = "http://localhost:$port/send/success?transaction-id=xxx"
+        val url = "http://localhost:$port/send/success?amount=1100&recipient-id=123"
         assertEndpointEquals("/screens/send/success.json", url)
     }
 
     @Test
     fun error() {
         val url =
-            "http://localhost:$port/send/success?transaction-id=xxx&error=${ErrorCode.NOT_ENOUGH_FUNDS}"
+            "http://localhost:$port/send/success?amount=1100&recipient-id=123&error=${ErrorCode.NOT_ENOUGH_FUNDS}"
         assertEndpointEquals("/screens/send/error.json", url)
     }
 }

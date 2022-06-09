@@ -1,7 +1,7 @@
 {
   "type": "Screen",
   "attributes": {
-    "id": "page.cashin.success",
+    "id": "page.cashin.error",
     "safe": true
   },
   "children": [

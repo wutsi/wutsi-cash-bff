@@ -2,6 +2,7 @@ package com.wutsi.application.cash.endpoint.cashout.screen
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
+import com.wutsi.application.cash.endpoint.cashin.screen.CashinSuccessScreen
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.flutter.sdui.Action
@@ -17,6 +18,7 @@ import com.wutsi.flutter.sdui.enums.ActionType.Route
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.ButtonType.Elevated
 import com.wutsi.flutter.sdui.enums.TextAlignment
+import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -27,12 +29,13 @@ import java.text.DecimalFormat
 @RequestMapping("/cashout/success")
 class CashoutSuccessScreen(private val tenantProvider: TenantProvider) : AbstractQuery() {
     @PostMapping
-    fun index(@RequestParam amount: Double): Widget {
+    fun index(
+        @RequestParam amount: Double,
+        @RequestParam(name = "error", required = false) error: String? = null
+    ): Widget {
         val tenant = tenantProvider.get()
-        val numberFormat = DecimalFormat(tenant.monetaryFormat)
-        val formattedAmount = numberFormat.format(amount)
         return Screen(
-            id = Page.CASHOUT_SUCCESS,
+            id = error?.let { Page.CASHOUT_ERROR } ?: Page.CASHOUT_SUCCESS,
             safe = true,
             appBar = AppBar(
                 elevation = 0.0,
@@ -45,22 +48,12 @@ class CashoutSuccessScreen(private val tenantProvider: TenantProvider) : Abstrac
                     Container(
                         alignment = Center,
                         padding = 20.0,
-                        child = Icon(
-                            code = Theme.ICON_CHECK_CIRCLE,
-                            size = 80.0,
-                            color = Theme.COLOR_SUCCESS
-                        )
+                        child = getIcon(error)
                     ),
                     Container(
                         alignment = Center,
                         padding = 10.0,
-                        child = Text(
-                            caption = getText(
-                                "page.cashout-success.message", arrayOf(formattedAmount)
-                            ),
-                            alignment = TextAlignment.Center,
-                            size = Theme.TEXT_SIZE_X_LARGE,
-                        )
+                        child = getMessage(amount, error, tenant)
                     ),
                     Container(
                         padding = 10.0,
@@ -77,4 +70,37 @@ class CashoutSuccessScreen(private val tenantProvider: TenantProvider) : Abstrac
             ),
         ).toWidget()
     }
+
+    private fun getIcon(error: String?): Icon =
+        if (error != null)
+            Icon(
+                code = Theme.ICON_ERROR,
+                size = CashinSuccessScreen.ICON_SIZE,
+                color = Theme.COLOR_DANGER
+            )
+        else
+            Icon(
+                code = Theme.ICON_CHECK_CIRCLE,
+                size = CashinSuccessScreen.ICON_SIZE,
+                color = Theme.COLOR_SUCCESS
+            )
+
+    private fun getMessage(amount: Double, error: String?, tenant: Tenant): Text =
+        if (error != null)
+            Text(
+                caption = error,
+                color = Theme.COLOR_DANGER,
+                bold = true,
+                alignment = TextAlignment.Center,
+            )
+        else
+            Text(
+                caption = getText(
+                    "page.cashout-success.message",
+                    arrayOf(DecimalFormat(tenant.monetaryFormat).format(amount))
+                ),
+                color = Theme.COLOR_SUCCESS,
+                bold = true,
+                alignment = TextAlignment.Center,
+            )
 }

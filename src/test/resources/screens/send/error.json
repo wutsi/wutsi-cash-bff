@@ -34,9 +34,11 @@
                       },
                       "children": [
                         {
-                          "type": "Image",
+                          "type": "Text",
                           "attributes": {
-                            "url": "https://www.goo.com/1.png"
+                            "caption": "RS",
+                            "bold": true,
+                            "size": 24.0
                           },
                           "children": []
                         }
@@ -53,13 +55,68 @@
                     {
                       "type": "Text",
                       "attributes": {
-                        "caption": "Roger Milla",
+                        "caption": "Ray Sponsible",
                         "color": "#1D7EDF",
                         "bold": true,
                         "size": 16.0,
                         "alignment": "Center"
                       },
                       "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "attributes": {
+                    "padding": 10.0
+                  },
+                  "children": [
+                    {
+                      "type": "Wrap",
+                      "attributes": {
+                        "spacing": 10.0,
+                        "runSpacing": 10.0,
+                        "direction": "Horizontal"
+                      },
+                      "children": [
+                        {
+                          "type": "Container",
+                          "attributes": {},
+                          "children": [
+                            {
+                              "type": "Row",
+                              "attributes": {
+                                "mainAxisSize": "min"
+                              },
+                              "children": [
+                                {
+                                  "type": "Icon",
+                                  "attributes": {
+                                    "code": "e4c9",
+                                    "size": 16.0
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "padding": 2.0
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "type": "Text",
+                                  "attributes": {
+                                    "caption": "Cameroon",
+                                    "color": "#95A5A6"
+                                  },
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -94,7 +151,7 @@
               "type": "Icon",
               "attributes": {
                 "code": "e238",
-                "size": 48.0,
+                "size": 80.0,
                 "color": "#8B0000"
               },
               "children": []
@@ -110,7 +167,7 @@
             {
               "type": "Text",
               "attributes": {
-                "caption": "Sorry! You do not have enough in your Wallet.",
+                "caption": "NOT_ENOUGH_FUNDS",
                 "color": "#8B0000",
                 "bold": true,
                 "alignment": "Center"

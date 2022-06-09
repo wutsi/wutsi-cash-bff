@@ -44,7 +44,7 @@
             {
               "type": "Text",
               "attributes": {
-                "caption": "{0} Added to your Wallet.",
+                "caption": "10,000 XAF Added to your Wallet.",
                 "color": "#4CAF50",
                 "bold": true,
                 "alignment": "Center"
