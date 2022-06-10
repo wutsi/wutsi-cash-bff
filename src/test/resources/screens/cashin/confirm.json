@@ -96,6 +96,53 @@
             {
               "type": "Container",
               "attributes": {
+                "padding": 10.0
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "Transaction Fees: 50 XAF",
+                    "bold": true
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "attributes": {
+                "padding": 10.0
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "attributes": {
+                    "mainAxisAlignment": "start",
+                    "crossAxisAlignment": "start"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "attributes": {
+                        "caption": "5,050 XAF will be debited from your account"
+                      },
+                      "children": []
+                    },
+                    {
+                      "type": "Text",
+                      "attributes": {
+                        "caption": "5,000 XAF will transfered into your Wallet."
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "attributes": {
                 "padding": 20.0
               },
               "children": []
@@ -112,7 +159,7 @@
                     "name": "command",
                     "hideText": false,
                     "required": false,
-                    "caption": "Cash In 5,000 XAF",
+                    "caption": "Add 5,000 XAF",
                     "enabled": true,
                     "readOnly": false,
                     "type": "Submit",

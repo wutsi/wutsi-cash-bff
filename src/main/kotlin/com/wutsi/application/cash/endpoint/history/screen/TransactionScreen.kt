@@ -159,19 +159,22 @@ class TransactionScreen(
         }
 
     private fun amount(tx: Transaction): Double =
-        tx.amount
+        if (isSender(tx))
+            tx.amount
+        else
+            tx.net
 
     private fun fees(tx: Transaction): Double =
-        if (isRecipient(tx))
+        if ((isSender(tx) && tx.applyFeesToSender) || (isRecipient(tx) && !tx.applyFeesToSender))
             tx.fees
         else
             0.0
 
+    private fun isSender(tx: Transaction): Boolean =
+        tx.accountId == securityContext.currentAccountId()
+
     private fun isRecipient(tx: Transaction): Boolean =
-        if (tx.type == TransactionType.CASHIN.name)
-            tx.accountId == securityContext.currentAccountId()
-        else
-            tx.recipientId == securityContext.currentAccountId()
+        tx.recipientId == securityContext.currentAccountId()
 
     private fun toSenderWidget(
         tx: Transaction,
