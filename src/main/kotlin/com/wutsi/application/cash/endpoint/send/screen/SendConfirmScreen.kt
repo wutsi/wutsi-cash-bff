@@ -28,6 +28,8 @@ import com.wutsi.platform.account.dto.Account
 import com.wutsi.platform.account.dto.SearchAccountRequest
 import com.wutsi.platform.core.error.Error
 import com.wutsi.platform.core.error.exception.BadRequestException
+import com.wutsi.platform.payment.dto.ComputeFeesRequest
+import com.wutsi.platform.payment.entity.TransactionType
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
@@ -82,6 +84,14 @@ class SendConfirmScreen(
     ): Widget {
         // Adjust amount
         val fmt = DecimalFormat(tenant.monetaryFormat)
+        val fees = paymentApi.computeFees(
+            request = ComputeFeesRequest(
+                transactionType = TransactionType.TRANSFER.name,
+                paymentMethodType = null,
+                amount = amount,
+                currency = tenant.currency
+            )
+        ).fee
 
         return Screen(
             id = Page.SEND_CONFIRM,
@@ -90,7 +100,7 @@ class SendConfirmScreen(
                 elevation = 0.0,
                 backgroundColor = Theme.COLOR_WHITE,
                 foregroundColor = Theme.COLOR_BLACK,
-                title = getText("page.send-confirm.title"),
+                title = getText("page.send.confirm.title"),
                 actions = listOf(
                     IconButton(
                         icon = Theme.ICON_CANCEL,
@@ -115,12 +125,13 @@ class SendConfirmScreen(
                         numberFormat = tenant.numberFormat,
                         color = Theme.COLOR_PRIMARY,
                     ),
+                    toFeeDetailsWidget(fees, fmt, Page.SEND_CONFIRM),
                     Container(
                         padding = 10.0,
                         child = Input(
                             name = "command",
                             type = Submit,
-                            caption = getText("page.send-confirm.button.submit", arrayOf(fmt.format(amount))),
+                            caption = getText("page.send.confirm.button.submit", arrayOf(fmt.format(amount))),
                             action = Action(
                                 type = ActionType.Route,
                                 url = urlBuilder.build(loginUrl, getSubmitUrl(amount, recipient)),
@@ -161,7 +172,7 @@ class SendConfirmScreen(
                     alignment = Center,
                     padding = 10.0,
                     child = Text(
-                        caption = getText("page.send-confirm.recipient-not-found"),
+                        caption = getText("page.send.confirm.recipient-not-found"),
                         alignment = TextAlignment.Center,
                         size = Theme.TEXT_SIZE_X_LARGE,
                     )
@@ -173,7 +184,7 @@ class SendConfirmScreen(
                     alignment = Center,
                     padding = 10.0,
                     child = Text(
-                        caption = getText("page.send-confirm.invite", arrayOf(tenant.name)),
+                        caption = getText("page.send.confirm.invite", arrayOf(tenant.name)),
                         alignment = TextAlignment.Center,
                         size = Theme.TEXT_SIZE_X_LARGE,
                     )
@@ -182,13 +193,13 @@ class SendConfirmScreen(
                     padding = 10.0,
                     child = Button(
                         caption = getText(
-                            "page.send-confirm.button.invite",
+                            "page.send.confirm.button.invite",
                             arrayOf(formattedPhoneNumber(phoneNumber))
                         ),
                         action = Action(
                             type = ActionType.Share,
                             message = getText(
-                                "page.send-confirm.invite.message",
+                                "page.send.confirm.invite.message",
                                 arrayOf(tenant.name, tenant.installUrl)
                             )
                         )

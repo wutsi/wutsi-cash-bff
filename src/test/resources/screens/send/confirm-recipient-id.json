@@ -80,12 +80,65 @@
         {
           "type": "MoneyText",
           "attributes": {
-            "value": 3000.0,
+            "value": 1000.0,
             "color": "#1D7EDF",
             "currency": "CFA",
             "numberFormat": "#,###,##0"
           },
           "children": []
+        },
+        {
+          "type": "Column",
+          "attributes": {},
+          "children": [
+            {
+              "type": "Container",
+              "attributes": {
+                "padding": 10.0
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "caption": "Transaction Fees: 100 XAF",
+                    "bold": true
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "type": "Container",
+              "attributes": {
+                "padding": 10.0
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "attributes": {
+                    "mainAxisAlignment": "start",
+                    "crossAxisAlignment": "start"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "attributes": {
+                        "caption": "1,100 XAF will be debited from your Wallet"
+                      },
+                      "children": []
+                    },
+                    {
+                      "type": "Text",
+                      "attributes": {
+                        "caption": "1,000 XAF will be transferred to your recipient."
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
           "type": "Container",
@@ -99,7 +152,7 @@
                 "name": "command",
                 "hideText": false,
                 "required": false,
-                "caption": "Send 3,000 XAF",
+                "caption": "Send 1,000 XAF",
                 "enabled": true,
                 "readOnly": false,
                 "type": "Submit",
@@ -108,7 +161,7 @@
               "children": [],
               "action": {
                 "type": "Route",
-                "url": "https://wutsi-gateway-test.herokuapp.com/login/?phone=%2B237999999999&icon=f197&screen-id=page.send.pin&title=Authorization&sub-title=Enter+your+PIN+to+authorise+the+transaction.&auth=false&return-to-route=false&return-url=http%3A%2F%2Flocalhost%3A0%2Fcommands%2Fsend%3Famount%3D3000.0%26recipient-id%3D111%26idempotency-key%3D123"
+                "url": "https://wutsi-gateway-test.herokuapp.com/login/?phone=%2B237999999999&icon=f197&screen-id=page.send.pin&title=Authorization&sub-title=Enter+your+PIN+to+authorise+the+transaction.&auth=false&return-to-route=false&return-url=http%3A%2F%2Flocalhost%3A0%2Fcommands%2Fsend%3Famount%3D1000.0%26recipient-id%3D111%26idempotency-key%3D123"
               }
             }
           ]
