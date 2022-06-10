@@ -23,6 +23,8 @@ import com.wutsi.flutter.sdui.enums.CrossAxisAlignment
 import com.wutsi.flutter.sdui.enums.InputType.Submit
 import com.wutsi.flutter.sdui.enums.MainAxisAlignment
 import com.wutsi.platform.account.WutsiAccountApi
+import com.wutsi.platform.payment.dto.ComputeFeesRequest
+import com.wutsi.platform.payment.entity.TransactionType
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -50,14 +52,22 @@ class CashoutConfirmScreen(
         val fmt = DecimalFormat(tenant.monetaryFormat)
         val paymentMethod = accountApi.getPaymentMethod(accountId, paymentToken).paymentMethod
         val carrier = tenantProvider.mobileCarriers(tenant).find { it.code.equals(paymentMethod.provider, true) }
+        val fees = paymentApi.computeFees(
+            request = ComputeFeesRequest(
+                transactionType = TransactionType.CASHOUT.name,
+                paymentMethodType = paymentMethod.type,
+                amount = amount,
+                currency = tenant.currency
+            )
+        ).fee
 
         return Screen(
-            id = Page.CASHIN_CONFIRM,
+            id = Page.CASHOUT_CONFIRM,
             appBar = AppBar(
                 elevation = 0.0,
                 backgroundColor = Theme.COLOR_WHITE,
                 foregroundColor = Theme.COLOR_BLACK,
-                title = getText("page.cashout-confirm.app-bar.title", arrayOf(fmt.format(balance.value)))
+                title = getText("page.cashout.confirm.app-bar.title", arrayOf(fmt.format(balance.value)))
             ),
             child = Container(
                 alignment = Center,
@@ -93,6 +103,7 @@ class CashoutConfirmScreen(
                                 color = Theme.COLOR_PRIMARY
                             ),
                         ),
+                        toFeeDetailsWidget(fees, fmt, Page.CASHOUT_CONFIRM),
                         Container(padding = 20.0),
                         Container(
                             padding = 10.0,
@@ -100,7 +111,7 @@ class CashoutConfirmScreen(
                                 name = "command",
                                 type = Submit,
                                 caption = getText(
-                                    "page.cashout-confirm.button.submit",
+                                    "page.cashout.confirm.button.submit",
                                     arrayOf(fmt.format(amount))
                                 ),
                                 action = Action(

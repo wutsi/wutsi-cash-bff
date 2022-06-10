@@ -94,47 +94,53 @@
               ]
             },
             {
-              "type": "Container",
-              "attributes": {
-                "padding": 10.0
-              },
+              "type": "Column",
+              "attributes": {},
               "children": [
                 {
-                  "type": "Text",
+                  "type": "Container",
                   "attributes": {
-                    "caption": "Transaction Fees: 50 XAF",
-                    "bold": true
-                  },
-                  "children": []
-                }
-              ]
-            },
-            {
-              "type": "Container",
-              "attributes": {
-                "padding": 10.0
-              },
-              "children": [
-                {
-                  "type": "Column",
-                  "attributes": {
-                    "mainAxisAlignment": "start",
-                    "crossAxisAlignment": "start"
+                    "padding": 10.0
                   },
                   "children": [
                     {
                       "type": "Text",
                       "attributes": {
-                        "caption": "5,050 XAF will be debited from your account"
+                        "caption": "Transaction Fees: 50 XAF",
+                        "bold": true
                       },
                       "children": []
-                    },
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "attributes": {
+                    "padding": 10.0
+                  },
+                  "children": [
                     {
-                      "type": "Text",
+                      "type": "Column",
                       "attributes": {
-                        "caption": "5,000 XAF will transfered into your Wallet."
+                        "mainAxisAlignment": "start",
+                        "crossAxisAlignment": "start"
                       },
-                      "children": []
+                      "children": [
+                        {
+                          "type": "Text",
+                          "attributes": {
+                            "caption": "5,050 XAF will be debited from your account"
+                          },
+                          "children": []
+                        },
+                        {
+                          "type": "Text",
+                          "attributes": {
+                            "caption": "5,000 XAF will be transferred into your Wallet."
+                          },
+                          "children": []
+                        }
+                      ]
                     }
                   ]
                 }

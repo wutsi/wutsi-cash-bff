@@ -8,6 +8,8 @@ import com.wutsi.application.cash.service.IdempotencyKeyGenerator
 import com.wutsi.platform.account.dto.GetPaymentMethodResponse
 import com.wutsi.platform.account.dto.PaymentMethod
 import com.wutsi.platform.account.dto.Phone
+import com.wutsi.platform.payment.dto.ComputeFeesResponse
+import com.wutsi.platform.payment.dto.TransactionFee
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -24,17 +26,21 @@ internal class CashoutConfirmScreenTest : AbstractEndpointTest() {
     @MockBean
     private lateinit var idempotencyKeyGenerator: IdempotencyKeyGenerator
 
+    val amount = 1000.0
+    val fees = 20.0
+
     @BeforeEach
     override fun setUp() {
         super.setUp()
 
-        url = "http://localhost:$port/cashout/confirm?amount=5000&payment-token=4304309409"
+        url = "http://localhost:$port/cashout/confirm?amount=$amount&payment-token=4304309409"
 
         doReturn("123").whenever(idempotencyKeyGenerator).generate()
     }
 
     @Test
     fun confirm() {
+        // GIVEN
         val response = GetPaymentMethodResponse(
             paymentMethod = PaymentMethod(
                 token = "xxxxxx",
@@ -47,6 +53,16 @@ internal class CashoutConfirmScreenTest : AbstractEndpointTest() {
         )
         doReturn(response).whenever(accountApi).getPaymentMethod(any(), any())
 
+        val transactionFee = TransactionFee(
+            amount = amount,
+            fees = fees,
+            senderAmount = amount + fees,
+            recipientAmount = amount,
+            applyFeesToSender = true
+        )
+        doReturn(ComputeFeesResponse(transactionFee)).whenever(paymentApi).computeFees(any())
+
+        // WHEN/THEN
         assertEndpointEquals("/screens/cashout/confirm.json", url)
     }
 }

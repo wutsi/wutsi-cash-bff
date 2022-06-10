@@ -239,7 +239,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "10,000 XAF",
+                                "caption": "9,000 XAF",
                                 "color": "#856404",
                                 "bold": true,
                                 "alignment": "Right"
@@ -306,7 +306,7 @@
                             {
                               "type": "Text",
                               "attributes": {
-                                "caption": "10,000 XAF",
+                                "caption": "9,000 XAF",
                                 "color": "#4CAF50",
                                 "bold": true,
                                 "alignment": "Right"

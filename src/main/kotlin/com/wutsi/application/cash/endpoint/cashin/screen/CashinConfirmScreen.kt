@@ -17,7 +17,6 @@ import com.wutsi.flutter.sdui.Row
 import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
-import com.wutsi.flutter.sdui.WidgetAware
 import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.Alignment.Center
 import com.wutsi.flutter.sdui.enums.CrossAxisAlignment
@@ -25,7 +24,6 @@ import com.wutsi.flutter.sdui.enums.InputType.Submit
 import com.wutsi.flutter.sdui.enums.MainAxisAlignment
 import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.payment.dto.ComputeFeesRequest
-import com.wutsi.platform.payment.dto.TransactionFee
 import com.wutsi.platform.payment.entity.TransactionType
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
@@ -69,12 +67,12 @@ class CashinConfirmScreen(
                 elevation = 0.0,
                 backgroundColor = Theme.COLOR_WHITE,
                 foregroundColor = Theme.COLOR_BLACK,
-                title = getText("page.cashin-confirm.app-bar.title", arrayOf(fmt.format(balance.value)))
+                title = getText("page.cashin.confirm.app-bar.title", arrayOf(fmt.format(balance.value)))
             ),
             child = Container(
                 alignment = Center,
                 child = Column(
-                    children = listOfNotNull(
+                    children = listOf(
                         Container(padding = 10.0),
                         Container(
                             padding = 10.0,
@@ -105,22 +103,7 @@ class CashinConfirmScreen(
                                 color = Theme.COLOR_PRIMARY
                             ),
                         ),
-                        Container(
-                            padding = 10.0,
-                            child = Text(
-                                caption = getText(
-                                    "page.cashin-confirm.transaction-fees",
-                                    arrayOf(fmt.format(fees.fees)),
-                                ),
-                                bold = true
-                            )
-                        ),
-
-                        if (fees.fees > 0)
-                            toFeeDetailsWidget(fees, fmt)
-                        else
-                            null,
-
+                        toFeeDetailsWidget(fees, fmt, Page.CASHIN_CONFIRM),
                         Container(padding = 20.0),
                         Container(
                             padding = 10.0,
@@ -128,7 +111,7 @@ class CashinConfirmScreen(
                                 name = "command",
                                 type = Submit,
                                 caption = getText(
-                                    "page.cashin-confirm.button.submit",
+                                    "page.cashin.confirm.button.submit",
                                     arrayOf(fmt.format(amount))
                                 ),
                                 action = Action(
@@ -142,19 +125,6 @@ class CashinConfirmScreen(
             ),
         ).toWidget()
     }
-
-    private fun toFeeDetailsWidget(fee: TransactionFee, fmt: DecimalFormat): WidgetAware =
-        Container(
-            padding = 10.0,
-            child = Column(
-                mainAxisAlignment = MainAxisAlignment.start,
-                crossAxisAlignment = CrossAxisAlignment.start,
-                children = listOf(
-                    Text(getText("page.cashin-confirm.sender-amount", arrayOf(fmt.format(fee.senderAmount)))),
-                    Text(getText("page.cashin-confirm.recipient-amount", arrayOf(fmt.format(fee.recipientAmount))))
-                )
-            )
-        )
 
     private fun getSubmitUrl(amount: Double, paymentToken: String): String {
         val me = accountApi.getAccount(securityContext.currentAccountId()).account

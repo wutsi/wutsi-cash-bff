@@ -39,6 +39,7 @@ internal class CashinConfirmScreenTest : AbstractEndpointTest() {
 
     @Test
     fun confirm() {
+        // GIVEN
         val response = GetPaymentMethodResponse(
             paymentMethod = PaymentMethod(
                 token = "xxxxxx",
@@ -60,6 +61,7 @@ internal class CashinConfirmScreenTest : AbstractEndpointTest() {
         )
         doReturn(ComputeFeesResponse(transactionFee)).whenever(paymentApi).computeFees(any())
 
+        // THEN
         assertEndpointEquals("/screens/cashin/confirm.json", url)
     }
 }

@@ -1,7 +1,7 @@
 {
   "type": "Screen",
   "attributes": {
-    "id": "page.cashin.confirm",
+    "id": "page.cashout.confirm",
     "safe": false
   },
   "children": [
@@ -84,12 +84,65 @@
                 {
                   "type": "MoneyText",
                   "attributes": {
-                    "value": 5000.0,
+                    "value": 1000.0,
                     "color": "#1D7EDF",
                     "currency": "XAF",
                     "numberFormat": "#,###,##0"
                   },
                   "children": []
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "attributes": {},
+              "children": [
+                {
+                  "type": "Container",
+                  "attributes": {
+                    "padding": 10.0
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "attributes": {
+                        "caption": "Transaction Fees: 20 XAF",
+                        "bold": true
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "attributes": {
+                    "padding": 10.0
+                  },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "attributes": {
+                        "mainAxisAlignment": "start",
+                        "crossAxisAlignment": "start"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "attributes": {
+                            "caption": "1,020 XAF will be debited from your Wallet"
+                          },
+                          "children": []
+                        },
+                        {
+                          "type": "Text",
+                          "attributes": {
+                            "caption": "1,000 XAF will be transferred into your account."
+                          },
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -112,7 +165,7 @@
                     "name": "command",
                     "hideText": false,
                     "required": false,
-                    "caption": "Cash Out 5,000 XAF",
+                    "caption": "Cash Out 1,000 XAF",
                     "enabled": true,
                     "readOnly": false,
                     "type": "Submit",
@@ -121,7 +174,7 @@
                   "children": [],
                   "action": {
                     "type": "Route",
-                    "url": "https://wutsi-gateway-test.herokuapp.com/login/?phone=%2B237699999999&icon=f197&screen-id=page.cashout.pin&title=Authorization&sub-title=Enter+your+PIN+to+authorize+the+transaction.&auth=false&return-to-route=false&return-url=http%3A%2F%2Flocalhost%3A0%2Fcommands%2Fcashout%3Famount%3D5000.0%26payment-token%3D4304309409%26idempotency-key%3D123"
+                    "url": "https://wutsi-gateway-test.herokuapp.com/login/?phone=%2B237699999999&icon=f197&screen-id=page.cashout.pin&title=Authorization&sub-title=Enter+your+PIN+to+authorize+the+transaction.&auth=false&return-to-route=false&return-url=http%3A%2F%2Flocalhost%3A0%2Fcommands%2Fcashout%3Famount%3D1000.0%26payment-token%3D4304309409%26idempotency-key%3D123"
                   }
                 }
               ]

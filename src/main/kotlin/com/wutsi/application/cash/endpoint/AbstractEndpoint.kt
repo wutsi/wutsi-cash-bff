@@ -11,19 +11,24 @@ import com.wutsi.application.shared.service.TogglesProvider
 import com.wutsi.application.shared.service.URLBuilder
 import com.wutsi.application.shared.ui.BottomNavigationBarWidget
 import com.wutsi.flutter.sdui.Action
+import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
 import com.wutsi.flutter.sdui.Dialog
+import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.WidgetAware
 import com.wutsi.flutter.sdui.enums.ActionType.Page
 import com.wutsi.flutter.sdui.enums.ActionType.Prompt
 import com.wutsi.flutter.sdui.enums.ActionType.Route
+import com.wutsi.flutter.sdui.enums.CrossAxisAlignment
 import com.wutsi.flutter.sdui.enums.DialogType.Error
+import com.wutsi.flutter.sdui.enums.MainAxisAlignment
 import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.core.error.ErrorResponse
 import com.wutsi.platform.core.logging.KVLogger
 import com.wutsi.platform.payment.WutsiPaymentApi
 import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Money
+import com.wutsi.platform.payment.dto.TransactionFee
 import com.wutsi.platform.tenant.dto.MobileCarrier
 import com.wutsi.platform.tenant.dto.Tenant
 import feign.FeignException
@@ -33,6 +38,7 @@ import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.web.bind.annotation.ExceptionHandler
 import java.net.URLEncoder
+import java.text.DecimalFormat
 
 abstract class AbstractEndpoint {
     @Autowired
@@ -216,4 +222,31 @@ abstract class AbstractEndpoint {
         width = Double.MAX_VALUE,
         child = child,
     )
+
+    protected fun toFeeDetailsWidget(fees: TransactionFee, fmt: DecimalFormat, prefix: String): WidgetAware =
+        Column(
+            children = listOfNotNull(
+                Container(
+                    padding = 10.0,
+                    child = Text(
+                        caption = getText(
+                            "$prefix.transaction-fees",
+                            arrayOf(fmt.format(fees.fees)),
+                        ),
+                        bold = true
+                    )
+                ),
+                Container(
+                    padding = 10.0,
+                    child = Column(
+                        mainAxisAlignment = MainAxisAlignment.start,
+                        crossAxisAlignment = CrossAxisAlignment.start,
+                        children = listOf(
+                            Text(getText("$prefix.sender-amount", arrayOf(fmt.format(fees.senderAmount)))),
+                            Text(getText("$prefix.recipient-amount", arrayOf(fmt.format(fees.recipientAmount))))
+                        )
+                    )
+                )
+            )
+        )
 }

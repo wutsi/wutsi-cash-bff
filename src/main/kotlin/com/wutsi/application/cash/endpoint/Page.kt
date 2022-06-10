@@ -8,6 +8,7 @@ object Page {
     const val CASHIN_PENDING = "page.cashin.pending"
     const val CASHIN_PIN = "page.cashin.pin"
     const val CASHOUT = "page.cashout"
+    const val CASHOUT_CONFIRM = "page.cashout.confirm"
     const val CASHOUT_SUCCESS = "page.cashout.success"
     const val CASHOUT_ERROR = "page.cashout.error"
     const val CASHOUT_PENDING = "page.cashout.pending"
