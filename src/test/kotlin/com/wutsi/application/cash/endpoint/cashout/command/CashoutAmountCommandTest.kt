@@ -82,7 +82,6 @@ internal class CashoutAmountCommandTest : AbstractEndpointTest() {
         assertEquals(getText("prompt.error.amount-required"), action.prompt?.attributes?.get("message"))
     }
 
-
     @Test
     fun notEnoughFunds() {
         // WHEN
