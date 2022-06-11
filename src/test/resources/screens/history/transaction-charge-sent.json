@@ -58,7 +58,63 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "Date",
+                                    "caption": "ID:",
+                                    "bold": true,
+                                    "alignment": "Right"
+                                  },
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Flexible",
+                          "attributes": {
+                            "flex": 3,
+                            "fit": "Tight"
+                          },
+                          "children": [
+                            {
+                              "type": "Text",
+                              "attributes": {
+                                "caption": "13230923092aef",
+                                "size": 10.0
+                              },
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "attributes": {
+                        "color": "#8c8c8c"
+                      },
+                      "children": []
+                    },
+                    {
+                      "type": "Row",
+                      "attributes": {},
+                      "children": [
+                        {
+                          "type": "Flexible",
+                          "attributes": {
+                            "flex": 1,
+                            "fit": "Tight"
+                          },
+                          "children": [
+                            {
+                              "type": "Container",
+                              "attributes": {
+                                "padding": 10.0
+                              },
+                              "children": [
+                                {
+                                  "type": "Text",
+                                  "attributes": {
+                                    "caption": "Date:",
                                     "bold": true,
                                     "alignment": "Right"
                                   },
@@ -122,7 +178,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "Type",
+                                    "caption": "Type:",
                                     "bold": true,
                                     "alignment": "Right"
                                   },
@@ -186,7 +242,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "Status",
+                                    "caption": "Status:",
                                     "bold": true,
                                     "alignment": "Right"
                                   },
@@ -252,7 +308,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "Amount",
+                                    "caption": "Amount:",
                                     "bold": true,
                                     "alignment": "Right"
                                   },
@@ -316,7 +372,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "Fees",
+                                    "caption": "Fees:",
                                     "bold": true,
                                     "alignment": "Right"
                                   },
@@ -343,6 +399,70 @@
                                   "type": "Text",
                                   "attributes": {
                                     "caption": "0 XAF",
+                                    "alignment": "Left"
+                                  },
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "attributes": {
+                        "color": "#8c8c8c"
+                      },
+                      "children": []
+                    },
+                    {
+                      "type": "Row",
+                      "attributes": {},
+                      "children": [
+                        {
+                          "type": "Flexible",
+                          "attributes": {
+                            "flex": 1,
+                            "fit": "Tight"
+                          },
+                          "children": [
+                            {
+                              "type": "Container",
+                              "attributes": {
+                                "padding": 10.0
+                              },
+                              "children": [
+                                {
+                                  "type": "Text",
+                                  "attributes": {
+                                    "caption": "Net:",
+                                    "bold": true,
+                                    "alignment": "Right"
+                                  },
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Flexible",
+                          "attributes": {
+                            "flex": 3,
+                            "fit": "Tight"
+                          },
+                          "children": [
+                            {
+                              "type": "Container",
+                              "attributes": {
+                                "padding": 10.0
+                              },
+                              "children": [
+                                {
+                                  "type": "Text",
+                                  "attributes": {
+                                    "caption": "10,100 XAF",
                                     "alignment": "Left"
                                   },
                                   "children": []
@@ -394,7 +514,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "From",
+                                    "caption": "From:",
                                     "bold": true,
                                     "alignment": "Right"
                                   },
@@ -460,7 +580,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "To",
+                                    "caption": "To:",
                                     "bold": true,
                                     "alignment": "Right"
                                   },
@@ -515,7 +635,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "Order",
+                                    "caption": "Order:",
                                     "bold": true,
                                     "alignment": "Right"
                                   },
@@ -535,7 +655,7 @@
                             {
                               "type": "ListItem",
                               "attributes": {
-                                "caption": "9REF",
+                                "caption": "#9REF",
                                 "trailing": {
                                   "type": "Icon",
                                   "attributes": {
@@ -547,7 +667,7 @@
                               "children": [],
                               "action": {
                                 "type": "Route",
-                                "url": "https://wutsi-gateway-test.herokuapp.com/store/order?id=203920-3209-3209-3209ref"
+                                "url": "https://wutsi-gateway-test.herokuapp.com/store/me/order?id=203920-3209-3209-3209ref"
                               }
                             }
                           ]
@@ -566,7 +686,7 @@
   "appBar": {
     "type": "AppBar",
     "attributes": {
-      "title": "Transaction",
+      "title": "Transaction #2AEF",
       "elevation": 0.0,
       "backgroundColor": "#FFFFFF",
       "foregroundColor": "#000000"

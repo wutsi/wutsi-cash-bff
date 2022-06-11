@@ -83,11 +83,31 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
     }
 
     @Test
-    fun charge() {
-        val tx = createTransferTransaction(USER_ID, 100, type = TransactionType.CASHOUT, status = Status.PENDING)
+    fun chargeSend() {
+        val tx = createTransferTransaction(
+            USER_ID,
+            100,
+            type = TransactionType.CASHOUT,
+            status = Status.PENDING,
+            orderId = "203920-3209-3209-3209ref"
+        )
         doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
 
-        assertEndpointEquals("/screens/history/transaction-charge.json", url)
+        assertEndpointEquals("/screens/history/transaction-charge-sent.json", url)
+    }
+
+    @Test
+    fun chargeReceived() {
+        val tx = createTransferTransaction(
+            100,
+            USER_ID,
+            type = TransactionType.CASHOUT,
+            status = Status.PENDING,
+            orderId = "203920-3209-3209-3209ref"
+        )
+        doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
+
+        assertEndpointEquals("/screens/history/transaction-charge-received.json", url)
     }
 
     private fun createOrder() = Order(
@@ -100,9 +120,11 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         accountId: Long,
         recipientId: Long,
         status: Status = Status.SUCCESSFUL,
-        type: TransactionType = TransactionType.TRANSFER
+        type: TransactionType = TransactionType.TRANSFER,
+        orderId: String? = null
     ) =
         Transaction(
+            id = "13230923092aef",
             accountId = accountId,
             recipientId = recipientId,
             type = type.name,
@@ -112,7 +134,7 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
             fees = 1000.0,
             gatewayFees = 100.0,
             description = "Sample description",
-            orderId = "203920-3209-3209-3209ref",
+            orderId = orderId,
             created = OffsetDateTime.of(2021, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC),
         )
 

@@ -398,7 +398,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "0 XAF",
+                                    "caption": "1,000 XAF",
                                     "alignment": "Left"
                                   },
                                   "children": []
@@ -462,7 +462,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "10,100 XAF",
+                                    "caption": "9,100 XAF",
                                     "alignment": "Left"
                                   },
                                   "children": []
@@ -534,7 +534,7 @@
                             {
                               "type": "ListItem",
                               "attributes": {
-                                "caption": "Name 1",
+                                "caption": "Name 100",
                                 "trailing": {
                                   "type": "Icon",
                                   "attributes": {
@@ -546,7 +546,7 @@
                               "children": [],
                               "action": {
                                 "type": "Route",
-                                "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=1"
+                                "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=100"
                               }
                             }
                           ]
@@ -603,6 +603,72 @@
                                 "caption": ""
                               },
                               "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "attributes": {
+                        "color": "#8c8c8c"
+                      },
+                      "children": []
+                    },
+                    {
+                      "type": "Row",
+                      "attributes": {},
+                      "children": [
+                        {
+                          "type": "Flexible",
+                          "attributes": {
+                            "flex": 1,
+                            "fit": "Tight"
+                          },
+                          "children": [
+                            {
+                              "type": "Container",
+                              "attributes": {
+                                "padding": 10.0
+                              },
+                              "children": [
+                                {
+                                  "type": "Text",
+                                  "attributes": {
+                                    "caption": "Order:",
+                                    "bold": true,
+                                    "alignment": "Right"
+                                  },
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Flexible",
+                          "attributes": {
+                            "flex": 3,
+                            "fit": "Tight"
+                          },
+                          "children": [
+                            {
+                              "type": "ListItem",
+                              "attributes": {
+                                "caption": "#9REF",
+                                "trailing": {
+                                  "type": "Icon",
+                                  "attributes": {
+                                    "code": "e15f"
+                                  },
+                                  "children": []
+                                }
+                              },
+                              "children": [],
+                              "action": {
+                                "type": "Route",
+                                "url": "https://wutsi-gateway-test.herokuapp.com/store/order?id=203920-3209-3209-3209ref"
+                              }
                             }
                           ]
                         }

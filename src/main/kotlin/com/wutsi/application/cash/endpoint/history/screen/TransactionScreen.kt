@@ -28,6 +28,7 @@ import com.wutsi.platform.account.WutsiAccountApi
 import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountRequest
+import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.Transaction
 import com.wutsi.platform.payment.entity.TransactionType
 import com.wutsi.platform.tenant.dto.Tenant
@@ -59,7 +60,6 @@ class TransactionScreen(
         val tx = paymentApi.getTransaction(id).transaction
         val accounts = findAccounts(tx)
         val paymentMethods = findPaymentMethods()
-        val color = toColor(tx)
 
         return Screen(
             id = Page.TRANSACTION,
@@ -67,7 +67,7 @@ class TransactionScreen(
                 elevation = 0.0,
                 backgroundColor = Theme.COLOR_WHITE,
                 foregroundColor = Theme.COLOR_BLACK,
-                title = getText("page.transaction.app-bar.title")
+                title = getText("page.transaction.app-bar.title", arrayOf(tx.id.uppercase().takeLast(4)))
             ),
 
             child = SingleChildScrollView(
@@ -78,8 +78,14 @@ class TransactionScreen(
                             child = Column(
                                 mainAxisAlignment = MainAxisAlignment.start,
                                 crossAxisAlignment = CrossAxisAlignment.start,
-                                children = listOf(
+                                children = listOfNotNull(
                                     Container(padding = 5.0),
+                                    toRowWidget(
+                                        "page.transaction.id",
+                                        Text(tx.id, size = Theme.TEXT_SIZE_SMALL)
+                                    ),
+                                    Divider(color = Theme.COLOR_DIVIDER),
+
                                     toRowWidget(
                                         "page.transaction.date",
                                         DateTimeUtil.convert(tx.created, account.timezoneId).format(dateFormat)
@@ -88,27 +94,43 @@ class TransactionScreen(
 
                                     toRowWidget(
                                         "page.transaction.type",
-                                        if (tx.type == "TRANSFER")
-                                            if (tx.recipientId == securityContext.currentAccountId())
-                                                getText("shared-ui.transaction.type.${tx.type}.receive")
-                                            else
-                                                getText("shared-ui.transaction.type.${tx.type}.send")
-                                        else
-                                            getText("shared-ui.transaction.type.${tx.type}")
+                                        getText("transaction.type.${tx.type}")
                                     ),
                                     Divider(color = Theme.COLOR_DIVIDER),
 
                                     toRowWidget(
                                         "page.transaction.status",
-                                        getText("shared-ui.transaction.status.${tx.status}"),
-                                        bold = true, color = color
+                                        getText("transaction.status.${tx.status}"),
+                                        bold = true,
+                                        color = when (tx.status.uppercase()) {
+                                            Status.FAILED.name -> Theme.COLOR_DANGER
+                                            Status.PENDING.name -> Theme.COLOR_WARNING
+                                            Status.SUCCESSFUL.name -> Theme.COLOR_SUCCESS
+                                            else -> null
+                                        }
                                     ),
                                     Divider(color = Theme.COLOR_DIVIDER),
 
                                     toRowWidget("page.transaction.amount", moneyFormat.format(amount(tx))),
                                     Divider(color = Theme.COLOR_DIVIDER),
 
-                                    toRowWidget("page.transaction.transaction-fees", moneyFormat.format(fees(tx))),
+                                    toRowWidget("page.transaction.fees", moneyFormat.format(fees(tx))),
+                                    Divider(color = Theme.COLOR_DIVIDER),
+
+                                    toRowWidget("page.transaction.net", moneyFormat.format(net(tx))),
+
+                                    if (tenant.testUserIds.contains(account.id))
+                                        Column(
+                                            children = listOf(
+                                                Divider(color = Theme.COLOR_DIVIDER),
+                                                toRowWidget(
+                                                    "page.transaction.fees-gateway",
+                                                    moneyFormat.format(tx.gatewayFees)
+                                                )
+                                            )
+                                        )
+                                    else
+                                        null,
                                 )
                             )
                         ),
@@ -131,7 +153,7 @@ class TransactionScreen(
                                         Divider(color = Theme.COLOR_DIVIDER)
                                     },
                                     tx.orderId?.let {
-                                        toRowWidget("page.transaction.order", toOrderWidget(it))
+                                        toRowWidget("page.transaction.order", toOrderWidget(it, tx))
                                     }
                                 )
                             )
@@ -144,22 +166,11 @@ class TransactionScreen(
         ).toWidget()
     }
 
-    private fun toColor(tx: Transaction): String =
-        when (tx.status.uppercase()) {
-            "FAILED" -> Theme.COLOR_DANGER
-            "PENDING" -> Theme.COLOR_WARNING
-            else -> when (tx.type.uppercase()) {
-                "CASHIN" -> Theme.COLOR_SUCCESS
-                "CASHOUT" -> Theme.COLOR_DANGER
-                else -> if (tx.recipientId == securityContext.currentAccountId())
-                    Theme.COLOR_SUCCESS
-                else
-                    Theme.COLOR_DANGER
-            }
-        }
+    private fun net(tx: Transaction): Double =
+        amount(tx) - fees(tx)
 
     private fun amount(tx: Transaction): Double =
-        if (isSender(tx))
+        if (isSender(tx) || !tx.applyFeesToSender)
             tx.amount
         else
             tx.net
@@ -200,12 +211,15 @@ class TransactionScreen(
         else
             accounts[tx.recipientId]?.let { toAccountWidget(it) } ?: Container()
 
-    private fun toOrderWidget(orderId: String): WidgetAware =
+    private fun toOrderWidget(orderId: String, tx: Transaction): WidgetAware =
         ListItem(
-            caption = orderId.uppercase().takeLast(4),
+            caption = "#" + orderId.uppercase().takeLast(4),
             trailing = Icon(Theme.ICON_CHEVRON_RIGHT),
             action = gotoUrl(
-                urlBuilder.build(storeUrl, "order?id=$orderId")
+                if (isRecipient(tx))
+                    urlBuilder.build(storeUrl, "order?id=$orderId")
+                else
+                    urlBuilder.build(storeUrl, "me/order?id=$orderId")
             )
         )
 
