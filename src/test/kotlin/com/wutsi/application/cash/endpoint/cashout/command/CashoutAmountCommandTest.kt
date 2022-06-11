@@ -50,7 +50,7 @@ internal class CashoutAmountCommandTest : AbstractEndpointTest() {
     }
 
     @Test
-    fun minCashin() {
+    fun minCashout() {
         // WHEN
         request = CashoutRequest(paymentToken = "xxx", amount = 1.0)
         val response = rest.postForEntity(url, request, Action::class.java)
@@ -80,5 +80,26 @@ internal class CashoutAmountCommandTest : AbstractEndpointTest() {
         assertEquals(ActionType.Prompt, action.type)
         assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
         assertEquals(getText("prompt.error.amount-required"), action.prompt?.attributes?.get("message"))
+    }
+
+
+    @Test
+    fun notEnoughFunds() {
+        // WHEN
+        val request = CashoutRequest(
+            amount = 1000000.0, paymentToken = "xxx"
+        )
+        val response = rest.postForEntity(url, request, Action::class.java)
+
+        // THEN
+        assertEquals(200, response.statusCodeValue)
+
+        val action = response.body!!
+        assertEquals(ActionType.Prompt, action.type)
+        assertEquals(DialogType.Error.name, action.prompt?.attributes?.get("type"))
+        assertEquals(
+            getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS"),
+            action.prompt?.attributes?.get("message")
+        )
     }
 }

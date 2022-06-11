@@ -129,7 +129,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         val action = response.body!!
         assertEquals(ActionType.Route, action.type)
         assertEquals(
-            "http://localhost:0/cashin/success?amount=10000.0&error=Sorry%21+You+do+not+have+enough+in+your+Wallet.",
+            "http://localhost:0/cashin/success?amount=10000.0&error=Sorry%21+You+do+not+have+enough+funds+in+your+Wallet.",
             action.url
         )
     }
