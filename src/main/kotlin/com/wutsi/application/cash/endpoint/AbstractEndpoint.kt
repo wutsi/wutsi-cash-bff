@@ -72,39 +72,47 @@ abstract class AbstractEndpoint {
     protected lateinit var objectMapper: ObjectMapper
 
     @ExceptionHandler(TransactionException::class)
+    fun onTransactionException(ex: Throwable): Action {
+        val message = getErrorText(ex)
+        return showError(message, ex)
+    }
+
+    @ExceptionHandler(TransactionException::class)
     fun onTransactionException(ex: TransactionException): Action {
         val message = getTransactionErrorMessage(ex.error)
         return showError(message, ex)
     }
 
-    protected fun getTransactionErrorMessage(error: ErrorCode): String =
+    private fun getTransactionErrorMessage(error: ErrorCode): String =
         getTransactionErrorMessage(error.name)
 
-    protected fun getErrorText(ex: FeignException): String {
-        try {
-            val response = objectMapper.readValue(ex.contentUTF8(), ErrorResponse::class.java)
-            val code = response.error.code
-            if (code == com.wutsi.platform.payment.error.ErrorURN.TRANSACTION_FAILED.urn) {
-                val downstreamCode = response.error.downstreamCode
-                return getTransactionErrorMessage(downstreamCode)
+    protected fun getErrorText(ex: Throwable): String {
+        if (ex is FeignException)
+            try {
+                val response = objectMapper.readValue(ex.contentUTF8(), ErrorResponse::class.java)
+                val code = response.error.code
+                if (code == com.wutsi.platform.payment.error.ErrorURN.TRANSACTION_FAILED.urn) {
+                    val downstreamCode = response.error.downstreamCode
+                    return getTransactionErrorMessage(downstreamCode)
+                }
+            } catch (ex: Exception) {
             }
-        } catch (ex: Exception) {
-        }
+
         return getText("prompt.error.unexpected-error")
     }
 
     protected fun getTransactionId(ex: FeignException): String? {
-        try {
+        return try {
             val response = objectMapper.readValue(ex.contentUTF8(), ErrorResponse::class.java)
-            return response.error.data?.get("transaction-id")?.toString()
+            response.error.data?.get("transaction-id")?.toString()
         } catch (ex: Exception) {
-            return null
+            null
         }
 
         return getText("prompt.error.unexpected-error")
     }
 
-    protected fun getTransactionErrorMessage(error: String?): String =
+    private fun getTransactionErrorMessage(error: String?): String =
         try {
             getText("prompt.error.transaction-failed.$error")
         } catch (ex: Exception) {

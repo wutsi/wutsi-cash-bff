@@ -4,6 +4,10 @@ import com.wutsi.application.cash.endpoint.AbstractCommand
 import com.wutsi.application.cash.endpoint.cashin.dto.CashinRequest
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.flutter.sdui.Action
+import com.wutsi.flutter.sdui.Dialog
+import com.wutsi.flutter.sdui.enums.ActionType
+import com.wutsi.flutter.sdui.enums.DialogType
+import com.wutsi.platform.payment.core.Money
 import com.wutsi.platform.tenant.dto.Tenant
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -46,6 +50,23 @@ class CashinAmountCommand(
                 message = getText("prompt.error.min-cashin", arrayOf(amountText))
             )
         }
+
+        val balance = getBalance()
+        if (request.amount > balance.value)
+            return Action(
+                type = ActionType.Prompt,
+                prompt = Dialog(
+                    type = DialogType.Error,
+                    message = getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS"),
+                    title = getText("prompt.error.title"),
+                ).toWidget()
+            )
+
         return null
+    }
+
+    private fun getBalance(): Money {
+        val balance = paymentApi.getBalance(securityContext.currentAccountId()).balance
+        return Money(balance.amount, balance.currency)
     }
 }
