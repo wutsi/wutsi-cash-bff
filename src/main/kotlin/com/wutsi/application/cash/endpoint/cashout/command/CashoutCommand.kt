@@ -21,8 +21,8 @@ class CashoutCommand(
     private val tenantProvider: TenantProvider,
 ) : AbstractCommand() {
     companion object {
-        const val DELAY_SECONDS = 9L
-        const val MAX_RETRIES = 3
+        const val DELAY_SECONDS = 11L
+        const val MAX_RETRIES = 5
         private val LOGGER = LoggerFactory.getLogger(CashoutCommand::class.java)
     }
 
