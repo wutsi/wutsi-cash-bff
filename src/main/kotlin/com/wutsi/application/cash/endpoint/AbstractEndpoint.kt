@@ -71,8 +71,8 @@ abstract class AbstractEndpoint {
     @Autowired
     protected lateinit var objectMapper: ObjectMapper
 
-    @ExceptionHandler(TransactionException::class)
-    fun onTransactionException(ex: Throwable): Action {
+    @ExceptionHandler(Throwable::class)
+    fun onException(ex: Throwable): Action {
         val message = getErrorText(ex)
         return showError(message, ex)
     }
@@ -112,7 +112,7 @@ abstract class AbstractEndpoint {
         return getText("prompt.error.unexpected-error")
     }
 
-    private fun getTransactionErrorMessage(error: String?): String =
+    protected fun getTransactionErrorMessage(error: String?): String =
         try {
             getText("prompt.error.transaction-failed.$error")
         } catch (ex: Exception) {

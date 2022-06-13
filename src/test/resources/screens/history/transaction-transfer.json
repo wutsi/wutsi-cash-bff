@@ -334,7 +334,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "10,100 XAF",
+                                    "caption": "-10,100 XAF",
                                     "alignment": "Left"
                                   },
                                   "children": []
@@ -462,7 +462,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "10,100 XAF",
+                                    "caption": "-10,100 XAF",
                                     "alignment": "Left"
                                   },
                                   "children": []

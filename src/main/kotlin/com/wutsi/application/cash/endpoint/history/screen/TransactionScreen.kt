@@ -111,6 +111,23 @@ class TransactionScreen(
                                     ),
                                     Divider(color = Theme.COLOR_DIVIDER),
 
+                                    if (tx.status == Status.FAILED.name)
+                                        Column(
+                                            children = listOf(
+                                                toRowWidget(
+                                                    "page.transaction.error",
+                                                    Text(
+                                                        caption = getTransactionErrorMessage(tx.errorCode),
+                                                        size = Theme.TEXT_SIZE_SMALL,
+                                                        maxLines = 5,
+                                                    )
+                                                ),
+                                                Divider(color = Theme.COLOR_DIVIDER),
+                                            )
+                                        )
+                                    else
+                                        null,
+
                                     toRowWidget("page.transaction.amount", moneyFormat.format(amount(tx))),
                                     Divider(color = Theme.COLOR_DIVIDER),
 
@@ -167,19 +184,34 @@ class TransactionScreen(
     }
 
     private fun net(tx: Transaction): Double =
-        amount(tx) - fees(tx)
+        if ((isSender(tx) && tx.applyFeesToSender) || (isRecipient(tx) && !tx.applyFeesToSender))
+            tx.net * toAmountSign(tx)
+        else
+            tx.amount * toAmountSign(tx)
 
     private fun amount(tx: Transaction): Double =
         if (isSender(tx) || !tx.applyFeesToSender)
-            tx.amount
+            tx.amount * toAmountSign(tx)
         else
-            tx.net
+            tx.net * toAmountSign(tx)
+
+    private fun toAmountSign(tx: Transaction): Double =
+        if (tx.type == TransactionType.CASHOUT.name ||
+            (tx.type == TransactionType.CHARGE.name && isSender(tx)) ||
+            (tx.type == TransactionType.TRANSFER.name && isSender(tx))
+        )
+            -1.0
+        else
+            1.0
 
     private fun fees(tx: Transaction): Double =
         if ((isSender(tx) && tx.applyFeesToSender) || (isRecipient(tx) && !tx.applyFeesToSender))
-            tx.fees
+            tx.fees * toFeesSign(tx)
         else
             0.0
+
+    private fun toFeesSign(tx: Transaction): Double =
+        -toAmountSign(tx)
 
     private fun isSender(tx: Transaction): Boolean =
         tx.accountId == securityContext.currentAccountId()

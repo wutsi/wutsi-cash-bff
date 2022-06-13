@@ -204,7 +204,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "Cash Out",
+                                    "caption": "Payment",
                                     "alignment": "Left"
                                   },
                                   "children": []
@@ -398,7 +398,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "1,000 XAF",
+                                    "caption": "-1,000 XAF",
                                     "alignment": "Left"
                                   },
                                   "children": []
@@ -462,7 +462,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "9,100 XAF",
+                                    "caption": "9,000 XAF",
                                     "alignment": "Left"
                                   },
                                   "children": []
@@ -600,9 +600,20 @@
                             {
                               "type": "ListItem",
                               "attributes": {
-                                "caption": ""
+                                "caption": "Name 1",
+                                "trailing": {
+                                  "type": "Icon",
+                                  "attributes": {
+                                    "code": "e15f"
+                                  },
+                                  "children": []
+                                }
                               },
-                              "children": []
+                              "children": [],
+                              "action": {
+                                "type": "Route",
+                                "url": "https://wutsi-gateway-test.herokuapp.com/shell/profile?id=1"
+                              }
                             }
                           ]
                         }

@@ -12,6 +12,7 @@ import com.wutsi.platform.account.dto.AccountSummary
 import com.wutsi.platform.account.dto.ListPaymentMethodResponse
 import com.wutsi.platform.account.dto.PaymentMethodSummary
 import com.wutsi.platform.account.dto.SearchAccountResponse
+import com.wutsi.platform.payment.core.ErrorCode
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.GetTransactionResponse
 import com.wutsi.platform.payment.dto.Transaction
@@ -68,7 +69,13 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
 
     @Test
     fun cashin() {
-        val tx = createTransferTransaction(USER_ID, 100, type = TransactionType.CASHIN, status = Status.FAILED)
+        val tx = createTransferTransaction(
+            USER_ID,
+            100,
+            type = TransactionType.CASHIN,
+            status = Status.FAILED,
+            errorCode = ErrorCode.NOT_ENOUGH_FUNDS.name
+        )
         doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
 
         assertEndpointEquals("/screens/history/transaction-cashin.json", url)
@@ -87,7 +94,7 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         val tx = createTransferTransaction(
             USER_ID,
             100,
-            type = TransactionType.CASHOUT,
+            type = TransactionType.CHARGE,
             status = Status.PENDING,
             orderId = "203920-3209-3209-3209ref"
         )
@@ -101,7 +108,7 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         val tx = createTransferTransaction(
             100,
             USER_ID,
-            type = TransactionType.CASHOUT,
+            type = TransactionType.CHARGE,
             status = Status.PENDING,
             orderId = "203920-3209-3209-3209ref"
         )
@@ -121,7 +128,8 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         recipientId: Long,
         status: Status = Status.SUCCESSFUL,
         type: TransactionType = TransactionType.TRANSFER,
-        orderId: String? = null
+        orderId: String? = null,
+        errorCode: String? = null,
     ) =
         Transaction(
             id = "13230923092aef",
@@ -136,6 +144,7 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
             description = "Sample description",
             orderId = orderId,
             created = OffsetDateTime.of(2021, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC),
+            errorCode = errorCode
         )
 
     private fun createPaymentMethodSummary(token: String, maskedNumber: String) = PaymentMethodSummary(

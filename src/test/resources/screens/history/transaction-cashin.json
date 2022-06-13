@@ -289,6 +289,69 @@
                       "children": []
                     },
                     {
+                      "type": "Column",
+                      "attributes": {},
+                      "children": [
+                        {
+                          "type": "Row",
+                          "attributes": {},
+                          "children": [
+                            {
+                              "type": "Flexible",
+                              "attributes": {
+                                "flex": 1,
+                                "fit": "Tight"
+                              },
+                              "children": [
+                                {
+                                  "type": "Container",
+                                  "attributes": {
+                                    "padding": 10.0
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "Text",
+                                      "attributes": {
+                                        "caption": "Error:",
+                                        "bold": true,
+                                        "alignment": "Right"
+                                      },
+                                      "children": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "Flexible",
+                              "attributes": {
+                                "flex": 3,
+                                "fit": "Tight"
+                              },
+                              "children": [
+                                {
+                                  "type": "Text",
+                                  "attributes": {
+                                    "caption": "Sorry! You do not have enough funds in your Wallet.",
+                                    "size": 10.0,
+                                    "maxLines": 5
+                                  },
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Divider",
+                          "attributes": {
+                            "color": "#8c8c8c"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
                       "type": "Row",
                       "attributes": {},
                       "children": [
