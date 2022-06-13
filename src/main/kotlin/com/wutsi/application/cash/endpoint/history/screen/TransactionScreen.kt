@@ -211,7 +211,10 @@ class TransactionScreen(
             0.0
 
     private fun toFeesSign(tx: Transaction): Double =
-        -toAmountSign(tx)
+        if ((isSender(tx) && tx.applyFeesToSender) || (isRecipient(tx) && !tx.applyFeesToSender))
+            -toAmountSign(tx)
+        else
+            toAmountSign(tx)
 
     private fun isSender(tx: Transaction): Boolean =
         tx.accountId == securityContext.currentAccountId()
