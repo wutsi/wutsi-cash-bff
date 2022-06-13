@@ -678,7 +678,7 @@
                               "children": [],
                               "action": {
                                 "type": "Route",
-                                "url": "https://wutsi-gateway-test.herokuapp.com/store/me/order?id=203920-3209-3209-3209ref"
+                                "url": "https://wutsi-gateway-test.herokuapp.com/store/order?id=203920-3209-3209-3209ref"
                               }
                             }
                           ]

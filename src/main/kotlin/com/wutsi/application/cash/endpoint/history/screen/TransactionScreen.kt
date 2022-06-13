@@ -251,10 +251,7 @@ class TransactionScreen(
             caption = "#" + orderId.uppercase().takeLast(4),
             trailing = Icon(Theme.ICON_CHEVRON_RIGHT),
             action = gotoUrl(
-                if (isRecipient(tx))
-                    urlBuilder.build(storeUrl, "order?id=$orderId")
-                else
-                    urlBuilder.build(storeUrl, "me/order?id=$orderId")
+                urlBuilder.build(storeUrl, "order?id=$orderId")
             )
         )
 
