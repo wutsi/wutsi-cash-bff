@@ -1,4 +1,4 @@
-package com.wutsi.application.cash.endpoint.history.screen
+package com.wutsi.application.cash.endpoint.transaction.screen
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
@@ -57,14 +57,14 @@ internal class HistoryScreenTest : AbstractEndpointTest() {
         )
         doReturn(SearchAccountResponse(accounts)).whenever(accountApi).searchAccount(any())
 
-        assertEndpointEquals("/screens/history/history.json", url)
+        assertEndpointEquals("/screens/transaction/history.json", url)
     }
 
     @Test
     fun noTransactions() {
         doReturn(SearchTransactionResponse()).whenever(paymentApi).searchTransaction(any())
 
-        assertEndpointEquals("/screens/history/history-empty.json", url)
+        assertEndpointEquals("/screens/transaction/history-empty.json", url)
     }
 
     private fun createTransferTransactionSummary(accountId: Long, recipientId: Long, status: String = "SUCCESSFUL") =

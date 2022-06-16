@@ -19,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
+import java.net.URLEncoder
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -33,8 +34,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
     override fun setUp() {
         super.setUp()
 
-        url =
-            "http://localhost:$port/commands/send?amount=3000.0&recipient-id=111&idempotency-key=123"
+        url = "http://localhost:$port/commands/send?amount=3000.0&recipient-id=111&idempotency-key=123"
     }
 
     @Test
@@ -61,7 +61,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val action = response.body!!
         assertEquals(Route, action.type)
-        assertEquals("http://localhost:0/send/success?amount=3000.0&recipient-id=111", action.url)
+        assertEquals("http://localhost:0/transaction/success?transaction-id=xxx", action.url)
     }
 
     @Test
@@ -88,7 +88,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
 
         val action = response.body!!
         assertEquals(Route, action.type)
-        assertEquals("http://localhost:0/send/pending?transaction-id=xxx", action.url)
+        assertEquals("http://localhost:0/transaction/processing?transaction-id=xxx", action.url)
     }
 
     @Test
@@ -98,9 +98,7 @@ internal class SendCommandTest : AbstractEndpointTest() {
         doThrow(ex).whenever(paymentApi).createTransfer(any())
 
         // WHEN
-        val request = SendRequest(
-            pin = "123456"
-        )
+        val request = SendRequest(pin = "123456")
         val response = rest.postForEntity(url, request, Action::class.java)
 
         // THEN
@@ -115,9 +113,13 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertNull(req.firstValue.description)
 
         val action = response.body!!
+        val error = getText("prompt.error.transaction-failed.UNEXPECTED_ERROR")
         assertEquals(Route, action.type)
         assertEquals(
-            "http://localhost:0/send/success?amount=3000.0&recipient-id=111&error=Sorry%21+An+unexpected+error+has+occurred.+Please%2C+try+again.",
+            "http://localhost:0/transaction/error?type=TRANSFER&amount=3000.0&recipient-id=111&error=" + URLEncoder.encode(
+                error,
+                "utf-8"
+            ),
             action.url
         )
     }
@@ -146,9 +148,13 @@ internal class SendCommandTest : AbstractEndpointTest() {
         assertNull(req.firstValue.description)
 
         val action = response.body!!
+        val error = getText("prompt.error.unexpected-error")
         assertEquals(ActionType.Route, action.type)
         assertEquals(
-            "http://localhost:0/send/success?amount=3000.0&recipient-id=111&error=Oops%21+An+unexpected+error+has+occurred.+Please%2C+try+again.",
+            "http://localhost:0/transaction/error?type=TRANSFER&amount=3000.0&recipient-id=111&error=" + URLEncoder.encode(
+                error,
+                "utf-8"
+            ),
             action.url
         )
     }

@@ -1,0 +1,54 @@
+{
+  "type": "Column",
+  "attributes": {},
+  "children": [
+    {
+      "type": "Icon",
+      "attributes": {
+        "code": "e238",
+        "size": 40.0,
+        "color": "#8B0000"
+      },
+      "children": []
+    },
+    {
+      "type": "Container",
+      "attributes": {
+        "alignment": "Center",
+        "padding": 10.0
+      },
+      "children": [
+        {
+          "type": "Text",
+          "attributes": {
+            "caption": "The transaction has failed because an unexpected error has occurred.",
+            "color": "#8B0000",
+            "alignment": "Center"
+          },
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "attributes": {
+        "padding": 10.0
+      },
+      "children": [
+        {
+          "type": "Button",
+          "attributes": {
+            "caption": "OK",
+            "padding": 15.0,
+            "type": "Elevated"
+          },
+          "children": [],
+          "action": {
+            "type": "Route",
+            "url": "route:/~"
+          }
+        }
+      ]
+    }
+  ]
+}

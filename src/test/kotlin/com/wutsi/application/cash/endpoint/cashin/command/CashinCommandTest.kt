@@ -20,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
+import java.net.URLEncoder
 import kotlin.test.assertEquals
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -57,7 +58,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
 
         val action = response.body!!
         assertEquals(ActionType.Route, action.type)
-        assertEquals("http://localhost:0/cashin/success?amount=10000.0", action.url)
+        assertEquals("http://localhost:0/transaction/success?transaction-id=111", action.url)
     }
 
     @Test
@@ -84,7 +85,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
 
         val action = response.body!!
         assertEquals(ActionType.Route, action.type)
-        assertEquals("http://localhost:0/cashin/pending", action.url)
+        assertEquals("http://localhost:0/transaction/processing?transaction-id=111", action.url)
     }
 
     @Test
@@ -107,9 +108,13 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         assertEquals("123", request.firstValue.idempotencyKey)
 
         val action = response.body!!
+        val error = getText("prompt.error.unexpected-error")
         assertEquals(ActionType.Route, action.type)
         assertEquals(
-            "http://localhost:0/cashin/success?amount=10000.0&error=Oops%21+An+unexpected+error+has+occurred.+Please%2C+try+again.",
+            "http://localhost:0/transaction/error?type=CASHIN&amount=10000.0&error=" + URLEncoder.encode(
+                error,
+                "utf-8"
+            ),
             action.url
         )
     }
@@ -127,9 +132,13 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         assertEquals(200, response.statusCodeValue)
 
         val action = response.body!!
+        val error = getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS")
         assertEquals(ActionType.Route, action.type)
         assertEquals(
-            "http://localhost:0/cashin/success?amount=10000.0&error=Sorry%21+You+do+not+have+enough+funds+in+your+Wallet.",
+            "http://localhost:0/transaction/error?type=CASHIN&amount=10000.0&error=" + URLEncoder.encode(
+                error,
+                "utf-8"
+            ),
             action.url
         )
     }

@@ -1,0 +1,167 @@
+{
+  "type": "Screen",
+  "attributes": {
+    "id": "page.transaction.processing",
+    "safe": true,
+    "backgroundColor": "#e8e8e8"
+  },
+  "children": [
+    {
+      "type": "Column",
+      "attributes": {},
+      "children": [
+        {
+          "type": "Container",
+          "attributes": {
+            "margin": 5.0,
+            "background": "#FFFFFF",
+            "border": 1.0,
+            "borderColor": "#e8e8e8",
+            "width": 1.7976931348623157E308
+          },
+          "children": [
+            {
+              "type": "Column",
+              "attributes": {},
+              "children": [
+                {
+                  "type": "Container",
+                  "attributes": {
+                    "padding": 10.0
+                  },
+                  "children": [
+                    {
+                      "type": "MoneyText",
+                      "attributes": {
+                        "value": 1000.0,
+                        "color": "#1D7EDF",
+                        "currency": "XAF",
+                        "numberFormat": "#,###,##0"
+                      },
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "type": "Container",
+                  "attributes": {
+                    "alignment": "Center",
+                    "padding": 10.0
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "attributes": {
+                        "mainAxisAlignment": "center",
+                        "mainAxisSize": "min",
+                        "crossAxisAlignment": "center"
+                      },
+                      "children": [
+                        {
+                          "type": "Container",
+                          "attributes": {
+                            "padding": 5.0
+                          },
+                          "children": [
+                            {
+                              "type": "CircleAvatar",
+                              "attributes": {
+                                "radius": 24.0
+                              },
+                              "children": [
+                                {
+                                  "type": "Text",
+                                  "attributes": {
+                                    "caption": "RS",
+                                    "bold": true,
+                                    "size": 16.0
+                                  },
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Icon",
+                          "attributes": {
+                            "code": "ee8d"
+                          },
+                          "children": []
+                        },
+                        {
+                          "type": "Container",
+                          "attributes": {
+                            "padding": 5.0
+                          },
+                          "children": [
+                            {
+                              "type": "Icon",
+                              "attributes": {
+                                "code": "http://www.goole.com/images/orange.png",
+                                "size": 48.0
+                              },
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Container",
+          "attributes": {
+            "padding": 10.0,
+            "margin": 5.0,
+            "background": "#FFFFFF",
+            "border": 1.0,
+            "borderColor": "#e8e8e8",
+            "width": 1.7976931348623157E308
+          },
+          "children": [
+            {
+              "type": "Column",
+              "attributes": {},
+              "children": [
+                {
+                  "type": "Center",
+                  "attributes": {},
+                  "children": [
+                    {
+                      "type": "Container",
+                      "attributes": {
+                        "padding": 10.0
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "attributes": {
+                            "caption": "Processing the transaction. Please wait..."
+                          },
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "Timeout",
+                  "attributes": {
+                    "url": "http://localhost:0/widgets/transaction/status?transaction-id=555",
+                    "delay": 15
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

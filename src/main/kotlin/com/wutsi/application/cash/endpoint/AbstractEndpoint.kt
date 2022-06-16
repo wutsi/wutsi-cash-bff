@@ -108,8 +108,6 @@ abstract class AbstractEndpoint {
         } catch (ex: Exception) {
             null
         }
-
-        return getText("prompt.error.unexpected-error")
     }
 
     protected fun getTransactionErrorMessage(error: String?): String =
@@ -218,7 +216,7 @@ abstract class AbstractEndpoint {
     ).toBottomNavigationBar()
 
     protected fun toSectionWidget(
-        child: WidgetAware,
+        child: WidgetAware?,
         padding: Double? = 10.0,
         background: String? = Theme.COLOR_WHITE
     ) = Container(

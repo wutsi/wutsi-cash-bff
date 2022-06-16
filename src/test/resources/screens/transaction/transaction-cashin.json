@@ -332,7 +332,7 @@
                                 {
                                   "type": "Text",
                                   "attributes": {
-                                    "caption": "Sorry! You do not have enough funds in your Wallet.",
+                                    "caption": "The transaction has failed because you do not have enough funds in your Wallet.",
                                     "size": 10.0,
                                     "maxLines": 5
                                   },

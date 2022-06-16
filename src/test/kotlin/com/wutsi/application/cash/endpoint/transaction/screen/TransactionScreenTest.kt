@@ -1,4 +1,4 @@
-package com.wutsi.application.cash.endpoint.history.screen
+package com.wutsi.application.cash.endpoint.transaction.screen
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doReturn
@@ -64,7 +64,7 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         val tx = createTransferTransaction(USER_ID, 100, type = TransactionType.TRANSFER, status = Status.SUCCESSFUL)
         doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
 
-        assertEndpointEquals("/screens/history/transaction-transfer.json", url)
+        assertEndpointEquals("/screens/transaction/transaction-transfer.json", url)
     }
 
     @Test
@@ -78,7 +78,7 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         )
         doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
 
-        assertEndpointEquals("/screens/history/transaction-cashin.json", url)
+        assertEndpointEquals("/screens/transaction/transaction-cashin.json", url)
     }
 
     @Test
@@ -86,7 +86,7 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         val tx = createTransferTransaction(USER_ID, 100, type = TransactionType.CASHOUT, status = Status.PENDING)
         doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
 
-        assertEndpointEquals("/screens/history/transaction-cashout.json", url)
+        assertEndpointEquals("/screens/transaction/transaction-cashout.json", url)
     }
 
     @Test
@@ -100,7 +100,7 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         )
         doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
 
-        assertEndpointEquals("/screens/history/transaction-charge-sent.json", url)
+        assertEndpointEquals("/screens/transaction/transaction-charge-sent.json", url)
     }
 
     @Test
@@ -114,7 +114,7 @@ internal class TransactionScreenTest : AbstractEndpointTest() {
         )
         doReturn(GetTransactionResponse(tx)).whenever(paymentApi).getTransaction(any())
 
-        assertEndpointEquals("/screens/history/transaction-charge-received.json", url)
+        assertEndpointEquals("/screens/transaction/transaction-charge-received.json", url)
     }
 
     private fun createOrder() = Order(

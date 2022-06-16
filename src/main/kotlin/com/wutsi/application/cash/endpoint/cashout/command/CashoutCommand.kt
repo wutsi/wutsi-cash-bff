@@ -1,15 +1,12 @@
 package com.wutsi.application.cash.endpoint.cashout.command
 
 import com.wutsi.application.cash.endpoint.AbstractCommand
-import com.wutsi.application.cash.endpoint.cashin.command.CashinCommand
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.flutter.sdui.Action
 import com.wutsi.platform.payment.core.Status
 import com.wutsi.platform.payment.dto.CreateCashoutRequest
 import com.wutsi.platform.payment.dto.CreateCashoutResponse
-import com.wutsi.platform.payment.dto.Transaction
 import feign.FeignException
-import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -20,12 +17,6 @@ import org.springframework.web.bind.annotation.RestController
 class CashoutCommand(
     private val tenantProvider: TenantProvider,
 ) : AbstractCommand() {
-    companion object {
-        const val DELAY_SECONDS = 11L
-        const val MAX_RETRIES = 5
-        private val LOGGER = LoggerFactory.getLogger(CashoutCommand::class.java)
-    }
-
     @PostMapping
     fun index(
         @RequestParam amount: Double,
@@ -38,26 +29,18 @@ class CashoutCommand(
         // Cashout
         try {
             val response = cashout(amount, paymentToken, idempotencyKey)
-            var status = response.status
             logger.add("transaction_id", response.id)
+            logger.add("transaction_status", response.status)
 
-            if (response.status == Status.PENDING.name) {
-                val tx = waitForCompletion(response.id)
-                status = tx.status
-            }
-
-            logger.add("transaction_status", status)
-            return gotoUrl(
-                url = if (response.status == Status.SUCCESSFUL.name)
-                    urlBuilder.build("cashout/success?amount=$amount")
-                else
-                    urlBuilder.build("cashout/pending")
-            )
+            return if (response.status == Status.SUCCESSFUL.name)
+                gotoUrl(urlBuilder.build("transaction/success?transaction-id=${response.id}"))
+            else
+                gotoUrl(urlBuilder.build("transaction/processing?transaction-id=${response.id}"))
         } catch (ex: FeignException) {
             logger.setException(ex)
             val error = getErrorText(ex)
             return gotoUrl(
-                url = urlBuilder.build("/cashout/success?amount=$amount&error=" + encodeURLParam(error))
+                url = urlBuilder.build("transaction/error?type=CASHOUT&error=" + encodeURLParam(error))
             )
         }
     }
@@ -71,22 +54,4 @@ class CashoutCommand(
                 idempotencyKey = idempotencyKey
             )
         )
-
-    private fun waitForCompletion(transactionId: String): Transaction {
-        var retries = 0
-        var tx = Transaction()
-        try {
-            while (retries++ < MAX_RETRIES) {
-                LOGGER.info("$retries - Transaction #$transactionId is PENDING. Wait for ${CashinCommand.DELAY_SECONDS} sec...")
-                Thread.sleep(DELAY_SECONDS * 1000) // Wait for 15 secs...
-                val response = paymentApi.getTransaction(transactionId)
-                tx = response.transaction
-                if (tx.status != Status.PENDING.name)
-                    break
-            }
-            return tx
-        } finally {
-            logger.add("retries", retries - 1)
-        }
-    }
 }

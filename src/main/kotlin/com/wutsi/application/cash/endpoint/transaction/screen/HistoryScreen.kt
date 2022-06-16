@@ -1,4 +1,4 @@
-package com.wutsi.application.cash.endpoint.history.screen
+package com.wutsi.application.cash.endpoint.transaction.screen
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page

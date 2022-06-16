@@ -39,13 +39,13 @@ class SendCommand(
             return if (Status.SUCCESSFUL.name == response.status)
                 gotoUrl(
                     url = urlBuilder.build(
-                        "send/success?amount=$amount&recipient-id=$recipientId"
+                        "transaction/success?transaction-id=${response.id}"
                     )
                 )
             else
                 gotoUrl(
                     url = urlBuilder.build(
-                        "send/pending?transaction-id=${response.id}"
+                        "transaction/processing?transaction-id=${response.id}"
                     )
                 )
         } catch (ex: FeignException) {
@@ -53,7 +53,9 @@ class SendCommand(
             val error = getErrorText(ex)
             return gotoUrl(
                 url = urlBuilder.build(
-                    "send/success?amount=$amount&recipient-id=$recipientId&error=" + encodeURLParam(error)
+                    "transaction/error?type=TRANSFER&amount=$amount&recipient-id=$recipientId&error=" + encodeURLParam(
+                        error
+                    )
                 )
             )
         }

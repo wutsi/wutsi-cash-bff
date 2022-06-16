@@ -1,4 +1,4 @@
-package com.wutsi.application.cash.endpoint.history.screen
+package com.wutsi.application.cash.endpoint.transaction.screen
 
 import com.wutsi.application.cash.endpoint.AbstractQuery
 import com.wutsi.application.cash.endpoint.Page
@@ -170,7 +170,7 @@ class TransactionScreen(
                                         Divider(color = Theme.COLOR_DIVIDER)
                                     },
                                     tx.orderId?.let {
-                                        toRowWidget("page.transaction.order", toOrderWidget(it, tx))
+                                        toRowWidget("page.transaction.order", toOrderWidget(it))
                                     }
                                 )
                             )
@@ -246,7 +246,7 @@ class TransactionScreen(
         else
             accounts[tx.recipientId]?.let { toAccountWidget(it) } ?: Container()
 
-    private fun toOrderWidget(orderId: String, tx: Transaction): WidgetAware =
+    private fun toOrderWidget(orderId: String): WidgetAware =
         ListItem(
             caption = "#" + orderId.uppercase().takeLast(4),
             trailing = Icon(Theme.ICON_CHEVRON_RIGHT),
