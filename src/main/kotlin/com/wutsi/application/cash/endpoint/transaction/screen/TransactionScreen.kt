@@ -230,8 +230,10 @@ class TransactionScreen(
     ): WidgetAware =
         if (tx.type == TransactionType.CASHIN.name)
             toPaymentProvideWidget(tx, paymentMethods, tenant)
+        else if (tx.type == TransactionType.CASHOUT.name)
+            accounts[tx.accountId]?.let { toAccountWidget(it, null) } ?: Container()
         else
-            accounts[tx.accountId]?.let { toAccountWidget(it) } ?: Container()
+            accounts[tx.accountId]?.let { toAccountWidget(it, paymentMethods[tx.paymentMethodToken]) } ?: Container()
 
     private fun toRecipientWidget(
         tx: Transaction,
@@ -240,11 +242,11 @@ class TransactionScreen(
         tenant: Tenant
     ): WidgetAware =
         if (tx.type == TransactionType.CASHIN.name)
-            accounts[tx.accountId]?.let { toAccountWidget(it) } ?: Container()
+            accounts[tx.accountId]?.let { toAccountWidget(it, null) } ?: Container()
         else if (tx.type == TransactionType.CASHOUT.name)
             toPaymentProvideWidget(tx, paymentMethods, tenant)
         else
-            accounts[tx.recipientId]?.let { toAccountWidget(it) } ?: Container()
+            accounts[tx.recipientId]?.let { toAccountWidget(it, null) } ?: Container()
 
     private fun toOrderWidget(orderId: String): WidgetAware =
         ListItem(
@@ -277,9 +279,10 @@ class TransactionScreen(
         )
     }
 
-    private fun toAccountWidget(account: AccountSummary): WidgetAware =
+    private fun toAccountWidget(account: AccountSummary, paymentMethod: PaymentMethodSummary?): WidgetAware =
         ListItem(
             caption = account.displayName ?: "",
+            subCaption = paymentMethod?.phone?.number,
             trailing = Icon(Theme.ICON_CHEVRON_RIGHT),
             action = Action(
                 type = ActionType.Route,
