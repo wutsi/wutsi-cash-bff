@@ -86,7 +86,8 @@ internal class CashoutAmountCommandTest : AbstractEndpointTest() {
     fun notEnoughFunds() {
         // WHEN
         val request = CashoutRequest(
-            amount = 1000000.0, paymentToken = "xxx"
+            amount = 1000000.0,
+            paymentToken = "xxx"
         )
         val response = rest.postForEntity(url, request, Action::class.java)
 
