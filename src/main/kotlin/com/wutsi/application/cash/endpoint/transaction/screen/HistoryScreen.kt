@@ -5,7 +5,6 @@ import com.wutsi.application.cash.endpoint.Page
 import com.wutsi.application.shared.Theme
 import com.wutsi.application.shared.service.TenantProvider
 import com.wutsi.application.shared.ui.TransactionListItem
-import com.wutsi.flutter.sdui.Action
 import com.wutsi.flutter.sdui.AppBar
 import com.wutsi.flutter.sdui.Column
 import com.wutsi.flutter.sdui.Container
@@ -17,7 +16,6 @@ import com.wutsi.flutter.sdui.Screen
 import com.wutsi.flutter.sdui.Text
 import com.wutsi.flutter.sdui.Widget
 import com.wutsi.flutter.sdui.WidgetAware
-import com.wutsi.flutter.sdui.enums.ActionType
 import com.wutsi.flutter.sdui.enums.Alignment
 import com.wutsi.flutter.sdui.enums.MainAxisAlignment
 import com.wutsi.flutter.sdui.enums.TextAlignment
@@ -95,8 +93,7 @@ class HistoryScreen(
                 separator = true,
                 children = txs.map {
                     TransactionListItem(
-                        action = Action(
-                            type = ActionType.Route,
+                        action = gotoUrl(
                             url = urlBuilder.build("transaction?id=${it.id}")
                         ),
                         model = sharedUIMapper.toTransactionModel(

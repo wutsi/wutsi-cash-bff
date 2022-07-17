@@ -1,7 +1,7 @@
 wutsi:
-platform:
-  security:
-    api-key: ${API_KEY}
   application:
     gateway-url: https://wutsi-gateway-prod.herokuapp.com
     server-url: ${wutsi.application.gateway-url}/cash
+  platform:
+    security:
+      api-key: ${API_KEY}
