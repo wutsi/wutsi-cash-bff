@@ -68,7 +68,7 @@ jobs:
           heroku config:set --app ${HEROKU_APP} APP_PROFILE=test
           heroku config:set --app ${HEROKU_APP} API_KEY=${API_KEY}
           heroku addons -a ${HEROKU_APP} | grep papertrail && echo 'addon: papertrail exists' ||  heroku addons:create papertrail -a ${HEROKU_APP}
-          heroku deploy:jar target/wutsi-cash-bff.jar --app ${HEROKU_APP}
+          heroku deploy:jar wutsi-cash-bff.jar --app ${HEROKU_APP}
       - name: Health check
         env:
           HEROKU_APP: wutsi-cash-bff-test
@@ -116,7 +116,7 @@ jobs:
           heroku config:set --app ${HEROKU_APP} APP_PROFILE=prod
           heroku config:set --app ${HEROKU_APP} API_KEY=${API_KEY}
           heroku addons -a ${HEROKU_APP} | grep papertrail && echo 'addon: papertrail exists' ||  heroku addons:create papertrail -a ${HEROKU_APP}
-          heroku deploy:jar target/wutsi-cash-bff.jar --app ${HEROKU_APP}
+          heroku deploy:jar wutsi-cash-bff.jar --app ${HEROKU_APP}
       - name: Health check
         env:
           HEROKU_APP: wutsi-cash-bff-prod
