@@ -75,6 +75,7 @@ jobs:
         run: |
           sleep 90
           curl -sSf https://${HEROKU_APP}.herokuapp.com/actuator/health >> /dev/null
+          
       - name: Notification
         uses: rtCamp/action-slack-notify@v2
         if: ${{ always() }}
