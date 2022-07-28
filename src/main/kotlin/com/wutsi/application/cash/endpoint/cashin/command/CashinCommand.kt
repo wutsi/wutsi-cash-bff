@@ -44,7 +44,11 @@ class CashinCommand(
             logger.setException(ex)
             val error = getErrorText(ex)
             return gotoUrl(
-                url = urlBuilder.build("transaction/error?type=CASHIN&amount=$amount&error=" + encodeURLParam(error))
+                url = urlBuilder.build(
+                    "transaction/error?type=CASHIN&amount=$amount&payment-token=$paymentToken&error=" + encodeURLParam(
+                        error
+                    )
+                )
             )
         }
     }

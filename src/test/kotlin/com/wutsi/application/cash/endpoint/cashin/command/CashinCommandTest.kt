@@ -111,7 +111,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         val error = getText("prompt.error.unexpected-error")
         assertEquals(ActionType.Route, action.type)
         assertEquals(
-            "http://localhost:0/transaction/error?type=CASHIN&amount=10000.0&error=" + URLEncoder.encode(
+            "http://localhost:0/transaction/error?type=CASHIN&amount=10000.0&payment-token=xxxx&error=" + URLEncoder.encode(
                 error,
                 "utf-8"
             ),
@@ -135,7 +135,7 @@ internal class CashinCommandTest : AbstractEndpointTest() {
         val error = getText("prompt.error.transaction-failed.NOT_ENOUGH_FUNDS")
         assertEquals(ActionType.Route, action.type)
         assertEquals(
-            "http://localhost:0/transaction/error?type=CASHIN&amount=10000.0&error=" + URLEncoder.encode(
+            "http://localhost:0/transaction/error?type=CASHIN&amount=10000.0&payment-token=xxxx&error=" + URLEncoder.encode(
                 error,
                 "utf-8"
             ),

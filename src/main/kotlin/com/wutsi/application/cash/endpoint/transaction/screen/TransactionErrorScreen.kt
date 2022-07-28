@@ -26,12 +26,14 @@ class TransactionErrorScreen(
         @RequestParam amount: Double,
         @RequestParam type: TransactionType,
         @RequestParam(name = "recipient-id", required = false) recipientId: Long? = null,
+        @RequestParam(name = "payment-token", required = false) paymentToken: String? = null,
     ): Widget {
         val tx = Transaction(
             type = type.name,
             recipientId = recipientId,
             accountId = securityContext.currentAccountId(),
-            amount = amount
+            amount = amount,
+            paymentMethodToken = paymentToken
         )
         val tenant = tenantProvider.get()
 
