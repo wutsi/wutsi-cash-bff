@@ -35,7 +35,7 @@ abstract class AbstractTransactionStatusScreen(
                     padding = 10.0,
                     child = MoneyText(
                         value = tx.amount,
-                        currency = tx.currency,
+                        currency = tenant.currencySymbol,
                         numberFormat = tenant.numberFormat,
                         color = Theme.COLOR_PRIMARY
                     )
