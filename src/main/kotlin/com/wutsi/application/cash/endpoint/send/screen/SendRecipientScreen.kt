@@ -60,8 +60,28 @@ class SendRecipientScreen(
             )
         ).contacts
 
+        val tabs = if (contacts.isEmpty())
+            listOf(
+                Tab(icon = Theme.ICON_PHONE, caption = getText("page.send-recipient.tab.phone"))
+            )
+        else
+            listOf(
+                Tab(icon = Theme.ICON_GROUP, caption = getText("page.send-recipient.tab.contact")),
+                Tab(icon = Theme.ICON_PHONE, caption = getText("page.send-recipient.tab.phone"))
+            )
+
+        val tabViews = if (contacts.isEmpty())
+            listOf(
+                phoneTab(amount, amountText, tenant)
+            )
+        else
+            listOf(
+                contactTab(contacts, amount, tenant),
+                phoneTab(amount, amountText, tenant)
+            )
+
         return DefaultTabController(
-            length = 2,
+            length = tabs.size,
             child = Screen(
                 id = Page.SEND_RECIPIENT,
                 backgroundColor = Theme.COLOR_WHITE,
@@ -77,27 +97,11 @@ class SendRecipientScreen(
                         )
                     ),
                     bottom = TabBar(
-                        tabs = if (contacts.isEmpty())
-                            listOf(
-                                Tab(icon = Theme.ICON_PHONE, caption = getText("page.send-recipient.tab.phone"))
-                            )
-                        else
-                            listOf(
-                                Tab(icon = Theme.ICON_GROUP, caption = getText("page.send-recipient.tab.contact")),
-                                Tab(icon = Theme.ICON_PHONE, caption = getText("page.send-recipient.tab.phone"))
-                            )
+                        tabs = tabs
                     )
                 ),
                 child = TabBarView(
-                    children = if (contacts.isEmpty())
-                        listOf(
-                            phoneTab(amount, amountText, tenant)
-                        )
-                    else
-                        listOf(
-                            contactTab(contacts, amount, tenant),
-                            phoneTab(amount, amountText, tenant)
-                        )
+                    children = tabViews
                 )
             )
         ).toWidget()
