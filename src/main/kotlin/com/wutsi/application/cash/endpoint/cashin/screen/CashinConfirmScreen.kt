@@ -129,7 +129,7 @@ class CashinConfirmScreen(
     private fun getSubmitUrl(amount: Double, paymentToken: String): String {
         val me = accountApi.getAccount(securityContext.currentAccountId()).account
         return "?phone=" + encodeURLParam(me.phone!!.number) +
-            "&icon=" + Theme.ICON_LOCK +
+            "&dark-mode=true" +
             "&screen-id=" + Page.CASHIN_PIN +
             "&title=" + encodeURLParam(getText("page.cashin-pin.title")) +
             "&sub-title=" + encodeURLParam(getText("page.cashin-pin.sub-title")) +

@@ -227,7 +227,7 @@ class SendConfirmScreen(
     private fun getSubmitUrl(amount: Double, recipient: Account): String {
         val me = accountApi.getAccount(securityContext.currentAccountId()).account
         return "?phone=" + encodeURLParam(me.phone!!.number) +
-            "&icon=" + Theme.ICON_LOCK +
+            "&dark-mode=true" +
             "&screen-id=" + Page.SEND_PIN +
             "&title=" + encodeURLParam(getText("page.send-pin.title")) +
             "&sub-title=" + encodeURLParam(getText("page.send-pin.sub-title")) +
